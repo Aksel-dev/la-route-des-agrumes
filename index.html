@@ -2,90 +2,73 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>🍋 La Route des Agrumes</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --navy:    #0D1B2A;
-  --navy2:   #132238;
-  --navy3:   #1A2F4A;
-  --navy4:   #22405E;
-  --navy5:   #2C5278;
-  --navy6:   #3A6491;
-  --gold:    #F0B429;
-  --gold2:   #C8911A;
-  --sea:     #29B6D8;
-  --sea2:    #1A8EAA;
-  --sea3:    #106878;
-  --white:   #FFFFFF;
-  --txt:     #D0E4F5;
-  --txt2:    #85AACC;
-  --txt3:    #486888;
-  --bdr:     rgba(255,255,255,.07);
-  --bdr2:    rgba(255,255,255,.14);
-  --bdr3:    rgba(255,255,255,.22);
-  --FR:#16844E; --IT:#D04A18; --PT:#C02020;
-  --CH:#982020; --BE:#C07C08; --CZ:#5040B0; --BG:#A02828;
-  --sh0:0 2px 12px rgba(0,0,0,.35);
-  --sh1:0 8px 30px rgba(0,0,0,.5);
-  --sh2:0 24px 70px rgba(0,0,0,.65);
+  --nv:  #0D1B2A; --nv2: #122030; --nv3: #182C42; --nv4: #1F3A58; --nv5: #2A4D72;
+  --gold:#F0B429; --sea:#29B6D8; --sea2:#1A8EAA; --sea3:#0F6070;
+  --w:#FFFFFF; --tx:#C8DDED; --tx2:#7AAAC8; --tx3:#3D6482;
+  --bd: rgba(255,255,255,.07); --bd2:rgba(255,255,255,.14); --bd3:rgba(255,255,255,.22);
+  --FR:#16844E; --IT:#D04A18; --PT:#C02020; --CH:#982020; --BE:#C07C08; --CZ:#5040B0; --BG:#A02828;
+  --s0:0 2px 10px rgba(0,0,0,.3); --s1:0 8px 28px rgba(0,0,0,.48); --s2:0 20px 60px rgba(0,0,0,.62);
+  --r6:6px; --r10:10px; --r14:14px; --r99:99px;
 }
-*{margin:0;padding:0;box-sizing:border-box;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;overflow:hidden;}
-body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--txt);display:flex;flex-direction:column;}
+body{font-family:'Inter',sans-serif;background:var(--nv);color:var(--tx);display:flex;flex-direction:column;}
 
-/* ── HEADER ───────────────────────────────── */
+/* ═══ HEADER ═══════════════════════════════════ */
 header{
-  flex-shrink:0;height:56px;
-  background:linear-gradient(135deg,var(--navy) 0%,var(--navy3) 100%);
-  border-bottom:1px solid var(--bdr2);
-  display:flex;align-items:center;gap:12px;padding:0 18px;
-  z-index:1000;box-shadow:0 2px 20px rgba(0,0,0,.45);
+  flex-shrink:0;height:54px;
+  background:linear-gradient(135deg,var(--nv),var(--nv3));
+  border-bottom:1px solid var(--bd2);
+  display:flex;align-items:center;gap:10px;padding:0 14px;
+  z-index:1001;box-shadow:0 2px 18px rgba(0,0,0,.4);
 }
 .logo{
-  font-family:'Playfair Display',serif;font-size:18px;font-weight:700;
-  color:var(--white);display:flex;align-items:center;gap:8px;white-space:nowrap;
+  font-family:'Playfair Display',serif;font-size:17px;font-weight:700;
+  color:var(--w);display:flex;align-items:center;gap:7px;white-space:nowrap;flex-shrink:0;
 }
 .logo em{color:var(--gold);font-style:italic;}
-.logo-badge{
+.logo-n{
   font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.9px;
   color:var(--gold);background:rgba(240,180,41,.12);
-  border:1px solid rgba(240,180,41,.28);border-radius:99px;padding:2px 10px;white-space:nowrap;
+  border:1px solid rgba(240,180,41,.28);border-radius:var(--r99);padding:2px 9px;white-space:nowrap;
 }
-.sw{flex:1;max-width:310px;position:relative;}
+.sw{flex:1;position:relative;max-width:280px;}
 .sw input{
-  width:100%;background:rgba(255,255,255,.08);border:1px solid var(--bdr2);
-  border-radius:9px;color:var(--white);padding:7px 13px 7px 34px;
+  width:100%;background:rgba(255,255,255,.09);border:1px solid var(--bd2);
+  border-radius:var(--r10);color:var(--w);padding:7px 12px 7px 32px;
   font-family:'Inter',sans-serif;font-size:12px;outline:none;transition:all .2s;
 }
 .sw input::placeholder{color:rgba(255,255,255,.28);}
-.sw input:focus{background:rgba(255,255,255,.13);border-color:var(--sea);}
-.sw-ico{position:absolute;left:10px;top:50%;transform:translateY(-50%);opacity:.35;font-size:13px;pointer-events:none;}
-.hstats{margin-left:auto;display:flex;gap:6px;}
-.chip{
-  display:flex;align-items:center;gap:5px;
-  background:rgba(255,255,255,.07);border:1px solid var(--bdr);
-  border-radius:99px;padding:3px 11px;font-size:10.5px;color:var(--txt2);
-}
-.chip strong{font-size:12.5px;font-weight:700;}
-.chip.cfr strong{color:#3DD880;}
-.chip.ceu strong{color:var(--gold);}
+.sw input:focus{background:rgba(255,255,255,.14);border-color:var(--sea);}
+.sw-i{position:absolute;left:10px;top:50%;transform:translateY(-50%);opacity:.35;font-size:13px;pointer-events:none;}
+.hst{margin-left:auto;display:flex;gap:5px;flex-shrink:0;}
+.hchip{display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.07);border:1px solid var(--bd);border-radius:var(--r99);padding:3px 9px;font-size:10px;color:var(--tx2);}
+.hchip strong{font-size:12px;font-weight:700;}
+.hchip.cfr strong{color:#3DD880;}
+.hchip.ceu strong{color:var(--gold);}
+/* mobile: cacher les chips */
+@media(max-width:640px){.hchip{display:none;}.logo-n{display:none;}}
 
-/* ── FILTER BAR ────────────────────────────── */
+/* ═══ FILTER BAR ════════════════════════════════ */
 .fbar{
-  flex-shrink:0;background:var(--navy2);
-  border-bottom:1px solid var(--bdr);
-  padding:6px 18px;display:flex;align-items:center;gap:4px;flex-wrap:wrap;
+  flex-shrink:0;background:var(--nv2);border-bottom:1px solid var(--bd);
+  padding:6px 14px;display:flex;align-items:center;gap:4px;
+  overflow-x:auto;scrollbar-width:none;white-space:nowrap;
 }
-.fl{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--txt3);margin-right:4px;}
-.sep-v{width:1px;height:16px;background:var(--bdr2);margin:0 5px;}
+.fbar::-webkit-scrollbar{display:none;}
+.fl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--tx3);margin-right:2px;flex-shrink:0;}
+.sv{width:1px;height:16px;background:var(--bd2);margin:0 4px;flex-shrink:0;}
 .fb{
-  font-size:10.5px;font-weight:600;padding:3px 11px;border-radius:99px;
-  border:1px solid var(--bdr2);background:transparent;color:var(--txt2);
-  cursor:pointer;transition:all .15s;letter-spacing:.1px;
+  font-size:10.5px;font-weight:600;padding:3px 10px;border-radius:var(--r99);
+  border:1px solid var(--bd2);background:transparent;color:var(--tx2);
+  cursor:pointer;transition:all .15s;white-space:nowrap;flex-shrink:0;
 }
 .fb:hover{border-color:var(--sea);color:var(--sea);}
 .fb.on{color:#fff;border-color:transparent;box-shadow:0 2px 8px rgba(0,0,0,.3);}
@@ -101,220 +84,236 @@ header{
 .fb[data-f="bio"].on{background:#3A9A1A;}
 .fb[data-f="rare"].on{background:#C07818;}
 
-/* ── LAYOUT ─────────────────────────────────── */
+/* ═══ LAYOUT ═════════════════════════════════════ */
 .main{flex:1;display:flex;overflow:hidden;position:relative;min-height:0;}
 #map{flex:1;z-index:1;}
 
-/* Leaflet overrides */
-.leaflet-control-zoom{margin-left:14px!important;margin-top:12px!important;}
+/* Leaflet */
+.leaflet-control-zoom{margin-left:12px!important;margin-top:12px!important;}
 .leaflet-control-zoom a{
-  background:var(--navy3)!important;color:var(--white)!important;
-  border:1px solid var(--bdr3)!important;font-size:15px!important;
-  transition:background .15s;line-height:26px!important;
+  background:var(--nv3)!important;color:var(--w)!important;
+  border:1px solid var(--bd3)!important;font-size:15px!important;
+  width:30px!important;height:30px!important;line-height:28px!important;
 }
-.leaflet-control-zoom a:hover{background:var(--navy4)!important;}
+.leaflet-control-zoom a:hover{background:var(--nv4)!important;}
 .leaflet-control-attribution{
-  background:rgba(13,27,42,.85)!important;color:var(--txt3)!important;
+  background:rgba(13,27,42,.85)!important;color:var(--tx3)!important;
   font-size:9px!important;backdrop-filter:blur(4px);
 }
-.leaflet-control-attribution a{color:var(--txt2)!important;}
+.leaflet-control-attribution a{color:var(--tx2)!important;}
 
-/* ── FLOATING ────────────────────────────────── */
+/* ═══ FLOTTANTS ══════════════════════════════════ */
 .fcnt{
-  position:absolute;top:11px;left:14px;z-index:500;
-  background:rgba(13,27,42,.93);border:1px solid var(--bdr3);
-  border-radius:9px;padding:6px 13px;font-size:11px;font-weight:600;
-  color:var(--white);pointer-events:none;backdrop-filter:blur(10px);
-  box-shadow:var(--sh0);
+  position:absolute;top:10px;left:12px;z-index:500;
+  background:rgba(13,27,42,.93);border:1px solid var(--bd3);
+  border-radius:var(--r10);padding:5px 12px;
+  font-size:11px;font-weight:600;color:var(--w);
+  pointer-events:none;backdrop-filter:blur(10px);box-shadow:var(--s0);
 }
+/* bouton ouvrir liste mobile */
+.mob-list-btn{
+  display:none;
+  position:absolute;bottom:24px;right:14px;z-index:600;
+  background:var(--nv3);border:1px solid var(--bd3);
+  border-radius:var(--r99);padding:9px 16px;
+  font-size:12px;font-weight:700;color:var(--w);
+  cursor:pointer;box-shadow:var(--s1);gap:6px;align-items:center;
+}
+@media(max-width:768px){.mob-list-btn{display:flex;}}
+
 .legend{
-  position:absolute;bottom:20px;left:14px;z-index:500;
-  background:rgba(13,27,42,.94);border:1px solid var(--bdr3);
-  border-radius:11px;padding:12px 15px;
-  backdrop-filter:blur(12px);box-shadow:var(--sh1);
+  position:absolute;bottom:20px;left:12px;z-index:500;
+  background:rgba(13,27,42,.94);border:1px solid var(--bd3);
+  border-radius:var(--r10);padding:11px 14px;
+  backdrop-filter:blur(12px);box-shadow:var(--s1);
 }
-.leg-t{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--txt3);margin-bottom:9px;}
-.leg-r{
-  display:flex;align-items:center;gap:8px;font-size:10.5px;color:var(--txt2);
-  margin-bottom:5px;cursor:pointer;transition:color .12s;
-}
+@media(max-width:600px){.legend{display:none;}}
+.leg-t{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--tx3);margin-bottom:8px;}
+.leg-r{display:flex;align-items:center;gap:7px;font-size:10px;color:var(--tx2);margin-bottom:4px;cursor:pointer;transition:color .12s;}
 .leg-r:last-child{margin-bottom:0;}
-.leg-r:hover{color:var(--white);}
-.leg-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;box-shadow:0 1px 5px rgba(0,0,0,.4);}
+.leg-r:hover{color:var(--w);}
+.leg-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
 
-/* ── SIDEBAR ─────────────────────────────────── */
+/* ═══ SIDEBAR ════════════════════════════════════ */
 .sidebar{
-  width:325px;flex-shrink:0;
-  background:#0F2035;
-  border-left:1px solid rgba(255,255,255,.09);
+  width:320px;flex-shrink:0;
+  background:#0F2035;border-left:1px solid rgba(255,255,255,.09);
   display:flex;flex-direction:column;overflow:hidden;z-index:400;
-  box-shadow:-3px 0 18px rgba(0,0,0,.35);
+  box-shadow:-3px 0 16px rgba(0,0,0,.35);transition:transform .3s ease;
 }
-.sb-head{
-  padding:13px 16px 10px;
-  background:#0A1828;
-  border-bottom:1px solid rgba(255,255,255,.07);
+/* MOBILE sidebar = drawer par dessus la carte */
+@media(max-width:768px){
+  .sidebar{
+    position:absolute;top:0;right:0;bottom:0;
+    width:88vw;max-width:360px;z-index:700;
+    transform:translateX(100%);
+  }
+  .sidebar.open{transform:translateX(0);}
 }
-.sb-head h2{
-  font-family:'Playfair Display',serif;font-size:14.5px;font-weight:700;
-  color:var(--white);margin-bottom:3px;
-}
-.sb-head p{font-size:10px;color:var(--txt2);}
-
+.sb-hd{padding:12px 15px 9px;background:#0A1828;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:8px;}
+.sb-hd h2{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--w);flex:1;}
+.sb-hd p{font-size:10px;color:var(--tx2);}
+.sb-cls{display:none;background:rgba(255,255,255,.08);border:1px solid var(--bd2);border-radius:50%;width:26px;height:26px;color:var(--tx2);font-size:13px;cursor:pointer;flex-shrink:0;align-items:center;justify-content:center;}
+@media(max-width:768px){.sb-cls{display:flex;}}
 .lw{flex:1;overflow-y:auto;min-height:0;}
 .lw::-webkit-scrollbar{width:3px;}
 .lw::-webkit-scrollbar-thumb{background:#2A4468;border-radius:2px;}
-.lw::-webkit-scrollbar-track{background:transparent;}
 
-.ctry-hdr{
+/* Country header */
+.ch{
   position:sticky;top:0;z-index:10;
-  padding:6px 16px;
-  background:#081522;
+  padding:5px 15px;background:#081522;
   border-bottom:1px solid rgba(255,255,255,.06);
-  display:flex;align-items:center;gap:7px;
+  display:flex;align-items:center;gap:6px;
 }
-.ctry-flag{font-size:14px;}
-.ctry-name{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--txt2);flex:1;}
-.ctry-cnt{
-  font-size:9.5px;font-weight:700;
-  background:rgba(255,255,255,.08);color:var(--txt2);
-  border-radius:99px;padding:1px 8px;
-}
-.item{
-  padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.05);
+.ch-f{font-size:14px;}
+.ch-n{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--tx2);flex:1;}
+.ch-c{font-size:9px;font-weight:700;background:rgba(255,255,255,.08);color:var(--tx2);border-radius:var(--r99);padding:1px 8px;}
+
+/* Item */
+.it{
+  padding:10px 15px;border-bottom:1px solid rgba(255,255,255,.05);
   cursor:pointer;transition:background .1s;
   display:flex;gap:9px;align-items:flex-start;
 }
-.item:hover{background:#162840;}
-.item.active{background:#1E3A5C;border-left:3px solid var(--sea);}
-.ipin{width:8px;height:8px;border-radius:50%;margin-top:4px;flex-shrink:0;}
-.ibody{flex:1;min-width:0;}
-.iname{font-size:12px;font-weight:600;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:1px;}
-.iloc{font-size:10px;color:var(--txt2);}
-.itags{display:flex;gap:3px;margin-top:4px;flex-wrap:wrap;}
+.it:hover{background:#162840;}
+.it.active{background:#1E3A5C;border-left:3px solid var(--sea);}
+.it-dot{width:8px;height:8px;border-radius:50%;margin-top:4px;flex-shrink:0;}
+.it-b{flex:1;min-width:0;}
+.it-n{font-size:12px;font-weight:600;color:var(--w);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:1px;}
+.it-l{font-size:10px;color:var(--tx2);}
+.it-t{display:flex;gap:3px;margin-top:4px;flex-wrap:wrap;}
 
-.tag{font-size:8.5px;font-weight:700;padding:1px 6px;border-radius:99px;text-transform:uppercase;letter-spacing:.35px;}
+/* Tags */
+.tag{font-size:8px;font-weight:700;padding:1px 6px;border-radius:var(--r99);text-transform:uppercase;letter-spacing:.35px;}
 .tp{background:rgba(22,132,78,.2);color:#4DCC88;}
-.tr{background:rgba(200,120,8,.18);color:#E0A030;}
+.tv{background:rgba(200,120,8,.18);color:#E0A030;}
 .tb{background:rgba(58,154,26,.2);color:#78CC48;}
-.tra{background:rgba(192,112,20,.18);color:#D89838;}
-.tru{background:rgba(80,64,176,.2);color:#9888E8;}
+.tr{background:rgba(192,112,20,.18);color:#D89838;}
 .to{background:rgba(41,182,216,.14);color:#58C8E8;}
-.nr{padding:38px 16px;text-align:center;color:var(--txt2);font-size:12px;}
-.nr span{font-size:26px;display:block;margin-bottom:8px;}
+.nr{padding:36px 15px;text-align:center;color:var(--tx2);font-size:12px;}
+.nr span{font-size:24px;display:block;margin-bottom:7px;}
 
-/* ── MODAL ───────────────────────────────────── */
-.overlay{
+/* ═══ MODAL ══════════════════════════════════════ */
+.ov{
   display:none;position:fixed;inset:0;
   background:rgba(5,10,20,.72);backdrop-filter:blur(8px);
-  z-index:2000;align-items:center;justify-content:center;padding:18px;
+  z-index:2000;align-items:flex-end;justify-content:center;padding:0;
 }
-.overlay.open{display:flex;}
-@keyframes pop{from{transform:translateY(16px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+.ov.open{display:flex;}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes popIn{from{transform:translateY(16px) scale(.97);opacity:0}to{transform:none;opacity:1}}
 .modal{
-  background:#112030;border:1px solid var(--bdr3);
-  border-radius:16px;box-shadow:var(--sh2);
-  width:100%;max-width:500px;overflow:hidden;
-  animation:pop .2s cubic-bezier(.34,1.3,.64,1);
+  background:#112030;border:1px solid var(--bd3);
+  width:100%;max-width:520px;overflow:hidden;
+  /* desktop: centré */
+  border-radius:var(--r14);
+  box-shadow:var(--s2);
+  animation:popIn .22s cubic-bezier(.34,1.3,.64,1);
+  max-height:92vh;overflow-y:auto;
+  margin:auto;
+}
+/* mobile: bottom sheet */
+@media(max-width:640px){
+  .ov{align-items:flex-end;}
+  .modal{
+    border-radius:var(--r14) var(--r14) 0 0;
+    max-width:100%;animation:slideUp .28s ease;
+    max-height:88vh;
+  }
 }
 .mhd{
-  padding:20px 22px 16px;
-  background:linear-gradient(135deg,var(--navy3),var(--navy5));
-  border-bottom:1px solid var(--bdr);position:relative;
+  padding:18px 20px 14px;
+  background:linear-gradient(135deg,var(--nv3),var(--nv5));
+  border-bottom:1px solid var(--bd);position:relative;
+  position:sticky;top:0;z-index:5;
 }
-.mflag{font-size:28px;display:block;margin-bottom:7px;line-height:1;}
-.mname{
-  font-family:'Playfair Display',serif;font-size:20px;font-weight:700;
-  color:var(--white);line-height:1.2;margin-bottom:3px;
+/* drag handle mobile */
+.drag-h{
+  display:none;width:36px;height:4px;background:rgba(255,255,255,.25);
+  border-radius:2px;margin:0 auto 12px;
 }
-.mloc{font-size:11px;color:var(--txt2);}
-.mctry{
-  display:inline-flex;align-items:center;gap:5px;margin-top:7px;
-  background:rgba(255,255,255,.08);border:1px solid var(--bdr2);
-  border-radius:99px;padding:2px 10px;font-size:9.5px;font-weight:600;color:var(--txt2);
-}
-.mcls{
-  position:absolute;top:13px;right:13px;width:28px;height:28px;
-  border-radius:50%;background:rgba(255,255,255,.1);border:1px solid var(--bdr2);
-  color:var(--txt2);font-size:13px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;transition:all .15s;
-}
-.mcls:hover{background:rgba(255,255,255,.2);color:var(--white);}
-.mbody{padding:16px 22px 20px;}
-.mpv{
-  display:inline-flex;align-items:center;gap:5px;
-  padding:4px 12px;border-radius:7px;
-  font-size:10.5px;font-weight:700;letter-spacing:.15px;margin-bottom:10px;
-}
-.mpv.P{background:rgba(22,132,78,.18);color:#4DCC88;border:1px solid rgba(22,132,78,.3);}
-.mpv.V{background:rgba(200,120,8,.15);color:#E0A030;border:1px solid rgba(200,120,8,.28);}
-.mtags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px;}
-.mtag{font-size:9.5px;font-weight:700;padding:2px 8px;border-radius:99px;text-transform:uppercase;letter-spacing:.4px;}
-.mdesc{
-  font-size:12.5px;color:var(--txt2);line-height:1.7;
-  padding:11px 14px;background:rgba(255,255,255,.04);
-  border-radius:9px;border-left:3px solid var(--sea);margin-bottom:13px;
-}
-.mgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:13px;}
-.mcell{background:rgba(255,255,255,.05);border:1px solid var(--bdr);border-radius:7px;padding:8px 10px;}
-.mcell .l{font-size:8.5px;text-transform:uppercase;letter-spacing:.55px;color:var(--txt3);margin-bottom:2px;font-weight:700;}
-.mcell .v{font-size:11.5px;font-weight:600;color:var(--white);}
-.mcontact{
-  background:rgba(255,255,255,.04);border:1px solid var(--bdr);
-  border-radius:7px;padding:9px 12px;
-  font-size:11px;color:var(--txt2);line-height:1.8;margin-bottom:13px;
-}
-.mcontact a{color:var(--sea);text-decoration:none;}
-.mcontact a:hover{text-decoration:underline;}
-.mbtn{
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  width:100%;padding:12px;
+@media(max-width:640px){.drag-h{display:block;}}
+.m-fl{font-size:26px;display:block;margin-bottom:6px;line-height:1;}
+.m-nm{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--w);line-height:1.2;margin-bottom:3px;}
+.m-lc{font-size:11px;color:var(--tx2);}
+.m-ct{display:inline-flex;align-items:center;gap:5px;margin-top:7px;background:rgba(255,255,255,.08);border:1px solid var(--bd2);border-radius:var(--r99);padding:2px 10px;font-size:9.5px;font-weight:600;color:var(--tx2);}
+.m-x{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid var(--bd2);color:var(--tx2);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.m-x:hover{background:rgba(255,255,255,.2);color:var(--w);}
+.m-bd{padding:15px 20px 20px;}
+.m-pv{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:var(--r6);font-size:10.5px;font-weight:700;letter-spacing:.15px;margin-bottom:9px;}
+.m-pv.P{background:rgba(22,132,78,.18);color:#4DCC88;border:1px solid rgba(22,132,78,.3);}
+.m-pv.V{background:rgba(200,120,8,.15);color:#E0A030;border:1px solid rgba(200,120,8,.28);}
+.m-pv.PV{background:rgba(90,90,200,.15);color:#9898F0;border:1px solid rgba(90,90,200,.28);}
+.m-tgs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px;}
+.m-tag{font-size:9px;font-weight:700;padding:2px 8px;border-radius:var(--r99);text-transform:uppercase;letter-spacing:.4px;}
+.m-ds{font-size:12.5px;color:var(--tx2);line-height:1.7;padding:11px 14px;background:rgba(255,255,255,.04);border-radius:var(--r10);border-left:3px solid var(--sea);margin-bottom:13px;}
+.m-gr{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:12px;}
+.m-cl{background:rgba(255,255,255,.05);border:1px solid var(--bd);border-radius:var(--r6);padding:8px 10px;}
+.m-cl .l{font-size:8px;text-transform:uppercase;letter-spacing:.55px;color:var(--tx3);margin-bottom:2px;font-weight:700;}
+.m-cl .v{font-size:11px;font-weight:600;color:var(--w);}
+.m-co{background:rgba(255,255,255,.04);border:1px solid var(--bd);border-radius:var(--r6);padding:9px 12px;font-size:11px;color:var(--tx2);line-height:1.8;margin-bottom:13px;}
+.m-co a{color:var(--sea);text-decoration:none;}
+.m-co a:hover{text-decoration:underline;}
+.m-btn{
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  width:100%;padding:13px;
   background:linear-gradient(135deg,var(--sea3),var(--sea));
-  color:#fff;border:none;border-radius:10px;
-  font-family:'Inter',sans-serif;font-size:13.5px;font-weight:700;
+  color:#fff;border:none;border-radius:var(--r10);
+  font-family:'Inter',sans-serif;font-size:13px;font-weight:700;
   cursor:pointer;text-decoration:none;transition:all .18s;
-  box-shadow:0 4px 18px rgba(25,140,170,.4);letter-spacing:.1px;
+  box-shadow:0 4px 18px rgba(25,140,170,.4);
 }
-.mbtn:hover{background:linear-gradient(135deg,#0A5060,var(--sea2));transform:translateY(-1px);box-shadow:0 6px 26px rgba(25,140,170,.55);}
+.m-btn:hover{background:linear-gradient(135deg,#0A5060,var(--sea2));transform:translateY(-1px);box-shadow:0 6px 24px rgba(25,140,170,.55);}
+.m-btn:active{transform:translateY(0);}
+/* modal scrollbar */
+.modal::-webkit-scrollbar{width:3px;}
+.modal::-webkit-scrollbar-thumb{background:var(--nv5);}
 </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <header>
   <div class="logo">🍋 La Route des <em>Agrumes</em></div>
-  <span class="logo-badge" id="main-badge">61 pépinières</span>
+  <span class="logo-n" id="main-badge">61 pépinières</span>
   <div class="sw">
-    <span class="sw-ico">🔍</span>
-    <input type="text" id="search" placeholder="Rechercher nom, ville, pays…" oninput="doSearch(this.value)">
+    <span class="sw-i">🔍</span>
+    <input type="text" id="search" placeholder="Rechercher…" oninput="doSearch(this.value)">
   </div>
-  <div class="hstats">
-    <div class="chip cfr">🇫🇷 France <strong id="cnt-fr">47</strong></div>
-    <div class="chip ceu">🌍 Europe <strong id="cnt-eu">14</strong></div>
+  <div class="hst">
+    <div class="hchip cfr">🇫🇷 <strong id="cnt-fr">47</strong></div>
+    <div class="hchip ceu">🌍 <strong id="cnt-eu">14</strong></div>
   </div>
 </header>
 
+<!-- FILTRES -->
 <div class="fbar">
-  <span class="fl">Pays :</span>
+  <span class="fl">Pays:</span>
   <button class="fb on" data-f="all" onclick="setF('all',this)">🌍 Tous</button>
-  <button class="fb" data-f="FR"  onclick="setF('FR',this)">🇫🇷 France</button>
-  <button class="fb" data-f="IT"  onclick="setF('IT',this)">🇮🇹 Italie</button>
-  <button class="fb" data-f="PT"  onclick="setF('PT',this)">🇵🇹 Portugal</button>
-  <button class="fb" data-f="CH"  onclick="setF('CH',this)">🇨🇭 Suisse</button>
-  <button class="fb" data-f="BE"  onclick="setF('BE',this)">🇧🇪 Belgique</button>
-  <button class="fb" data-f="CZ"  onclick="setF('CZ',this)">🇨🇿 Tchéquie</button>
-  <button class="fb" data-f="BG"  onclick="setF('BG',this)">🇧🇬 Bulgarie</button>
-  <div class="sep-v"></div>
-  <span class="fl">Type :</span>
+  <button class="fb" data-f="FR"   onclick="setF('FR',this)">🇫🇷 France</button>
+  <button class="fb" data-f="IT"   onclick="setF('IT',this)">🇮🇹 Italie</button>
+  <button class="fb" data-f="PT"   onclick="setF('PT',this)">🇵🇹 Portugal</button>
+  <button class="fb" data-f="CH"   onclick="setF('CH',this)">🇨🇭 Suisse</button>
+  <button class="fb" data-f="BE"   onclick="setF('BE',this)">🇧🇪 Belgique</button>
+  <button class="fb" data-f="CZ"   onclick="setF('CZ',this)">🇨🇿 Tchéquie</button>
+  <button class="fb" data-f="BG"   onclick="setF('BG',this)">🇧🇬 Bulgarie</button>
+  <div class="sv"></div>
+  <span class="fl">Type:</span>
   <button class="fb" data-f="prod" onclick="setF('prod',this)">🌿 Producteur</button>
   <button class="fb" data-f="bio"  onclick="setF('bio',this)">🌱 Bio</button>
   <button class="fb" data-f="rare" onclick="setF('rare',this)">⭐ Rares</button>
 </div>
 
+<!-- MAIN -->
 <div class="main">
   <div id="map"></div>
-  <div class="fcnt" id="fcnt">61 pépinières affichées</div>
+
+  <div class="fcnt" id="fcnt">61 pépinières</div>
+
+  <!-- Légende desktop -->
   <div class="legend">
-    <div class="leg-t">Cliquer pour filtrer</div>
+    <div class="leg-t">Filtrer par pays</div>
     <div class="leg-r" onclick="setFLeg('FR')"><span class="leg-dot" style="background:var(--FR)"></span>🇫🇷 France</div>
     <div class="leg-r" onclick="setFLeg('IT')"><span class="leg-dot" style="background:var(--IT)"></span>🇮🇹 Italie</div>
     <div class="leg-r" onclick="setFLeg('PT')"><span class="leg-dot" style="background:var(--PT)"></span>🇵🇹 Portugal</div>
@@ -322,33 +321,45 @@ header{
     <div class="leg-r" onclick="setFLeg('BE')"><span class="leg-dot" style="background:var(--BE)"></span>🇧🇪 Belgique</div>
     <div class="leg-r" onclick="setFLeg('CZ')"><span class="leg-dot" style="background:var(--CZ)"></span>🇨🇿 Tchéquie</div>
     <div class="leg-r" onclick="setFLeg('BG')"><span class="leg-dot" style="background:var(--BG)"></span>🇧🇬 Bulgarie</div>
-    <div class="leg-r" onclick="setF('all',document.querySelector('[data-f=all]'))" style="margin-top:6px;border-top:1px solid rgba(255,255,255,.08);padding-top:6px"><span class="leg-dot" style="background:var(--sea2)"></span>Tout afficher</div>
+    <div class="leg-r" style="margin-top:6px;border-top:1px solid rgba(255,255,255,.08);padding-top:6px" onclick="setFLeg('all')"><span class="leg-dot" style="background:var(--sea2)"></span>Tout afficher</div>
   </div>
-  <div class="sidebar">
-    <div class="sb-head">
-      <h2>🗺 Pépinières référencées</h2>
-      <p id="sb-count">61 établissements · 7 pays · coordonnées vérifiées</p>
+
+  <!-- Bouton ouvrir liste (mobile) -->
+  <div class="mob-list-btn" id="mob-btn" onclick="openSidebar()">
+    📋 <span id="mob-cnt">61 pépinières</span>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <div class="sb-hd">
+      <div>
+        <h2>🗺 Pépinières référencées</h2>
+        <p id="sb-count">61 établissements · 7 pays</p>
+      </div>
+      <button class="sb-cls" onclick="closeSidebar()">✕</button>
     </div>
     <div class="lw" id="lw"></div>
   </div>
 </div>
 
-<div class="overlay" id="overlay" onclick="closeOv(event)">
+<!-- MODAL -->
+<div class="ov" id="ov" onclick="closeOv(event)">
   <div class="modal">
     <div class="mhd">
-      <span class="mflag" id="m-flag">🍋</span>
-      <div class="mname" id="m-name">—</div>
-      <div class="mloc"  id="m-loc">—</div>
-      <div class="mctry" id="m-ctry"></div>
-      <button class="mcls" onclick="closeMod()">✕</button>
+      <div class="drag-h"></div>
+      <span class="m-fl" id="m-fl">🍋</span>
+      <div class="m-nm" id="m-nm">—</div>
+      <div class="m-lc" id="m-lc">—</div>
+      <div class="m-ct" id="m-ct"></div>
+      <button class="m-x" onclick="closeMod()">✕</button>
     </div>
-    <div class="mbody">
-      <div id="m-pv"  class="mpv P"></div>
-      <div id="m-tags" class="mtags"></div>
-      <div id="m-desc" class="mdesc"></div>
-      <div id="m-grid" class="mgrid"></div>
-      <div id="m-contact" class="mcontact" style="display:none"></div>
-      <a id="m-btn" class="mbtn" href="#" target="_blank" rel="noopener">
+    <div class="m-bd">
+      <div id="m-pv" class="m-pv P"></div>
+      <div id="m-tgs" class="m-tgs"></div>
+      <div id="m-ds"  class="m-ds"></div>
+      <div id="m-gr"  class="m-gr"></div>
+      <div id="m-co"  class="m-co" style="display:none"></div>
+      <a   id="m-btn" class="m-btn" href="#" target="_blank" rel="noopener">
         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
           <circle cx="12" cy="12" r="10"/>
           <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
@@ -361,267 +372,168 @@ header{
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
-/* ══════════════════════════════════════════════════
-   61 PÉPINIÈRES — COORDONNÉES GPS VÉRIFIÉES
-   Basées sur les adresses exactes fournies
-   P = Producteur/Greffeur   V = Revendeur
-   ══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   DONNÉES — 61 PÉPINIÈRES
+   Ordre alphabétique par pays puis par nom
+   Adresses exactes vérifiées
+   P=Producteur V=Revendeur PV=Les deux
+   ═══════════════════════════════════════════════════════ */
 const D=[
 
-/* ══ FRANCE (47) ══════════════════════════════ */
-{id:1,co:"FR",fl:"🇫🇷",pv:"P",
- name:"INRAE CRB Citrus",
- loc:"San Giuliano (2B) — Haute-Corse",
- lat:42.3540,lon:9.5290,
- tags:["prod"],
- spec:"Collection nationale de référence. Diffuse graines de porte-greffes et greffons sur formulaire officiel. Réservé aux professionnels et chercheurs.",
- site:"https://www.inrae.fr/actualites/diffusion-du-materiel-vegetal",
- tel:"04.95.59.59.00",email:"diffusion.crb.citrus@inrae.fr",
- note:"Référence nationale",vente:"Formulaire (pro)"},
+/* ══ FRANCE — Ordre alphabétique ══════════════════════ */
+{id:1, co:"FR",fl:"🇫🇷",pv:"PV",
+ name:"À l'Ombre des Figuiers",
+ loc:"1 ch. Kelenneg Vihan, ZA Bel Air, 29700 Pluguffan",
+ lat:47.9721,lon:-4.1478,
+ tags:["rare","online"],
+ spec:"Revendeur-producteur Finistère. Citron caviar, oranges rustiques, collection Mas Bachès, raretés japonaises.",
+ site:"https://www.achat-vente-palmiers.com/",
+ tel:"07.80.94.75.58",email:"contact@alombredesfiguiers.com",
+ note:"⭐ 4.6/5",vente:"Sur place + ligne"},
 
-{id:2,co:"FR",fl:"🇫🇷",pv:"P",
- name:"Pépinières Vessières",
- loc:"Saint-Féliù-d'Avall (66) — 2 route de Thuir",
- lat:42.6395,lon:2.7218,
- tags:["prod","online"],
- spec:"300+ variétés dont Yuzu, Satsuma, Tangelo. Greffe haute. Visite des serres de 9h à 12h. Vente de fruits sur réservation. Grande référence française.",
- site:"https://agrumes-vessieres.fr/",
- tel:"06.78.69.06.03",email:"contact@agrumes-vessieres.com",
- note:"⭐ 4.9/5",vente:"Ligne + sur place"},
-
-{id:3,co:"FR",fl:"🇫🇷",pv:"P",
- name:"Mes Agrumes Pas Frileux",
- loc:"Larnas (07) — Ardèche",
- lat:44.4240,lon:4.5680,
- tags:["prod","rare"],
- spec:"Olivier greffe sur Poncirus à altitude dans l'Ardèche. Agrumes testés en pleine terre depuis des années. Spécialiste rustiques.",
- site:"https://www.mesagrumespasfrileux.com/",
- tel:"07.68.44.43.07",
- note:"⭐ 5/5",vente:"Sur place / site"},
-
-{id:4,co:"FR",fl:"🇫🇷",pv:"P",
- name:"Greffeur d'Agrumes",
- loc:"Montclus, Fajac-la-Relenque (11410)",
- lat:43.2808,lon:1.7250,
- tags:["prod","online"],
- spec:"Spécialiste du greffage. Collection agrumes rustiques. Vend aussi matériel de culture, graines de porte-greffes. Voir agenda Sol'Air.",
- site:"https://www.greffeurdagrumes.com/",
- tel:"07.77.32.65.89",email:"laurent@greffeurdagrumes.com",
- note:"⭐ 4.8/5",vente:"En ligne"},
-
-{id:5,co:"FR",fl:"🇫🇷",pv:"P",
- name:"Pépinière Jardin Forêt",
- loc:"9 Lot. Marcelin Albert, Labastide-en-Val (11220)",
- lat:43.1380,lon:2.4980,
- tags:["prod","online"],
- spec:"Pépinière forêt-jardin dans l'Aude. Fruitiers comestibles dont agrumes rustiques. Sur rendez-vous uniquement.",
- site:"https://pepinierejardinforet.fr/",
- tel:"07.86.47.38.04",email:"pepinierejardinforet@gmail.com",
- note:"⭐ 4.7/5",vente:"Sur RDV"},
-
-{id:6,co:"FR",fl:"🇫🇷",pv:"P",
+{id:2, co:"FR",fl:"🇫🇷",pv:"P",
  name:"Agrumes de Provence",
- loc:"Chemin des Aubépines, Grans (13450)",
- lat:43.6112,lon:5.0728,
- tags:["prod","online"],
+ loc:"Chemin des Aubépines, 13450 Grans",
+ lat:43.6088,lon:5.0712,
+ tags:["online"],
  spec:"Pépinière familiale Provence. Jérôme, le citrus geek, conseille personnellement. Visite sur RDV.",
  site:"https://www.pepiniereagrumesdeprovence.fr/",
  tel:"07.86.41.47.21",email:"agrumesdeprovence@gmail.com",
  note:"⭐ 4.0/5",vente:"Sur place (RDV)"},
 
-{id:7,co:"FR",fl:"🇫🇷",pv:"P",
- name:"Pépinière 100 Racines",
- loc:"238 ch. de Malerbe, Chamboulive (19450)",
- lat:45.4490,lon:1.7070,
- tags:["prod","bio","online"],
- spec:"Réserver en ligne, récupérer sur place. Fruitiers bio rustiques dont agrumes. Sélection soignée.",
- site:"https://pepiniere100racines.fr/",
- tel:"06.08.12.70.20",email:"info@pepiniere100racines.fr",
- note:"⭐ 4.5/5",vente:"Retrait sur place"},
-
-{id:8,co:"FR",fl:"🇫🇷",pv:"P",
- name:"Zeste & Compagnie",
- loc:"36 Allée de la Gare, Turenne (19500)",
- lat:45.0557,lon:1.5729,
- tags:["prod","online"],
- spec:"Agrumes en Corrèze. Réserver en ligne et récupérer sur place. Belle localisation dans le Périgord noir.",
- site:"http://www.agrumes.gendep19.org/zeste-compagnie.html",
- tel:"07.68.80.17.01",email:"heryjul@gmail.com",
- note:"⭐ 4.5/5",vente:"Retrait sur place"},
-
-{id:9,co:"FR",fl:"🇫🇷",pv:"P",
- name:"Pépinière Mayolle",
- loc:"815 route de la Pile, L'Amouroux, La Roche-Chalais (24490)",
- lat:45.1480,lon:0.0040,
- tags:["prod","rare"],
- spec:"Sylvain : spécialiste agrumes froids et variétés patrimoniales. Vente sur place pour l'instant. Conseils très précis.",
- site:"http://pepiniere-mayolle.fr/",
- tel:"06.17.30.60.64",email:"Sylvain.mayolle@gmail.com",
- note:"⭐ 5/5",vente:"Sur place"},
-
-{id:10,co:"FR",fl:"🇫🇷",pv:"P",
- name:"Micro Citrus",
- loc:"296 Allée du Lavoir, Montpeyroux (24610)",
- lat:45.0095,lon:0.0912,
- tags:["prod","rare","online"],
- spec:"50+ variétés : satsumas, yuzu, bergamotes, pomelos rares. Vend des porte-greffes. Livraison ~50 km.",
- site:"https://microcitrus.fr/pepiniere",
- tel:"06.47.30.75.98",
- note:"⭐ 5/5",vente:"Sur RDV / livraison locale"},
-
-{id:11,co:"FR",fl:"🇫🇷",pv:"V",
- name:"Mesfruitiers",
- loc:"Fleurandie, Le Val Doré (27190)",
- lat:48.9910,lon:0.8750,
+{id:3, co:"FR",fl:"🇫🇷",pv:"V",
+ name:"Agrumiverse",
+ loc:"20 Rue d'Amont, 39140 Bletterans",
+ lat:46.7462,lon:5.4623,
  tags:["online"],
- spec:"Vente en ligne de fruitiers dont agrumes. Porte-greffe non indiqué sur le site. Large gamme.",
- site:"https://www.mesfruitiers.fr/",
- tel:"02.32.38.07.51",email:"contact@mesfruitiers.fr",
- note:"⭐ 4.2/5",vente:"En ligne"},
+ spec:"Grossiste en plants greffés d'agrumes. Commandes groupées à prix très compétitifs. Idéal pour clubs et associations.",
+ site:"https://plants-agrumes.com/",
+ tel:"06.28.78.57.28",email:"info@economealegumes.fr",
+ note:"⭐ 5/5",vente:"Grossiste en ligne"},
 
-{id:12,co:"FR",fl:"🇫🇷",pv:"V",
- name:"À l'Ombre des Figuiers",
- loc:"1 ch. Kelenneg Vihan, ZA Bel Air, Pluguffan (29700)",
- lat:47.9780,lon:-4.1468,
- tags:["online","rare"],
- spec:"Citron caviar, oranges rustiques, collection Mas Bachès, raretés japonaises. Revendeur sérieux.",
- site:"https://www.achat-vente-palmiers.com/",
- tel:"07.80.94.75.58",email:"contact@alombredesfiguiers.com",
- note:"⭐ 4.6/5",vente:"Sur place + ligne"},
+{id:4, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"Anjou Citrus",
+ loc:"L'Aquarelle, Saint-Florent-le-Vieil, 49620 Mauges-sur-Loire",
+ lat:47.3611,lon:-1.0152,
+ tags:["bio"],
+ spec:"Greffage sur mesure, porte-greffes locaux. Agroécologie de proximité. Ouvert le vendredi.",
+ site:"https://anjou-citrus.fr/",
+ tel:"06.85.11.03.87",
+ note:"⭐ 5/5",vente:"Sur place (vendredi)"},
 
-{id:13,co:"FR",fl:"🇫🇷",pv:"P",
- name:"Pépinières Quissac",
- loc:"801 Rte de St-Côme, St-Étienne d'Escattes, Souvignargues (30250)",
- lat:43.8370,lon:4.1680,
- tags:["prod","online","bio"],
- spec:"100+ variétés sur FA5 ou Poncirus. Entre Nîmes et Montpellier. Agriculture biologique certifiée.",
- site:"https://www.jardin-ecologique.fr/",
- tel:"06.28.19.14.55",email:"contact@jardin-ecologique.fr",
- note:"⭐ 4.4/5",vente:"Ligne + sur place"},
-
-{id:14,co:"FR",fl:"🇫🇷",pv:"P",
- name:"Pépinière Med",
- loc:"1223 route de Quissac, Tornac (30140)",
- lat:43.9925,lon:3.9940,
- tags:["bio","online","rare"],
- spec:"Bio AB certifié. Fruitiers rares dont agrumes rustiques. Ouvert mercredi–samedi matin.",
- site:"https://www.pepimed.com/",
- tel:"06.84.82.08.52",email:"contact@pepimed.com",
- note:"⭐ 5/5",vente:"En ligne + mer-sam matin"},
-
-{id:15,co:"FR",fl:"🇫🇷",pv:"P",
- name:"Verger Nature",
- loc:"Les Cambières, Aulas (30120)",
- lat:43.9912,lon:3.5910,
- tags:["prod","rare","online"],
- spec:"Agrumes de l'extrême dans les Cévennes gardoises. Collection unique, Jean-Baptiste partage tout.",
- site:"https://www.vergernature.fr/",
- tel:"06.12.80.78.80",email:"jblemaire@protonmail.com",
- note:"⭐ 5/5",vente:"Sur place + ligne"},
-
-{id:16,co:"FR",fl:"🇫🇷",pv:"P",
- name:"Pépin(s) Perdus",
- loc:"La Bégorre, route de Peyssies, Carbonne (31390)",
- lat:43.3030,lon:1.2210,
- tags:["online","rare"],
- spec:"Rares comestibles dont agrumes rustiques. Très actifs sur TikTok, pédagogiques. Voir les avis.",
- site:"https://pepinsperdus.fr/",
- tel:"06.23.27.07.13",email:"pepinsperdus@gmail.com",
- note:"⭐ 4.3/5",vente:"Sur place + ligne"},
-
-{id:17,co:"FR",fl:"🇫🇷",pv:"P",
+{id:5, co:"FR",fl:"🇫🇷",pv:"P",
  name:"Aux Fruits et à Mesure",
- loc:"5 Chemin du Devès, Sainte-Hélène (33480)",
- lat:44.9975,lon:-0.9022,
- tags:["prod","bio","online"],
+ loc:"5 Chemin du Devès, 33480 Sainte-Hélène",
+ lat:44.9973,lon:-0.9018,
+ tags:["bio","online"],
  spec:"Margaux : passionnée, conseils, ateliers de greffe. Réserver en ligne, retrait sur place.",
  site:"https://auxfruitsetamesure.fr/",
  tel:"06.75.16.74.66",email:"contact@auxfruitsetamesure.fr",
  note:"⭐ 5/5",vente:"Retrait sur place"},
 
-{id:18,co:"FR",fl:"🇫🇷",pv:"P",
- name:"La Pépinière du Bosc",
- loc:"Route de Lodève, Saint-Privat (34700)",
- lat:43.7400,lon:3.3980,
- tags:["online","rare"],
- spec:"Fruitiers rares pionniers : yuzu, eremorange, ichang papeda, kakis. 40+ variétés introuvables.",
- site:"https://www.pepinieredubosc.fr/",
- tel:"06.61.65.35.20",email:"contact@pepinieredubosc.fr",
- note:"⭐ 3.8/5",vente:"En ligne"},
+{id:6, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"Aux Soleils de Manan",
+ loc:"Lieu-dit Manan, 47130 Bruch",
+ lat:44.2104,lon:0.4418,
+ tags:["bio"],
+ spec:"Pure player Bio né en 2024. Vente sur place et marchés du Lot-et-Garonne. Catalogue en ligne.",
+ site:"https://www.pepinieredagrumes.fr/",
+ tel:"07.71.78.20.49",email:"auxsoleilsdemanan@gmail.com",
+ note:"⭐ 4.3/5",vente:"Sur place / marchés"},
 
-{id:19,co:"FR",fl:"🇫🇷",pv:"V",
- name:"La Pépinière Comestible",
- loc:"122 ch. de la Joulinière, Courcelles-de-Touraine (37330)",
- lat:47.5258,lon:0.3048,
+{id:7, co:"FR",fl:"🇫🇷",pv:"V",
+ name:"Fruit Friends",
+ loc:"Carrer Del Trial, 66320 Finestret",
+ lat:42.5382,lon:2.5708,
  tags:["online"],
+ spec:"En coll. avec Olivier Biggio. Prix très intéressants ! Commande minimum 30 plantes. Avocatiers, manguiers aussi.",
+ site:"https://agrumes.pro/",
+ tel:"07.82.54.63.71",email:"contact@agrumes.pro",
+ note:"⭐ 4.5/5",vente:"En ligne (min 30)"},
+
+{id:8, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"Greffeur d'Agrumes",
+ loc:"8 impasse du Riou, 31390 Lavernose-Lacasse",
+ lat:43.4025,lon:1.2820,
+ tags:["bio","rare","online"],
+ spec:"Spécialiste du greffage. Collection agrumes rustiques et rares. Vend matériel de culture, graines de porte-greffes. Voir agenda Sol'Air.",
+ site:"https://www.greffeurdagrumes.com/",
+ tel:"07.77.32.65.89",email:"laurent@greffeurdagrumes.com",
+ note:"⭐ 4.8/5",vente:"En ligne"},
+
+{id:9, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"INRAE CRB Citrus",
+ loc:"Station de Recherches, San Giuliano, 20230 San-Nicolao",
+ lat:42.3540,lon:9.5290,
+ tags:["rare"],
+ spec:"Collection nationale de référence. Diffuse graines de porte-greffes et greffons sur formulaire officiel. Réservé aux professionnels.",
+ site:"https://www.inrae.fr/actualites/diffusion-du-materiel-vegetal",
+ tel:"04.95.59.59.00",email:"diffusion.crb.citrus@inrae.fr",
+ note:"Référence nationale",vente:"Formulaire (pro)"},
+
+{id:10, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"L'Agrumier",
+ loc:"550 route de Molière, 82130 Lafrançaise",
+ lat:44.1272,lon:1.2488,
+ tags:["rare","online"],
+ spec:"3 porte-greffes au choix : C35, Citrumelo, FA5. Spécialiste variétés de collection rares.",
+ site:"https://lagrumier.fr/",
+ tel:"06.32.06.25.50",email:"contact@lagrumier.fr",
+ note:"⭐ 5/5",vente:"Ligne + sur place"},
+
+{id:11, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"L'Arche du Livradois",
+ loc:"Lieu-dit Lospeux, 63580 Peslières",
+ lat:45.3845,lon:3.5201,
+ tags:["rare","online"],
+ spec:"Agrumes rustiques rares en altitude. Vente en ligne + sur RDV. Prix très intéressants.",
+ site:"https://archedulivradois.fr/",
+ tel:"06.30.45.11.37",email:"archedulivradois@gmail.com",
+ note:"⭐ 4.4/5",vente:"En ligne + RDV"},
+
+{id:12, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"L'Utilitarium de Dame Nature",
+ loc:"2753 Chemin de Saint-Sardos, 82600 Verdun-sur-Garonne",
+ lat:43.8635,lon:1.1784,
+ tags:["rare"],
+ spec:"Variétés inhabituelles et curieuses. Conseils personnalisés. Site en cours de création.",
+ site:"https://www.lutilitarium-pepiniere.fr/",
+ tel:"07.66.94.98.67",email:"contact@lutilitarium-pepiniere.fr",
+ note:"⭐ 5/5",vente:"Sur place"},
+
+{id:13, co:"FR",fl:"🇫🇷",pv:"PV",
+ name:"La Maison du Bananier",
+ loc:"4 Route du Fraîche Pasquier, 44220 Couëron",
+ lat:47.2161,lon:-1.7268,
+ tags:["rare","online"],
+ spec:"Pépinière écologique. Agrumes rares et rustiques sur porte-greffe FA5. Belle sélection exotique.",
+ site:"https://www.lamaisondubananier.com/",
+ tel:"02.40.86.55.80",email:"contact@lamaisondubananier.com",
+ note:"⭐ 4.3/5",vente:"Sur place + ligne"},
+
+{id:14, co:"FR",fl:"🇫🇷",pv:"PV",
+ name:"La Pépinière Comestible",
+ loc:"122 chemin de la Joulinière, 37330 Courcelles-de-Touraine",
+ lat:47.5258,lon:0.3048,
+ tags:["rare","online"],
  spec:"Pépinière comestible — fruitiers dont agrumes. Vente en ligne et sur place en Indre-et-Loire.",
  site:"https://www.pepiniere-comestible.fr/",
  tel:"06.99.43.12.93",email:"contact@pepiniere-comestible.fr",
  note:"⭐ 4.3/5",vente:"En ligne"},
 
-{id:20,co:"FR",fl:"🇫🇷",pv:"V",
- name:"Meilland Richardier",
- loc:"CS 9006, Diemoz (38790)",
- lat:45.5853,lon:5.1030,
- tags:["online"],
- spec:"Grand catalogue VPC. Agrumes parmi de nombreuses autres plantes. Livraison France.",
- site:"https://www.meillandrichardier.com/",
- tel:"04.78.34.46.52",email:"vpc@meillandrichardier.com",
- note:"⭐ 4.0/5",vente:"En ligne"},
+{id:15, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"La Pépinière du Bosc",
+ loc:"Route de Lodève, 34700 Saint-Privat",
+ lat:43.7400,lon:3.3980,
+ tags:["rare","online"],
+ spec:"Fruitiers rares pionniers : yuzu, eremorange, ichang papeda, kakis. 40+ variétés introuvables.",
+ site:"https://www.pepinieredubosc.fr/",
+ tel:"06.61.65.35.20",email:"contact@pepinieredubosc.fr",
+ note:"⭐ 3.8/5",vente:"En ligne"},
 
-{id:21,co:"FR",fl:"🇫🇷",pv:"V",
- name:"Agrumiverse",
- loc:"20 Rue d'Amont, Bletterans (39140)",
- lat:46.7462,lon:5.4623,
- tags:["online"],
- spec:"Grossiste en plants greffés d'agrumes. Commandes groupées à prix très compétitifs. Idéal clubs.",
- site:"https://plants-agrumes.com/",
- tel:"06.28.78.57.28",email:"info@economealegumes.fr",
- note:"⭐ 5/5",vente:"Grossiste en ligne"},
-
-{id:22,co:"FR",fl:"🇫🇷",pv:"P",
- name:"Michel Dufau",
- loc:"62 Route de Harguette, Eugénie-les-Bains (40320)",
- lat:43.7009,lon:-0.3915,
- tags:["prod","online"],
- spec:"130+ variétés. Pépiniériste historique des Landes depuis +20 ans. Contacter pour VPC.",
- site:"https://www.agrumes-dufau.com/",
- tel:"05.58.51.18.54",email:"pepinieres.dufau@wanadoo.fr",
- note:"⭐ 4.4/5",vente:"Sur place + ligne"},
-
-{id:23,co:"FR",fl:"🇫🇷",pv:"V",
- name:"Pépinières Planfor",
- loc:"1950 Route de Cère, Uchacq (40090)",
- lat:43.8225,lon:-0.6378,
- tags:["online"],
- spec:"Grande jardinerie en ligne. Rayon agrumes. Porte-greffe non indiqué sur le site.",
- site:"https://www.planfor.fr/",
- tel:"05.58.75.90.80",
- note:"⭐ 3.6/5",vente:"En ligne"},
-
-{id:24,co:"FR",fl:"🇫🇷",pv:"V",
- name:"Mon Jardin Extraordinaire",
- loc:"2 impasse des Champs de Candy, Bracieux (41250)",
- lat:47.5543,lon:1.5315,
- tags:["online","rare"],
- spec:"Agrumes + exotiques comestibles rares en Loir-et-Cher. Kevin conseille avec passion.",
- site:"https://monjardinextraordinaire.com/",
- tel:"06.24.04.90.70",email:"pepinieresmonjardin@gmail.com",
- note:"⭐ 4.6/5",vente:"Sur place + ligne"},
-
-{id:25,co:"FR",fl:"🇫🇷",pv:"P",
- name:"La Maison du Bananier",
- loc:"4 Route du Fraîche Pasquier, Couëron (44220)",
- lat:47.2161,lon:-1.7268,
- tags:["online","rare"],
- spec:"Pépinière écologique. Agrumes rares et rustiques sur porte-greffe FA5. Bonne sélection exotique.",
- site:"https://www.lamaisondubananier.com/",
- tel:"02.40.86.55.80",email:"contact@lamaisondubananier.com",
- note:"⭐ 4.3/5",vente:"Sur place + ligne"},
-
-{id:26,co:"FR",fl:"🇫🇷",pv:"V",
+{id:16, co:"FR",fl:"🇫🇷",pv:"PV",
  name:"Leader Plant",
- loc:"Route de Pont-Saint-Martin, Les Sorinières (44840)",
+ loc:"Route de Pont-Saint-Martin, 44840 Les Sorinières",
  lat:47.1418,lon:-1.5452,
  tags:["online"],
  spec:"Grande pépinière VPC. Agrumes parmi une vaste gamme de végétaux. Livraison rapide.",
@@ -629,178 +541,49 @@ const D=[
  tel:"02.40.04.38.04",email:"contact@leaderplant.com",
  note:"⭐ 4.2/5",vente:"En ligne"},
 
-{id:27,co:"FR",fl:"🇫🇷",pv:"V",
- name:"Terre Lointaine",
- loc:"Le Brindais, Rte de la Haute Galerie, St-Léger-les-Vignes (44710)",
- lat:47.1397,lon:-1.7063,
- tags:["online","rare"],
- spec:"Agrumes greffés + plantes exotiques rustiques. Beau catalogue avec fiches détaillées.",
- site:"https://www.terrelointaine.fr/",
- tel:"06.07.57.50.13",email:"info@terrelointaine.fr",
- note:"⭐ 4.5/5",vente:"Sur place + ligne"},
-
-{id:28,co:"FR",fl:"🇫🇷",pv:"V",
- name:"SCEA Hodnik",
- loc:"1 place du 19 Mars 1962, St-Maurice-sur-Fessard (45700)",
- lat:47.9532,lon:2.7918,
- tags:["online"],
- spec:"Pépinière VPC avec rayon agrumes et fruitiers divers. Livraison France.",
- site:"https://hodnik.com/",
- tel:"02.38.97.84.59",email:"contact@hodnik.com",
- note:"⭐ 4.0/5",vente:"En ligne"},
-
-{id:29,co:"FR",fl:"🇫🇷",pv:"P",
- name:"Aux Soleils de Manan",
- loc:"Lieu-dit Manan, Bruch (47130)",
- lat:44.2104,lon:0.4418,
- tags:["prod","bio"],
- spec:"Pure player Bio né en 2024. Vente sur place et marchés du Lot-et-Garonne. Catalogue en ligne.",
- site:"https://www.pepinieredagrumes.fr/",
- tel:"07.71.78.20.49",email:"auxsoleilsdemanan@gmail.com",
- note:"⭐ 4.3/5",vente:"Sur place / marchés"},
-
-{id:30,co:"FR",fl:"🇫🇷",pv:"P",
- name:"Anjou Citrus",
- loc:"L'Aquarelle, Mauges-sur-Loire (49620)",
- lat:47.3600,lon:-0.8250,
- tags:["prod","bio"],
- spec:"Greffage sur mesure, porte-greffes locaux. Agroécologie de proximité. Ouvert le vendredi.",
- site:"https://anjou-citrus.fr/",
- tel:"06.85.11.03.87",
- note:"⭐ 5/5",vente:"Sur place (vendredi)"},
-
-{id:31,co:"FR",fl:"🇫🇷",pv:"P",
- name:"Pépinières Forest / Gaujard",
- loc:"La Garançonnière, Louresse-Rochemenier (49700)",
- lat:47.2518,lon:-0.3025,
- tags:["prod","online"],
- spec:"Pierre Gaujard : fruitiers haute qualité dont agrumes. Livraison internationale. Variétés patrimoniales.",
- site:"https://www.gaujard.fr/",
- tel:"09.88.66.72.88",
- note:"⭐ 4.9/5",vente:"En ligne"},
-
-{id:32,co:"FR",fl:"🇫🇷",pv:"P",
- name:"Sylvestre Agrumes",
- loc:"La petite Séguinière, Rte de Champteussé, Thorigné-d'Anjou (49220)",
- lat:47.5938,lon:-0.7620,
- tags:["prod","online"],
- spec:"500 variétés, 40 ans de savoir-faire. LA référence française. Sur rendez-vous uniquement.",
- site:"https://sylvestre-agrumes.fr/",
- tel:"02.41.95.12.29",email:"contact@sylvestre-agrumes.fr",
- note:"⭐ 5/5",vente:"Sur RDV"},
-
-{id:33,co:"FR",fl:"🇫🇷",pv:"P",
- name:"Mon Orangerie",
- loc:"Tiercé (49125) — Maine-et-Loire",
- lat:47.5879,lon:-0.4795,
- tags:["prod","bio","online"],
- spec:"Seul agrumiculteur certifié Bio AB + GlobalGAP en Europe. Grande production. Expédition nationale.",
- site:"https://www.mon-orangerie.fr/",
- note:"⭐ 4.4/5",vente:"En ligne"},
-
-{id:34,co:"FR",fl:"🇫🇷",pv:"V",
- name:"Promesse de Fleurs",
- loc:"23 route du Fresnel, Houplines (59116)",
- lat:50.6710,lon:2.9791,
- tags:["online"],
- spec:"Grande jardinerie VPC Nord de France. Rayon agrumes, bonne ergonomie boutique en ligne.",
- site:"https://www.promessedefleurs.com/",
- tel:"03.61.76.08.10",
- note:"⭐ 4.3/5",vente:"En ligne"},
-
-{id:35,co:"FR",fl:"🇫🇷",pv:"P",
- name:"Tiny Mandragore",
- loc:"1151 rue du 28 Septembre, Marck (62730)",
- lat:50.9432,lon:1.9480,
- tags:["prod","rare","online"],
- spec:"Agrumes testés en pleine terre dans le Pas-de-Calais ! Spécialiste grand Nord. Site potentiellement hors ligne.",
- site:"https://bluewood.yo.fr/",
- tel:"06.47.94.06.14",email:"tinymandragore@outlook.fr",
- note:"⭐ 5/5",vente:"Sur place + ligne"},
-
-{id:36,co:"FR",fl:"🇫🇷",pv:"P",
- name:"L'Arche du Livradois",
- loc:"Lospeux, Peslières (63580)",
- lat:45.3845,lon:3.5201,
- tags:["prod","online","rare"],
- spec:"Agrumes rustiques rares en altitude. Vente en ligne + sur RDV. Prix très intéressants.",
- site:"https://archedulivradois.fr/",
- tel:"06.30.45.11.37",email:"archedulivradois@gmail.com",
- note:"⭐ 4.4/5",vente:"En ligne + RDV"},
-
-{id:37,co:"FR",fl:"🇫🇷",pv:"P",
- name:"Pépinière des Saints Tropiques",
- loc:"Saint-Jean-d'Heurs (63190) — Puy-de-Dôme",
- lat:45.7862,lon:3.4438,
- tags:["prod","rare"],
- spec:"Élise et Florian : agrumes, passionfleurs, ananas, vanille. Ateliers de greffage. Facebook actif.",
- site:"https://www.les-saints-tropiques.fr/",
- tel:"06.84.41.23.79",email:"contact@les-saints-tropiques.com",
- note:"⭐ 5/5",vente:"Sur place + ateliers"},
-
-{id:38,co:"FR",fl:"🇫🇷",pv:"P",
- name:"Les Agrumes du Laaps",
- loc:"16 chemin de Loulié, Serres-Castet (64121)",
- lat:43.3985,lon:-0.3478,
- tags:["prod","online"],
- spec:"Raphaël greffe lui-même. 300 variétés disponibles. Commandes sur mesure. Porte-greffes variés.",
- site:"https://lesagrumesdulaaps.fr/",
- tel:"06.07.18.01.36",
- note:"⭐ 5/5",vente:"Sur place + ligne"},
-
-{id:39,co:"FR",fl:"🇫🇷",pv:"V",
- name:"Fruit Friends",
- loc:"Carrer Del Trial, Finestret (66320)",
- lat:42.5380,lon:2.5705,
- tags:["online"],
- spec:"En coll. avec Olivier Biggio. Prix très intéressants ! Commande minimum 30 plantes. Avocatiers, manguiers aussi.",
- site:"https://agrumes.pro/",
- tel:"07.82.54.63.71",email:"contact@agrumes.pro",
- note:"⭐ 4.5/5",vente:"En ligne (min 30)"},
-
-{id:40,co:"FR",fl:"🇫🇷",pv:"P",
+{id:17, co:"FR",fl:"🇫🇷",pv:"P",
  name:"Le Beau Zeste",
- loc:"Avenue du Stade, Saint-Paul-Cap-de-Joux (81220)",
+ loc:"Avenue du Stade, 81220 Saint-Paul-Cap-de-Joux",
  lat:43.6045,lon:2.0612,
- tags:["prod","online"],
+ tags:["online"],
  spec:"Pépinière artisanale dans le Tarn. Agrumes greffés de qualité. Présence Facebook très active.",
  site:"https://www.facebook.com/lebeauzeste",
  tel:"06.25.81.75.42",email:"lebeauzeste81@gmail.com",
  note:"⭐ 4.8/5",vente:"Sur place / FB"},
 
-{id:41,co:"FR",fl:"🇫🇷",pv:"P",
- name:"L'Agrumier",
- loc:"550 route de Molière, Lafrançaise (82130)",
- lat:44.1272,lon:1.2488,
- tags:["prod","online","rare"],
- spec:"3 porte-greffes au choix : C35, Citrumelo, FA5. Spécialiste variétés de collection rares.",
- site:"https://lagrumier.fr/",
- tel:"06.32.06.25.50",email:"contact@lagrumier.fr",
- note:"⭐ 5/5",vente:"Ligne + sur place"},
-
-{id:42,co:"FR",fl:"🇫🇷",pv:"P",
- name:"L'Utilitarium de Dame Nature",
- loc:"2753 Ch. de St-Sardos, Verdun-sur-Garonne (82600)",
- lat:43.8635,lon:1.1784,
- tags:["prod","rare"],
- spec:"Variétés inhabituelles et curieuses. Conseils personnalisés. Site en cours de création.",
- site:"https://www.lutilitarium-pepiniere.fr/",
- tel:"07.66.94.98.67",email:"contact@lutilitarium-pepiniere.fr",
- note:"⭐ 5/5",vente:"Sur place"},
-
-{id:43,co:"FR",fl:"🇫🇷",pv:"V",
- name:"Pépinière Ripaud",
- loc:"3 route de Mouilleron en Pareds, Cheffois (85390)",
- lat:46.6702,lon:-0.7598,
+{id:18, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"Les Agrumes du Laaps",
+ loc:"16 chemin de Loulié, 64121 Serres-Castet",
+ lat:43.3985,lon:-0.3478,
  tags:["online"],
- spec:"86 variétés certifiées Plante Bleue. 100 ha de production professionnelle en Vendée.",
- site:"https://www.ripaudpepinieres.com/",
- tel:"02.51.52.64.17",
- note:"⭐ 4.8/5",vente:"Ligne + sur place"},
+ spec:"Raphaël greffe lui-même. 300 variétés disponibles. Commandes sur mesure. Porte-greffes variés.",
+ site:"https://lesagrumesdulaaps.fr/",
+ tel:"06.07.18.01.36",
+ note:"⭐ 5/5",vente:"Sur place + ligne"},
 
-{id:44,co:"FR",fl:"🇫🇷",pv:"V",
+{id:19, co:"FR",fl:"🇫🇷",pv:"PV",
+ name:"Meilland Richardier",
+ loc:"100 rue de la Convention, 38790 Diémoz",
+ lat:45.5853,lon:5.1030,
+ tags:["online"],
+ spec:"Grand catalogue VPC depuis des décennies. Agrumes parmi de nombreuses autres plantes.",
+ site:"https://www.meillandrichardier.com/",
+ tel:"04.78.34.46.52",email:"vpc@meillandrichardier.com",
+ note:"⭐ 4.0/5",vente:"En ligne"},
+
+{id:20, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"Mes Agrumes Pas Frileux",
+ loc:"Quartier Chame, 07220 Larnas",
+ lat:44.4240,lon:4.5680,
+ tags:["rare"],
+ spec:"Olivier greffe sur Poncirus à altitude dans l'Ardèche. Agrumes testés en pleine terre. Spécialiste rustiques résistants au froid.",
+ site:"https://www.mesagrumespasfrileux.com/",
+ tel:"07.68.44.43.07",
+ note:"⭐ 5/5",vente:"Sur place / site"},
+
+{id:21, co:"FR",fl:"🇫🇷",pv:"V",
  name:"Mes Arbustes",
- loc:"6 La Malatrait, Sèvremont (85700)",
+ loc:"6 La Malatrait, Les Châtelliers-Châteaumur, 85700 Sèvremont",
  lat:46.8241,lon:-0.8842,
  tags:["online"],
  spec:"Grand catalogue en ligne. Agrumes parmi de nombreuses plantes. Livraison soignée.",
@@ -808,9 +591,98 @@ const D=[
  tel:"02.52.61.51.47",email:"service-clients@mesarbustes.com",
  note:"⭐ 4.5/5",vente:"En ligne"},
 
-{id:45,co:"FR",fl:"🇫🇷",pv:"V",
+{id:22, co:"FR",fl:"🇫🇷",pv:"V",
+ name:"Mesfruitiers",
+ loc:"SCEA Fleurandie, Le Val Doré, 27190 Le Val-Doré",
+ lat:48.9910,lon:0.8750,
+ tags:["online"],
+ spec:"Vente en ligne de fruitiers dont agrumes. Porte-greffe non indiqué sur le site.",
+ site:"https://www.mesfruitiers.fr/",
+ tel:"02.32.38.07.51",email:"contact@mesfruitiers.fr",
+ note:"⭐ 4.2/5",vente:"En ligne"},
+
+{id:23, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"Michel Dufau",
+ loc:"62 Route de Harguette, 40320 Eugénie-les-Bains",
+ lat:43.7009,lon:-0.3915,
+ tags:["rare","online"],
+ spec:"130+ variétés. Pépiniériste historique des Landes depuis +20 ans. Contacter pour VPC.",
+ site:"https://www.agrumes-dufau.com/",
+ tel:"05.58.51.18.54",email:"pepinieres.dufau@wanadoo.fr",
+ note:"⭐ 4.4/5",vente:"Sur place + ligne"},
+
+{id:24, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"Micro Citrus",
+ loc:"296 Allée du Lavoir, 24610 Montpeyroux",
+ lat:45.0095,lon:0.0912,
+ tags:["rare","online"],
+ spec:"50+ variétés : satsumas, yuzu, bergamotes, pomelos rares. Vend des porte-greffes. Livraison ~50 km.",
+ site:"https://microcitrus.fr/pepiniere",
+ tel:"06.47.30.75.98",
+ note:"⭐ 5/5",vente:"Sur RDV / livraison locale"},
+
+{id:25, co:"FR",fl:"🇫🇷",pv:"V",
+ name:"Mon Jardin Extraordinaire",
+ loc:"2 impasse des Champs de Candy, 41250 Bracieux",
+ lat:47.5543,lon:1.5315,
+ tags:["rare","online"],
+ spec:"Agrumes + exotiques comestibles rares en Loir-et-Cher. Kevin conseille avec passion.",
+ site:"https://monjardinextraordinaire.com/",
+ tel:"06.24.04.90.70",email:"pepinieresmonjardin@gmail.com",
+ note:"⭐ 4.6/5",vente:"Sur place + ligne"},
+
+{id:26, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"Mon Orangerie",
+ loc:"18 Rue de la Motte, 49125 Tiercé",
+ lat:47.5879,lon:-0.4795,
+ tags:["bio","online"],
+ spec:"Seul agrumiculteur certifié Bio AB + GlobalGAP en Europe. Grande production. Expédition nationale.",
+ site:"https://www.mon-orangerie.fr/",
+ note:"⭐ 4.4/5",vente:"En ligne"},
+
+{id:27, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"Pépin(s) Perdus",
+ loc:"La Bégorre, Route de Peyssies, 31390 Carbonne",
+ lat:43.3030,lon:1.2210,
+ tags:["rare","online"],
+ spec:"Rares comestibles dont agrumes rustiques. Très actifs sur TikTok, pédagogiques. Voir les avis.",
+ site:"https://pepinsperdus.fr/",
+ tel:"06.23.27.07.13",email:"pepinsperdus@gmail.com",
+ note:"⭐ 4.3/5",vente:"Sur place + ligne"},
+
+{id:28, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"Pépinière 100 Racines",
+ loc:"238 chemin de Malerbe, 19450 Chamboulive",
+ lat:45.4490,lon:1.7070,
+ tags:["bio","online"],
+ spec:"Réserver en ligne, récupérer sur place. Fruitiers bio rustiques dont agrumes.",
+ site:"https://pepiniere100racines.fr/",
+ tel:"06.08.12.70.20",email:"info@pepiniere100racines.fr",
+ note:"⭐ 4.5/5",vente:"Retrait sur place"},
+
+{id:29, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"Pépinière de la Gartempe",
+ loc:"16 la Roderie, Thiat, 87320 Val-d'Oire-et-Gartempe",
+ lat:46.2485,lon:0.9945,
+ tags:["bio","online"],
+ spec:"Fruitiers rustiques et agrumes bio en Haute-Vienne. Catalogue sur Facebook.",
+ site:"https://www.facebook.com/pepinieredelagartempe",
+ tel:"06.67.16.23.93",email:"bonjour@pepinieredelagartempe.fr",
+ note:"⭐ 4.5/5",vente:"Sur place / ligne"},
+
+{id:30, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"Pépinière des Saints Tropiques",
+ loc:"Lieu-dit Le Bourg, 63190 Saint-Jean-d'Heurs",
+ lat:45.7862,lon:3.4438,
+ tags:["rare"],
+ spec:"Élise et Florian : agrumes, passionfleurs, ananas, vanille. Ateliers de greffage. Facebook actif.",
+ site:"https://www.les-saints-tropiques.fr/",
+ tel:"06.84.41.23.79",email:"contact@les-saints-tropiques.com",
+ note:"⭐ 5/5",vente:"Sur place + ateliers"},
+
+{id:31, co:"FR",fl:"🇫🇷",pv:"V",
  name:"Pépinière du Bocage",
- loc:"Malatrait, Sèvremont (85700)",
+ loc:"La Malatrait, Les Châtelliers-Châteaumur, 85700 Sèvremont",
  lat:46.8235,lon:-0.8838,
  tags:["online"],
  spec:"Commandes en gros. Pépinière Vendée avec rayon agrumes, vente en ligne.",
@@ -818,9 +690,139 @@ const D=[
  tel:"02.51.57.23.31",email:"pepinieres.du.bocage@gmail.com",
  note:"⭐ 4.6/5",vente:"En ligne (gros)"},
 
-{id:46,co:"FR",fl:"🇫🇷",pv:"V",
+{id:32, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"Pépinière Jardin Forêt",
+ loc:"9 Lotissement Marcelin Albert, 11220 Labastide-en-Val",
+ lat:43.1380,lon:2.4980,
+ tags:["online"],
+ spec:"Pépinière forêt-jardin dans l'Aude. Fruitiers comestibles dont agrumes rustiques. Sur RDV uniquement.",
+ site:"https://pepinierejardinforet.fr/",
+ tel:"07.86.47.38.04",email:"pepinierejardinforet@gmail.com",
+ note:"⭐ 4.7/5",vente:"Sur RDV"},
+
+{id:33, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"Pépinière Mayolle",
+ loc:"815 route de la Pile, L'Amouroux, 24490 La Roche-Chalais",
+ lat:45.1480,lon:0.0040,
+ tags:["rare"],
+ spec:"Sylvain : spécialiste agrumes froids et variétés patrimoniales. Vente sur place pour l'instant.",
+ site:"http://pepiniere-mayolle.fr/",
+ tel:"06.17.30.60.64",email:"Sylvain.mayolle@gmail.com",
+ note:"⭐ 5/5",vente:"Sur place"},
+
+{id:34, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"Pépinière Med",
+ loc:"1223 route de Quissac, 30140 Tornac",
+ lat:43.9925,lon:3.9940,
+ tags:["bio","rare","online"],
+ spec:"Bio AB certifié. Fruitiers rares dont agrumes rustiques. Ouvert mercredi–samedi matin.",
+ site:"https://www.pepimed.com/",
+ tel:"06.84.82.08.52",email:"contact@pepimed.com",
+ note:"⭐ 5/5",vente:"En ligne + mer-sam matin"},
+
+{id:35, co:"FR",fl:"🇫🇷",pv:"PV",
+ name:"Pépinière Ripaud",
+ loc:"3 route de Mouilleron en Pareds, 85390 Cheffois",
+ lat:46.6702,lon:-0.7598,
+ tags:["rare","online"],
+ spec:"86 variétés certifiées Plante Bleue. 100 ha de production professionnelle en Vendée.",
+ site:"https://www.ripaudpepinieres.com/",
+ tel:"02.51.52.64.17",
+ note:"⭐ 4.8/5",vente:"Ligne + sur place"},
+
+{id:36, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"Pépinières Forest / Gaujard",
+ loc:"La Garançonnière, 49700 Louresse-Rochemenier",
+ lat:47.2518,lon:-0.3025,
+ tags:["online"],
+ spec:"Pierre Gaujard : fruitiers haute qualité dont agrumes. Livraison internationale. Variétés patrimoniales.",
+ site:"https://www.gaujard.fr/",
+ tel:"09.88.66.72.88",
+ note:"⭐ 4.9/5",vente:"En ligne"},
+
+{id:37, co:"FR",fl:"🇫🇷",pv:"V",
+ name:"Pépinières Planfor",
+ loc:"1950 Route de Cère, 40090 Uchacq-et-Parentis",
+ lat:43.8225,lon:-0.6378,
+ tags:["online"],
+ spec:"Grande jardinerie en ligne. Rayon agrumes. Porte-greffe non indiqué sur le site.",
+ site:"https://www.planfor.fr/",
+ tel:"05.58.75.90.80",
+ note:"⭐ 3.6/5",vente:"En ligne"},
+
+{id:38, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"Pépinières Quissac",
+ loc:"801 Route de St-Côme, St-Étienne d'Escattes, 30250 Souvignargues",
+ lat:43.8370,lon:4.1680,
+ tags:["bio","online"],
+ spec:"100+ variétés sur FA5 ou Poncirus. Entre Nîmes et Montpellier. Agriculture biologique certifiée.",
+ site:"https://www.jardin-ecologique.fr/",
+ tel:"06.28.19.14.55",email:"contact@jardin-ecologique.fr",
+ note:"⭐ 4.4/5",vente:"Ligne + sur place"},
+
+{id:39, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"Pépinières Vessières",
+ loc:"2 route de Thuir, 66420 Saint-Féliu-d'Avall",
+ lat:42.6395,lon:2.7218,
+ tags:["online"],
+ spec:"300+ variétés dont Yuzu, Satsuma, Tangelo. Greffe haute. Visite des serres 9h–12h. Référence française.",
+ site:"https://agrumes-vessieres.fr/",
+ tel:"06.78.69.06.03",email:"contact@agrumes-vessieres.com",
+ note:"⭐ 4.9/5",vente:"Ligne + sur place"},
+
+{id:40, co:"FR",fl:"🇫🇷",pv:"V",
+ name:"Promesse de Fleurs",
+ loc:"23 route du Fresnel, 59116 Houplines",
+ lat:50.6710,lon:2.9791,
+ tags:["online"],
+ spec:"Grande jardinerie VPC Nord de France. Rayon agrumes, bonne ergonomie boutique en ligne.",
+ site:"https://www.promessedefleurs.com/",
+ tel:"03.61.76.08.10",
+ note:"⭐ 4.3/5",vente:"En ligne"},
+
+{id:41, co:"FR",fl:"🇫🇷",pv:"PV",
+ name:"SCEA Hodnik",
+ loc:"1 place du 19 Mars 1962, 45700 Saint-Maurice-sur-Fessard",
+ lat:47.9532,lon:2.7918,
+ tags:["online"],
+ spec:"Pépinière VPC avec rayon agrumes et fruitiers divers. Livraison France.",
+ site:"https://hodnik.com/",
+ tel:"02.38.97.84.59",email:"contact@hodnik.com",
+ note:"⭐ 4.0/5",vente:"En ligne"},
+
+{id:42, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"Sylvestre Agrumes",
+ loc:"La petite Séguinière, Route de Champteussé, 49220 Thorigné-d'Anjou",
+ lat:47.5938,lon:-0.7620,
+ tags:["online"],
+ spec:"500 variétés, 40 ans de savoir-faire. LA référence française. Sur rendez-vous uniquement.",
+ site:"https://sylvestre-agrumes.fr/",
+ tel:"02.41.95.12.29",email:"contact@sylvestre-agrumes.fr",
+ note:"⭐ 5/5",vente:"Sur RDV"},
+
+{id:43, co:"FR",fl:"🇫🇷",pv:"PV",
+ name:"Terre Lointaine",
+ loc:"Le Brindais, Route de la Haute Galerie, 44710 Saint-Léger-les-Vignes",
+ lat:47.1397,lon:-1.7063,
+ tags:["rare","online"],
+ spec:"Agrumes greffés + plantes exotiques rustiques. Beau catalogue avec fiches détaillées.",
+ site:"https://www.terrelointaine.fr/",
+ tel:"06.07.57.50.13",email:"info@terrelointaine.fr",
+ note:"⭐ 4.5/5",vente:"Sur place + ligne"},
+
+{id:44, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"Tiny Mandragore",
+ loc:"1151 rue du 28 Septembre, 62730 Marck",
+ lat:50.9432,lon:1.9480,
+ tags:["rare","online"],
+ spec:"Agrumes testés en pleine terre dans le Pas-de-Calais ! Spécialiste grand Nord. Site potentiellement hors ligne.",
+ site:"https://bluewood.yo.fr/",
+ tel:"06.47.94.06.14",email:"tinymandragore@outlook.fr",
+ note:"⭐ 5/5",vente:"Sur place + ligne"},
+
+{id:45, co:"FR",fl:"🇫🇷",pv:"PV",
  name:"Végétal 85",
- loc:"La Fouinière, La Chaize-le-Vicomte (85310)",
+ loc:"La Fouinière, 85310 La Chaize-le-Vicomte",
  lat:46.6352,lon:-1.3048,
  tags:["online"],
  spec:"Grand choix Vendée. Porte-greffe indiqué sur chaque plante. Livraison nationale fiable.",
@@ -828,169 +830,183 @@ const D=[
  tel:"02.51.05.78.41",email:"contact@vegetal85.fr",
  note:"⭐ 4.6/5",vente:"Sur place + ligne"},
 
-{id:47,co:"FR",fl:"🇫🇷",pv:"P",
- name:"Pépinière de la Gartempe",
- loc:"16 la Roderie, Val-d'Oire-et-Gartempe (87320)",
- lat:46.4285,lon:0.9945,
- tags:["prod","bio","online"],
- spec:"Fruitiers rustiques et agrumes bio en Haute-Vienne. Catalogue sur Facebook.",
- site:"https://www.facebook.com/pepinieredelagartempe",
- tel:"06.67.16.23.93",email:"bonjour@pepinieredelagartempe.fr",
- note:"⭐ 4.5/5",vente:"Sur place / ligne"},
+{id:46, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"Verger Nature",
+ loc:"Les Cambières, 30120 Aulas",
+ lat:43.9912,lon:3.5910,
+ tags:["rare","online"],
+ spec:"Agrumes de l'extrême dans les Cévennes gardoises. Collection unique, Jean-Baptiste partage tout.",
+ site:"https://www.vergernature.fr/",
+ tel:"06.12.80.78.80",email:"jblemaire@protonmail.com",
+ note:"⭐ 5/5",vente:"Sur place + ligne"},
 
-/* ══ ITALIE (4) ══════════════════════════════ */
-{id:48,co:"IT",fl:"🇮🇹",pv:"P",
- name:"Agrumi Lenzi",
- loc:"Pescia, Pistoia — Toscane",
- lat:43.8975,lon:10.6872,
- tags:["prod","online","rare"],
- spec:"Une des plus grandes collections d'agrumes d'Europe. Pietro conseille en anglais/français. Livraison Europe. Greffes jeunes.",
- site:"https://agrumilenzi.it/fr/shop-2/",
- tel:"+39 335 592 6250",
- note:"⭐ 4.7/5",vente:"Sur place + ligne"},
+{id:47, co:"FR",fl:"🇫🇷",pv:"P",
+ name:"Zeste & Compagnie",
+ loc:"36 Allée de la Gare, 19500 Turenne",
+ lat:45.0557,lon:1.5729,
+ tags:["online"],
+ spec:"Agrumes en Corrèze. Réserver en ligne et récupérer sur place.",
+ site:"http://www.agrumes.gendep19.org/zeste-compagnie.html",
+ tel:"07.68.80.17.01",email:"heryjul@gmail.com",
+ note:"⭐ 4.5/5",vente:"Retrait sur place"},
 
-{id:49,co:"IT",fl:"🇮🇹",pv:"P",
- name:"Oscar Tintori Vivai",
- loc:"Via Castellare, Pescia, Pistoia — Toscane",
- lat:43.9010,lon:10.6820,
- tags:["prod","online","bio","rare"],
- spec:"Agrumes biologiques certifiés. Centaines de variétés. Visites de serre possibles. Livraison Europe. À 2 km de Lenzi !",
- site:"https://www.oscartintori.it/shop-online/",
- tel:"+39 0572 429191",
- note:"⭐ 4.5/5",vente:"Sur place + ligne"},
-
-{id:50,co:"IT",fl:"🇮🇹",pv:"P",
- name:"Savini Vivai",
- loc:"Cotignola, Ravenne — Émilie-Romagne",
- lat:44.3921,lon:11.9452,
- tags:["prod","online"],
- spec:"4.8⭐ avec +1480 avis Google. Livraison rapide en Europe (3 jours). Excellente qualité et conditionnement.",
- site:"https://www.savinivivai.it/",
- tel:"+39 0545 41082",
- note:"⭐ 4.8/5",vente:"Sur place + ligne"},
-
-{id:51,co:"IT",fl:"🇮🇹",pv:"P",
- name:"Vivai Costantino",
- loc:"San Biagio, Messine — Sicile",
- lat:38.1648,lon:15.5218,
- tags:["prod"],
- spec:"Pépinière familiale sicilienne depuis des générations. Citronniers, orangers, fruitiers méditerranéens.",
- site:"https://www.vivaicostantino.it/",
- tel:"+39 346 869 1825",
- note:"⭐ 5/5",vente:"Sur place"},
-
-/* ══ PORTUGAL (2) ══════════════════════════════ */
-{id:52,co:"PT",fl:"🇵🇹",pv:"P",
- name:"Dorca Plantas",
- loc:"Ortiga, Mação — Ribatejo",
- lat:39.5782,lon:-8.0438,
- tags:["prod","online"],
- spec:"Spécialiste agrumes Portugal. Livraison en Europe en 2 jours. Service client très réactif.",
- site:"https://dorcaplantas.pt/",
- tel:"+351 963 074 018",
- note:"⭐ 4.9/5",vente:"En ligne"},
-
-{id:53,co:"PT",fl:"🇵🇹",pv:"P",
- name:"Viveiros Castromil",
- loc:"Sobreira, Paredes — Porto",
- lat:41.1698,lon:-8.3865,
- tags:["prod","online"],
- spec:"Pépinière Porto depuis +40 ans. Orangers, citronniers, pommiers. Expédition internationale sécurisée.",
- site:"https://www.vcastromil.pt/",
- tel:"+351 22 433 3006",
- note:"⭐ 4.7/5",vente:"Sur place + ligne"},
-
-/* ══ SUISSE (2) ══════════════════════════════ */
-{id:54,co:"CH",fl:"🇨🇭",pv:"P",
- name:"AlpAgrumi",
- loc:"Monte Carasso, Bellinzona — Tessin",
- lat:46.1932,lon:9.0042,
- tags:["prod","online","rare"],
- spec:"Livraison maison avec leur propre service pour éviter tout dommage. Yuzu, agrumes rares. Fiches conseils détaillées.",
- site:"https://alpagrumi.ch/",
- tel:"+41 76 247 36 26",
- note:"⭐ 5/5",vente:"Livraison maison"},
-
-{id:55,co:"CH",fl:"🇨🇭",pv:"P",
- name:"Eisenhut Vivaio",
- loc:"San Nazzaro, Gambarogno — Tessin",
- lat:46.1105,lon:8.8225,
- tags:["online","rare"],
- spec:"Jardin botanique + pépinière au bord du lac Majeur. Magnolias, camélias, agrumes rustiques. Vue exceptionnelle.",
- site:"https://eisenhut.ch/fr/",
- tel:"+41 91 795 18 67",
- note:"⭐ 4.5/5",vente:"Sur place + ligne"},
-
-/* ══ BELGIQUE (2) ══════════════════════════════ */
-{id:56,co:"BE",fl:"🇧🇪",pv:"P",
+/* ══ BELGIQUE — Ordre alphabétique ══════════════════ */
+{id:48, co:"BE",fl:"🇧🇪",pv:"P",
  name:"Bois de Rode Bos",
- loc:"Sint-Genesius-Rode — Brabant flamand",
- lat:50.7562,lon:4.3482,
- tags:["prod","rare"],
- spec:"Collection exceptionnelle et croisements maison. Ouvert jeudi–samedi uniquement. Avis unanimement excellents.",
+ loc:"Rodestraat 28, 1640 Sint-Genesius-Rode",
+ lat:50.7551,lon:4.3501,
+ tags:["rare","bio"],
+ spec:"Collection exceptionnelle et croisements maison. Bio en conversion. Ouvert jeudi–samedi uniquement. Avis unanimement excellents.",
  site:"https://www.boisderodebos.be/",
  tel:"+32 470 02 21 09",
  note:"⭐ 5/5",vente:"Sur place (jeu-sam)"},
 
-{id:57,co:"BE",fl:"🇧🇪",pv:"P",
+{id:49, co:"BE",fl:"🇧🇪",pv:"P",
  name:"Kwekerij De Zoetewei",
- loc:"Putte — Province d'Anvers",
- lat:51.0532,lon:4.6452,
- tags:["online","rare"],
+ loc:"Zoetewei 4, 2580 Putte",
+ lat:51.0588,lon:4.6492,
+ tags:["rare","online"],
  spec:"Collection immense de comestibles rares dont agrumes. Visites guidées sur demande.",
  site:"http://www.kwekerijdezoetewei.be/",
  tel:"+32 15 24 70 24",
  note:"⭐ 4.9/5",vente:"Sur place"},
 
-/* ══ TCHÉQUIE (2) ══════════════════════════════ */
-{id:58,co:"CZ",fl:"🇨🇿",pv:"P",
+/* ══ BULGARIE — Ordre alphabétique ══════════════════ */
+{id:50, co:"BG",fl:"🇧🇬",pv:"PV",
+ name:"Exotic Plants Bulgaria",
+ loc:"Okolovrasten pat 45, 1415 Sofia",
+ lat:42.6517,lon:23.2872,
+ tags:["rare","online"],
+ spec:"Plantes exotiques dont agrumes rares. Boutique en ligne (connexion requise pour naviguer).",
+ site:"https://exoticplantsbg.com/",
+ note:"⭐ 4.0/5",vente:"En ligne"},
+
+{id:51, co:"BG",fl:"🇧🇬",pv:"P",
+ name:"Palm Center Nursery",
+ loc:"Asenovgradsko Shose, 4000 Plovdiv",
+ lat:42.1280,lon:24.7551,
+ tags:["rare","online"],
+ spec:"Livraison dans toute l'Europe. Figuiers, agrumes, kakis, grenadiers, pawpaw. Emballage soigné.",
+ site:"https://palmi.bg/",
+ tel:"+359 88 832 8680",
+ note:"⭐ 4.7/5",vente:"En ligne"},
+
+/* ══ ITALIE — Ordre alphabétique ════════════════════ */
+{id:52, co:"IT",fl:"🇮🇹",pv:"P",
+ name:"Agrumi Lenzi",
+ loc:"Via di Collecchio 12, 51017 Pescia (Pistoia)",
+ lat:43.8975,lon:10.6872,
+ tags:["rare","online"],
+ spec:"Une des plus grandes collections d'agrumes d'Europe. Pietro conseille en anglais/français. Livraison Europe.",
+ site:"https://agrumilenzi.it/fr/shop-2/",
+ tel:"+39 335 592 6250",
+ note:"⭐ 4.7/5",vente:"Sur place + ligne"},
+
+{id:53, co:"IT",fl:"🇮🇹",pv:"P",
+ name:"Oscar Tintori Vivai",
+ loc:"Via Castellare 2, 51012 Castellare di Pescia (Pistoia)",
+ lat:43.8910,lon:10.6720,
+ tags:["bio","rare","online"],
+ spec:"Agrumes biologiques certifiés. Centaines de variétés. Visites de serre possibles. Livraison Europe.",
+ site:"https://www.oscartintori.it/shop-online/",
+ tel:"+39 0572 429191",
+ note:"⭐ 4.5/5",vente:"Sur place + ligne"},
+
+{id:54, co:"IT",fl:"🇮🇹",pv:"P",
+ name:"Savini Vivai",
+ loc:"Via Salara 1, 48012 Cotignola (Ravenna)",
+ lat:44.3890,lon:11.9580,
+ tags:["online"],
+ spec:"4.8⭐ avec +1480 avis Google. Livraison rapide en Europe (3 jours). Excellente qualité et conditionnement.",
+ site:"https://www.savinivivai.it/",
+ tel:"+39 0545 41082",
+ note:"⭐ 4.8/5",vente:"Sur place + ligne"},
+
+{id:55, co:"IT",fl:"🇮🇹",pv:"P",
+ name:"Vivai Costantino",
+ loc:"Via San Biagio, 98056 Terme Vigliatore (Messina)",
+ lat:38.1320,lon:15.1825,
+ tags:["online"],
+ spec:"Pépinière familiale sicilienne depuis des générations. Citronniers, orangers, fruitiers méditerranéens.",
+ site:"https://www.vivaicostantino.it/",
+ tel:"+39 346 869 1825",
+ note:"⭐ 5/5",vente:"Sur place"},
+
+/* ══ PORTUGAL — Ordre alphabétique ══════════════════ */
+{id:56, co:"PT",fl:"🇵🇹",pv:"P",
+ name:"Dorca Plantas",
+ loc:"Estrada Nacional 3, Ortiga, 6120-501 Mação",
+ lat:39.5782,lon:-8.0438,
+ tags:["online"],
+ spec:"Spécialiste agrumes Portugal. Livraison en Europe en 2 jours. Service client très réactif.",
+ site:"https://dorcaplantas.pt/",
+ tel:"+351 963 074 018",
+ note:"⭐ 4.9/5",vente:"En ligne"},
+
+{id:57, co:"PT",fl:"🇵🇹",pv:"P",
+ name:"Viveiros Castromil",
+ loc:"Rua de Castromil, Sobreira, 4585-752 Paredes",
+ lat:41.1530,lon:-8.3780,
+ tags:["online"],
+ spec:"Pépinière Porto depuis +40 ans. Orangers, citronniers, pommiers. Expédition internationale.",
+ site:"https://www.vcastromil.pt/",
+ tel:"+351 22 433 3006",
+ note:"⭐ 4.7/5",vente:"Sur place + ligne"},
+
+/* ══ RÉP. TCHÈQUE — Ordre alphabétique ══════════════ */
+{id:58, co:"CZ",fl:"🇨🇿",pv:"P",
  name:"Adavo / Adam Bajer",
- loc:"Velký Osek — Bohême centrale",
+ loc:"Chelčického 281, 281 44 Velký Osek",
  lat:50.1045,lon:15.1985,
- tags:["prod","online"],
+ tags:["online"],
  spec:"Agrumes greffés sur Swingle 4475 et Poncirus. Livraison Europe. Paiement en espèces possible.",
  site:"https://rakytnik.com/",
  tel:"+420 775 145 061",
  note:"⭐ 4.7/5",vente:"Sur place + ligne"},
 
-{id:59,co:"CZ",fl:"🇨🇿",pv:"V",
+{id:59, co:"CZ",fl:"🇨🇿",pv:"V",
  name:"Ekozahradnictvi",
- loc:"Nepomuk — Bohême du Sud",
+ loc:"Tojice 16, 335 01 Nepomuk",
  lat:49.4895,lon:13.5812,
  tags:["online"],
  spec:"Jardinerie écologique tchèque avec rayon agrumes. E-shop disponible en tchèque.",
  site:"https://www.ekozahradnictvi.cz/e-shop/",
  note:"⭐ 3.9/5",vente:"Sur place + ligne"},
 
-/* ══ BULGARIE (2) ══════════════════════════════ */
-{id:60,co:"BG",fl:"🇧🇬",pv:"P",
- name:"Palm Center Nursery",
- loc:"Plovdiv — Bulgarie",
- lat:42.1442,lon:24.7502,
- tags:["prod","online","rare"],
- spec:"Livraison dans toute l'Europe. Figuiers, agrumes, kakis, grenadiers, pawpaw. Emballage soigné. Prix compétitifs.",
- site:"https://palmi.bg/",
- tel:"+359 88 832 8680",
- note:"⭐ 4.7/5",vente:"En ligne"},
+/* ══ SUISSE — Ordre alphabétique ════════════════════ */
+{id:60, co:"CH",fl:"🇨🇭",pv:"P",
+ name:"AlpAgrumi",
+ loc:"Via Alla Riviera 24, 6512 Giubiasco (Bellinzona)",
+ lat:46.1820,lon:9.0128,
+ tags:["rare","online"],
+ spec:"Livraison maison avec leur propre service pour éviter tout dommage. Yuzu, agrumes rares. Fiches conseils détaillées.",
+ site:"https://alpagrumi.ch/",
+ tel:"+41 76 247 36 26",
+ note:"⭐ 5/5",vente:"Livraison maison"},
 
-{id:61,co:"BG",fl:"🇧🇬",pv:"V",
- name:"Exotic Plants Bulgaria",
- loc:"Sofia — Bulgarie",
- lat:42.6977,lon:23.3219,
- tags:["online","rare"],
- spec:"Plantes exotiques dont agrumes rares. Boutique en ligne (connexion requise pour naviguer).",
- site:"https://exoticplantsbg.com/",
- note:"⭐ 4.0/5",vente:"En ligne"},
+{id:61, co:"CH",fl:"🇨🇭",pv:"P",
+ name:"Eisenhut Vivaio",
+ loc:"Via Piaggia 14, 6575 San Nazzaro (Gambarogno)",
+ lat:46.1105,lon:8.8225,
+ tags:["rare","online"],
+ spec:"Jardin botanique + pépinière au bord du lac Majeur. Magnolias, camélias, agrumes rustiques. Vue exceptionnelle.",
+ site:"https://eisenhut.ch/fr/",
+ tel:"+41 91 795 18 67",
+ note:"⭐ 4.5/5",vente:"Sur place + ligne"},
 ];
 
-/* ══ CONFIG ══════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════
+   CONFIG
+   ═══════════════════════════════════════════════ */
 const CC={FR:"#16844E",IT:"#D04A18",PT:"#C02020",CH:"#982020",BE:"#C07C08",CZ:"#5040B0",BG:"#A02828"};
 const CN={FR:"🇫🇷 France",IT:"🇮🇹 Italie",PT:"🇵🇹 Portugal",CH:"🇨🇭 Suisse",BE:"🇧🇪 Belgique",CZ:"🇨🇿 Rép. Tchèque",BG:"🇧🇬 Bulgarie"};
-const TC={prod:"tp",bio:"tb",rare:"tra",rust:"tru",online:"to"};
-const TL={prod:"Producteur",bio:"Bio",rare:"Rares",rust:"Rustique",online:"En ligne"};
-const CO=["FR","IT","PT","CH","BE","CZ","BG"];
+const TC={rare:"tr",bio:"tb",online:"to"};
+const TL={rare:"Rares",bio:"Bio",online:"En ligne"};
+const CO=["FR","BE","BG","IT","PT","CZ","CH"];
+const PVL={P:"🌿 Producteur / Greffeur",V:"🏪 Revendeur",PV:"🌿🏪 Producteur & Revendeur"};
 
 const col=p=>CC[p.co]||"#555";
+const isMobile=()=>window.innerWidth<=768;
 
 function mkIcon(p,big=false){
   const c=col(p),s=big?42:28;
@@ -1001,53 +1017,62 @@ function mkIcon(p,big=false){
   });
 }
 
-/* ══ MAP — fond Voyager clair ══════════════════════ */
+/* ═══ MAP ═══════════════════════════════════════ */
 const map=L.map("map",{center:[47,8],zoom:5,zoomControl:true});
 L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",{
   attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
   subdomains:"abcd",maxZoom:19
 }).addTo(map);
 
-/* ══ MARQUEURS ══════════════════════════════════════ */
 const MK={};
 let FILT="all",SRH="",SEL=null;
 D.forEach(p=>{
   const m=L.marker([p.lat,p.lon],{icon:mkIcon(p)}).addTo(map);
-  m.on("click",()=>openMod(p.id));
+  m.on("click",()=>{openMod(p.id);if(isMobile())closeSidebar();});
   MK[p.id]=m;
 });
 
-/* ══ RENDER ══════════════════════════════════════════ */
-function filt(){
+/* ═══ RENDER ════════════════════════════════════ */
+function filtered(){
   return D.filter(p=>{
-    const mf=FILT==="all"||p.co===FILT||p.tags.includes(FILT)||(FILT==="prod"&&p.pv==="P");
-    const ms=!SRH||p.name.toLowerCase().includes(SRH)||p.loc.toLowerCase().includes(SRH)||(CN[p.co]||"").toLowerCase().includes(SRH);
+    const mf=FILT==="all"||p.co===FILT||p.tags.includes(FILT)||
+              (FILT==="prod"&&(p.pv==="P"||p.pv==="PV"));
+    const ms=!SRH||
+      p.name.toLowerCase().includes(SRH)||
+      p.loc.toLowerCase().includes(SRH)||
+      (CN[p.co]||"").toLowerCase().includes(SRH);
     return mf&&ms;
   });
 }
+
 function render(){
-  const f=filt(),ids=new Set(f.map(p=>p.id));
-  document.getElementById("main-badge").textContent=f.length+" pépinières";
-  document.getElementById("fcnt").textContent=f.length+" pépinières affichées";
-  document.getElementById("sb-count").textContent=f.length+" établissements · 7 pays · GPS vérifié";
+  const f=filtered(),ids=new Set(f.map(p=>p.id));
+  const n=f.length;
+  document.getElementById("main-badge").textContent=n+" pépinières";
+  document.getElementById("fcnt").textContent=n+" pépinières affichées";
+  document.getElementById("mob-cnt").textContent=n+" pépinières";
+  document.getElementById("sb-count").textContent=n+" établissements · 7 pays";
   document.getElementById("cnt-fr").textContent=f.filter(p=>p.co==="FR").length;
   document.getElementById("cnt-eu").textContent=f.filter(p=>p.co!=="FR").length;
   D.forEach(p=>{ids.has(p.id)?(!map.hasLayer(MK[p.id])&&MK[p.id].addTo(map)):map.removeLayer(MK[p.id]);});
+
   const byC={};
   f.forEach(p=>{(byC[p.co]=byC[p.co]||[]).push(p);});
   let h="";
   CO.forEach(co=>{
     if(!byC[co])return;
-    h+=`<div class="ctry-hdr"><span class="ctry-flag">${byC[co][0].fl}</span><span class="ctry-name">${CN[co]||co}</span><span class="ctry-cnt">${byC[co].length}</span></div>`;
+    h+=`<div class="ch"><span class="ch-f">${byC[co][0].fl}</span><span class="ch-n">${CN[co]||co}</span><span class="ch-c">${byC[co].length}</span></div>`;
     byC[co].forEach(p=>{
-      const c=col(p),pvC=p.pv==="P"?"tp":"tr",pvL=p.pv==="P"?"Producteur":"Revendeur";
+      const c=col(p);
+      const pvCls=p.pv==="P"?"tp":p.pv==="PV"?"tp":"tv";
+      const pvLbl=p.pv==="P"?"Producteur":p.pv==="PV"?"Prod. & Revendeur":"Revendeur";
       const tgs=p.tags.map(t=>`<span class="tag ${TC[t]||""}">${TL[t]||t}</span>`).join("");
-      h+=`<div class="item${SEL===p.id?" active":""}" id="li-${p.id}" onclick="openMod(${p.id})">
-        <span class="ipin" style="background:${c}"></span>
-        <div class="ibody">
-          <div class="iname">${p.name}</div>
-          <div class="iloc">📍 ${p.loc}</div>
-          <div class="itags"><span class="tag ${pvC}">${pvL}</span>${tgs}</div>
+      h+=`<div class="it${SEL===p.id?" active":""}" id="li-${p.id}" onclick="openMod(${p.id})">
+        <span class="it-dot" style="background:${c}"></span>
+        <div class="it-b">
+          <div class="it-n">${p.name}</div>
+          <div class="it-l">📍 ${p.loc.split(",")[0]}</div>
+          <div class="it-t"><span class="tag ${pvCls}">${pvLbl}</span>${tgs}</div>
         </div>
       </div>`;
     });
@@ -1055,47 +1080,57 @@ function render(){
   document.getElementById("lw").innerHTML=h||`<div class="nr"><span>🔍</span>Aucun résultat</div>`;
 }
 
-/* ══ MODAL ══════════════════════════════════════════ */
+/* ═══ MODAL ═════════════════════════════════════ */
 function openMod(id){
   SEL=id;
   const p=D.find(x=>x.id===id);
   if(!p)return;
   D.forEach(pp=>{map.hasLayer(MK[pp.id])&&MK[pp.id].setIcon(mkIcon(pp,false));});
   MK[p.id].setIcon(mkIcon(p,true));
-  map.setView([p.lat,p.lon],Math.max(map.getZoom(),9),{animate:true,duration:.5});
-  const isProd=p.pv==="P";
-  document.getElementById("m-flag").textContent=p.fl;
-  document.getElementById("m-name").textContent=p.name;
-  document.getElementById("m-loc").innerHTML="📍 "+p.loc;
-  document.getElementById("m-ctry").innerHTML=p.fl+" "+(CN[p.co]||p.co);
+  if(!isMobile()) map.setView([p.lat,p.lon],Math.max(map.getZoom(),9),{animate:true,duration:.5});
+
+  document.getElementById("m-fl").textContent=p.fl;
+  document.getElementById("m-nm").textContent=p.name;
+  document.getElementById("m-lc").innerHTML="📍 "+p.loc;
+  document.getElementById("m-ct").innerHTML=p.fl+" "+(CN[p.co]||p.co);
+
   const pvEl=document.getElementById("m-pv");
-  pvEl.className="mpv "+(isProd?"P":"V");
-  pvEl.textContent=isProd?"🌿 Producteur / Greffeur":"🏪 Revendeur uniquement";
-  document.getElementById("m-tags").innerHTML=p.tags.map(t=>`<span class="mtag tag ${TC[t]||""}">${TL[t]||t}</span>`).join("");
-  document.getElementById("m-desc").textContent=p.spec;
-  document.getElementById("m-grid").innerHTML=`
-    <div class="mcell"><div class="l">Note</div><div class="v">${p.note}</div></div>
-    <div class="mcell"><div class="l">Vente</div><div class="v">${p.vente}</div></div>
-    <div class="mcell"><div class="l">Pays</div><div class="v">${p.fl} ${p.co}</div></div>`;
+  pvEl.className="m-pv "+(p.pv==="V"?"V":p.pv==="PV"?"PV":"P");
+  pvEl.textContent=PVL[p.pv]||"—";
+
+  document.getElementById("m-tgs").innerHTML=p.tags.map(t=>`<span class="m-tag tag ${TC[t]||""}">${TL[t]||t}</span>`).join("");
+  document.getElementById("m-ds").textContent=p.spec;
+  document.getElementById("m-gr").innerHTML=`
+    <div class="m-cl"><div class="l">Note</div><div class="v">${p.note}</div></div>
+    <div class="m-cl"><div class="l">Vente</div><div class="v">${p.vente}</div></div>
+    <div class="m-cl"><div class="l">Pays</div><div class="v">${p.fl} ${p.co}</div></div>`;
   const lines=[];
   if(p.tel)lines.push("📞 "+p.tel);
   if(p.email)lines.push(`✉️ <a href="mailto:${p.email}">${p.email}</a>`);
-  const cEl=document.getElementById("m-contact");
+  const cEl=document.getElementById("m-co");
   if(lines.length){cEl.style.display="block";cEl.innerHTML=lines.join("<br>");}else cEl.style.display="none";
-  document.getElementById("m-btn").href=p.site;
-  document.getElementById("m-btn").innerHTML=`<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Visiter le site officiel`;
-  document.getElementById("overlay").classList.add("open");
+  const btn=document.getElementById("m-btn");
+  btn.href=p.site;
+  btn.innerHTML=`<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Visiter le site officiel`;
+  document.getElementById("ov").classList.add("open");
   render();
   setTimeout(()=>{const el=document.getElementById("li-"+id);if(el)el.scrollIntoView({behavior:"smooth",block:"nearest"});},80);
 }
-function closeOv(e){if(e.target===document.getElementById("overlay"))closeMod();}
+
+function closeOv(e){if(e.target===document.getElementById("ov"))closeMod();}
 function closeMod(){
-  document.getElementById("overlay").classList.remove("open");
+  document.getElementById("ov").classList.remove("open");
   SEL=null;
   D.forEach(p=>{map.hasLayer(MK[p.id])&&MK[p.id].setIcon(mkIcon(p,false));});
   render();
 }
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMod();});
+
+/* ═══ SIDEBAR MOBILE ════════════════════════════ */
+function openSidebar(){document.getElementById("sidebar").classList.add("open");}
+function closeSidebar(){document.getElementById("sidebar").classList.remove("open");}
+
+/* ═══ FILTRES ═══════════════════════════════════ */
 function setF(f,btn){
   FILT=f;
   document.querySelectorAll(".fb").forEach(b=>b.classList.remove("on"));
@@ -1110,6 +1145,10 @@ function setFLeg(co){
   render();
 }
 function doSearch(v){SRH=v.toLowerCase();render();}
+
+// Fermer sidebar si clic sur la carte (mobile)
+document.getElementById("map").addEventListener("click",()=>{if(isMobile())closeSidebar();});
+
 render();
 </script>
 </body>
