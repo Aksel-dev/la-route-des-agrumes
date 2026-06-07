@@ -28,22 +28,42 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 
 /* HEADER */
 header{
-  flex-shrink:0;height:56px;
-  background:linear-gradient(135deg,var(--bg) 0%,var(--bg3) 100%);
-  border-bottom:1px solid var(--bd2);
-  display:flex;align-items:center;gap:10px;padding:0 16px;
-  z-index:1001;box-shadow:0 2px 18px rgba(0,0,0,.45);
+  flex-shrink:0;display:flex;flex-direction:column;
+  background:
+    radial-gradient(circle at 5% 50%,rgba(249,115,22,.55) 0%,transparent 19%),
+    radial-gradient(circle at 19% 14%,rgba(250,204,21,.38) 0%,transparent 14%),
+    radial-gradient(circle at 35% 83%,rgba(249,115,22,.42) 0%,transparent 17%),
+    radial-gradient(circle at 51% 33%,rgba(250,204,21,.3) 0%,transparent 13%),
+    radial-gradient(circle at 67% 73%,rgba(249,115,22,.45) 0%,transparent 18%),
+    radial-gradient(circle at 82% 20%,rgba(250,204,21,.34) 0%,transparent 14%),
+    radial-gradient(circle at 94% 60%,rgba(249,115,22,.38) 0%,transparent 16%),
+    linear-gradient(158deg,#0b1c05 0%,#152d08 20%,#1e380e 38%,#132507 56%,#0d1c04 76%,#060e02 100%);
+  border-bottom:1px solid rgba(249,115,22,.3);
+  z-index:1001;box-shadow:0 4px 32px rgba(0,0,0,.65);
+  position:relative;overflow:hidden;
 }
-.logo{font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--w);display:flex;align-items:center;gap:8px;white-space:nowrap;flex-shrink:0;}
-.logo em{color:var(--or);font-style:italic;}
+header::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to right,rgba(0,0,0,.5) 0%,rgba(0,0,0,.1) 35%,rgba(0,0,0,.1) 65%,rgba(0,0,0,.5) 100%),
+             linear-gradient(to bottom,rgba(0,0,0,.2) 0%,transparent 40%,rgba(0,0,0,.45) 100%);
+}
+.h-top{display:flex;align-items:center;gap:10px;padding:10px 16px 6px;min-height:46px;position:relative;z-index:1;}
+.h-hero{display:flex;flex-direction:column;align-items:center;padding:2px 16px 16px;position:relative;z-index:1;}
+.h-title{font-family:'Fraunces',serif;font-size:27px;font-weight:700;color:#fff;text-align:center;line-height:1.15;text-shadow:0 2px 18px rgba(0,0,0,.75),0 0 40px rgba(249,115,22,.2);}
+.h-title em{background:linear-gradient(90deg,#F97316 0%,#FACC15 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:italic;}
+.h-slogan{font-size:9px;font-weight:600;color:rgba(255,255,255,.45);letter-spacing:1.5px;text-transform:uppercase;margin-top:5px;text-shadow:0 1px 6px rgba(0,0,0,.6);}
+@media(max-width:768px){.h-hero{display:none;}}
+.logo{font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:var(--w);display:flex;align-items:center;gap:7px;white-space:nowrap;flex-shrink:0;z-index:1;}
+.logo em{background:linear-gradient(90deg,#F97316 0%,#FACC15 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:italic;}
+.logo-sub{display:none;}
 .logo-n{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--or);background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.28);border-radius:var(--rnd);padding:2px 9px;white-space:nowrap;}
-.sw{flex:1;position:relative;max-width:280px;}
-.sw input{width:100%;background:rgba(255,255,255,.07);border:1px solid var(--bd2);border-radius:var(--r2);color:var(--w);padding:7px 10px 7px 32px;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;outline:none;transition:all .18s;}
-.sw input::placeholder{color:rgba(255,255,255,.22);}
-.sw input:focus{background:rgba(255,255,255,.11);border-color:var(--tl);box-shadow:0 0 0 3px rgba(6,182,212,.1);}
-.sw svg{position:absolute;left:9px;top:50%;transform:translateY(-50%);opacity:.28;pointer-events:none;}
+.sw{flex:1;position:relative;max-width:260px;}
+.sw input{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:var(--r2);color:var(--w);padding:7px 10px 7px 32px;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;outline:none;transition:all .18s;}
+.sw input::placeholder{color:rgba(255,255,255,.35);}
+.sw input:focus{background:rgba(255,255,255,.15);border-color:var(--tl);box-shadow:0 0 0 3px rgba(6,182,212,.12);}
+.sw svg{position:absolute;left:9px;top:50%;transform:translateY(-50%);opacity:.5;pointer-events:none;}
 .hst{margin-left:auto;display:flex;gap:5px;flex-shrink:0;}
-.hchip{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.06);border:1px solid var(--bd);border-radius:var(--rnd);padding:3px 10px;font-size:10px;color:var(--tx2);}
+.hchip{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:var(--rnd);padding:3px 10px;font-size:10px;color:rgba(255,255,255,.65);}
 .hchip strong{font-size:12px;font-weight:700;}
 .hchip.cfr strong{color:#4ADE80;}
 .hchip.ceu strong{color:var(--au);}
@@ -70,6 +90,8 @@ header{
 .fb[data-f="hve"].on{background:#713F12;}
 .fb[data-f="rare"].on{background:#92400E;}
 .fb[data-f="online"].on{background:#075985;}
+.fb[data-f="envoi"].on{background:#0C6A86;}
+.fb[data-f="place"].on{background:#6D28D9;}
 
 /* flag-icons inside filter bar - small */
 .fb .fi{width:16px;height:12px;border-radius:2px;}
@@ -117,15 +139,14 @@ header{
 .mk.sel .mk-tail{border-top-width:10px;border-left-width:7px;border-right-width:7px;}
 
 /* FLOTTANT COMPTEUR */
-.fcnt{position:absolute;top:12px;left:14px;z-index:500;background:rgba(11,21,32,.93);border:1px solid var(--bd3);border-radius:var(--r2);padding:5px 12px;font-size:11px;font-weight:600;color:var(--w);pointer-events:none;backdrop-filter:blur(12px);}
+.fcnt{position:absolute;top:12px;left:14px;z-index:500;background:rgba(10,26,4,.93);border:1px solid rgba(249,115,22,.28);border-radius:var(--r2);padding:5px 12px;font-size:11px;font-weight:600;color:var(--w);pointer-events:none;backdrop-filter:blur(12px);}
 
-/* LÉGENDE DESKTOP */
-.legend{position:absolute;bottom:22px;left:14px;z-index:500;background:rgba(11,21,32,.96);border:1px solid var(--bd3);border-radius:var(--r3);padding:12px 14px;backdrop-filter:blur(14px);box-shadow:var(--s1);min-width:156px;}
-@media(max-width:600px){.legend{display:none;}}
-.leg-t{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--tx3);margin-bottom:8px;}
-.leg-r{display:flex;align-items:center;gap:8px;font-size:10.5px;color:var(--tx2);margin-bottom:4px;cursor:pointer;padding:3px 4px;border-radius:4px;transition:all .1s;}
+/* LÉGENDE (intégrée dans la sidebar) */
+.leg-sb{padding:10px 14px 8px;border-bottom:1px solid rgba(249,115,22,.18);background:linear-gradient(158deg,#0b1c05,#152d08);}
+.leg-t{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(249,115,22,.55);margin-bottom:7px;}
+.leg-r{display:flex;align-items:center;gap:8px;font-size:10px;color:rgba(255,210,130,.65);margin-bottom:2px;cursor:pointer;padding:3px 5px;border-radius:4px;transition:all .1s;}
 .leg-r:last-child{margin-bottom:0;}
-.leg-r:hover{color:var(--w);background:rgba(255,255,255,.06);}
+.leg-r:hover{color:#fff;background:rgba(249,115,22,.1);}
 .leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 .leg-r .fi{width:18px;height:13px;border-radius:2px;flex-shrink:0;}
 
@@ -134,35 +155,35 @@ header{
 @media(max-width:768px){.mob-btn{display:flex;}}
 
 /* SIDEBAR */
-.sidebar{width:320px;flex-shrink:0;background:#0A1928;border-left:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;overflow:hidden;z-index:400;}
+.sidebar{width:320px;flex-shrink:0;background:#0a1a04;border-left:1px solid rgba(249,115,22,.18);display:flex;flex-direction:column;overflow:hidden;z-index:400;}
 @media(max-width:768px){
   .sidebar{position:absolute;top:0;right:0;bottom:0;width:92vw;max-width:380px;z-index:700;transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);}
   .sidebar.open{transform:translateX(0);}
 }
-.sb-hd{padding:11px 14px 9px;background:#060F1A;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:8px;}
+.sb-hd{padding:11px 14px 9px;background:#060e02;border-bottom:1px solid rgba(249,115,22,.15);display:flex;align-items:center;gap:8px;}
 .sb-hd h2{font-family:'Fraunces',serif;font-size:14px;font-weight:700;color:var(--w);flex:1;}
-.sb-hd p{font-size:9px;color:var(--tx2);margin-top:1px;}
-.sb-cls{display:none;background:rgba(255,255,255,.07);border:1px solid var(--bd2);border-radius:50%;width:26px;height:26px;color:var(--tx2);font-size:13px;cursor:pointer;flex-shrink:0;align-items:center;justify-content:center;transition:all .14s;}
-.sb-cls:hover{background:rgba(255,255,255,.14);color:var(--w);}
+.sb-hd p{font-size:9px;color:rgba(249,200,130,.55);margin-top:1px;}
+.sb-cls{display:none;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.25);border-radius:50%;width:26px;height:26px;color:rgba(249,200,130,.7);font-size:13px;cursor:pointer;flex-shrink:0;align-items:center;justify-content:center;transition:all .14s;}
+.sb-cls:hover{background:rgba(249,115,22,.2);color:var(--w);}
 @media(max-width:768px){.sb-cls{display:flex;}}
 .lw{flex:1;overflow-y:auto;min-height:0;}
 .lw::-webkit-scrollbar{width:3px;}
-.lw::-webkit-scrollbar-thumb{background:#1A3A5C;border-radius:2px;}
+.lw::-webkit-scrollbar-thumb{background:#2a4a14;border-radius:2px;}
 
 /* Country header */
-.ch{position:sticky;top:0;z-index:10;padding:4px 14px;background:#040C16;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:7px;}
+.ch{position:sticky;top:0;z-index:10;padding:4px 14px;background:#040c02;border-bottom:1px solid rgba(249,115,22,.1);display:flex;align-items:center;gap:7px;}
 .ch .fi{width:18px;height:13px;border-radius:2px;}
-.ch-n{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--tx2);flex:1;}
-.ch-c{font-size:8.5px;font-weight:700;background:rgba(255,255,255,.08);color:var(--tx2);border-radius:var(--rnd);padding:1px 7px;}
+.ch-n{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(249,200,130,.6);flex:1;}
+.ch-c{font-size:8.5px;font-weight:700;background:rgba(249,115,22,.12);color:rgba(249,200,130,.7);border-radius:var(--rnd);padding:1px 7px;}
 
 /* List item */
-.it{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;transition:background .1s;display:flex;gap:9px;align-items:flex-start;}
-.it:hover{background:#12253B;}
-.it.active{background:#183250;border-left:3px solid var(--tl);}
+.it{padding:10px 14px;border-bottom:1px solid rgba(249,115,22,.06);cursor:pointer;transition:background .1s;display:flex;gap:9px;align-items:flex-start;}
+.it:hover{background:rgba(249,115,22,.07);}
+.it.active{background:rgba(249,115,22,.14);border-left:3px solid var(--or);}
 .it-dot{width:7px;height:7px;border-radius:50%;margin-top:4px;flex-shrink:0;}
 .it-b{flex:1;min-width:0;}
 .it-n{font-size:12px;font-weight:600;color:var(--w);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:1px;}
-.it-l{font-size:9px;color:var(--tx2);}
+.it-l{font-size:9px;color:rgba(249,200,130,.5);}
 .it-t{display:flex;gap:3px;margin-top:4px;flex-wrap:wrap;}
 
 /* TAGS */
@@ -215,16 +236,15 @@ header{
   position:absolute;bottom:22px;left:14px;z-index:600;
   display:flex;flex-direction:column;gap:5px;
 }
-@media(min-width:601px){.layers-btn{bottom:220px;}}
 .lbtn{
-  background:rgba(11,21,32,.93);border:1px solid var(--bd3);
+  background:rgba(10,26,4,.93);border:1px solid rgba(249,115,22,.25);
   border-radius:var(--rnd);padding:4px 11px;
-  font-size:9.5px;font-weight:700;color:var(--tx2);
+  font-size:9.5px;font-weight:700;color:rgba(249,200,130,.65);
   cursor:pointer;white-space:nowrap;transition:all .14s;
   font-family:'Plus Jakarta Sans',sans-serif;
   display:flex;align-items:center;gap:5px;
 }
-.lbtn:hover{color:var(--w);border-color:var(--bd3);}
+.lbtn:hover{color:var(--w);border-color:rgba(249,115,22,.5);}
 .lbtn.on{color:var(--w);}
 .lbtn .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 
@@ -234,16 +254,16 @@ header{
 .ov.open{display:flex;}
 @keyframes popIn{from{transform:translateY(18px) scale(.96);opacity:0}to{transform:none;opacity:1}}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.modal{background:#0D1F32;border:1px solid var(--bd3);border-radius:var(--r3);box-shadow:var(--s2);width:100%;max-width:510px;max-height:92vh;overflow-y:auto;animation:popIn .22s cubic-bezier(.34,1.3,.64,1);}
+.modal{background:#0e1c06;border:1px solid rgba(249,115,22,.22);border-radius:var(--r3);box-shadow:var(--s2);width:100%;max-width:510px;max-height:92vh;overflow-y:auto;animation:popIn .22s cubic-bezier(.34,1.3,.64,1);}
 .modal::-webkit-scrollbar{width:3px;}
-.modal::-webkit-scrollbar-thumb{background:var(--bg5);}
+.modal::-webkit-scrollbar-thumb{background:#2a4a14;}
 @media(max-width:600px){
   .ov{align-items:flex-end;padding:0;}
   .modal{border-radius:var(--r3) var(--r3) 0 0;max-width:100%;max-height:91vh;animation:slideUp .28s ease;}
 }
 .drag-h{display:none;width:36px;height:4px;background:rgba(255,255,255,.18);border-radius:2px;margin:10px auto 0;}
 @media(max-width:600px){.drag-h{display:block;}}
-.mhd{padding:18px 20px 14px;background:linear-gradient(135deg,var(--bg3),var(--bg5));border-bottom:1px solid var(--bd);position:relative;}
+.mhd{padding:18px 20px 14px;background:linear-gradient(135deg,#1a2c06,#243a0e);border-bottom:1px solid rgba(249,115,22,.18);position:relative;}
 .m-cr{display:flex;align-items:center;gap:9px;margin-bottom:8px;}
 .m-cr .fi{width:28px;height:21px;border-radius:3px;box-shadow:0 1px 4px rgba(0,0,0,.4);}
 .m-cb{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.1);border:1px solid var(--bd2);border-radius:var(--rnd);padding:2px 9px;font-size:9px;font-weight:700;color:var(--tx2);letter-spacing:.3px;}
@@ -271,7 +291,7 @@ header{
 
 .m-tgs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px;}
 .m-tg{font-size:8.5px;font-weight:700;padding:2px 8px;border-radius:var(--rnd);text-transform:uppercase;letter-spacing:.4px;}
-.m-desc{font-size:12px;color:var(--tx2);line-height:1.75;padding:11px 13px;background:rgba(255,255,255,.04);border-radius:var(--r2);border-left:3px solid var(--tl);margin-bottom:13px;}
+.m-desc{font-size:12px;color:var(--tx2);line-height:1.75;padding:11px 13px;background:rgba(249,115,22,.04);border-radius:var(--r2);border-left:3px solid var(--or);margin-bottom:13px;}
 .m-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:13px;}
 @media(max-width:360px){.m-grid{grid-template-columns:repeat(2,1fr);}}
 .m-cell{background:rgba(255,255,255,.05);border:1px solid var(--bd);border-radius:var(--r);padding:8px 10px;}
@@ -286,19 +306,63 @@ header{
 .m-btn:active{transform:scale(.98);}
 .m-btn-sec{background:rgba(255,255,255,.07);border:1px solid var(--bd3);box-shadow:none;color:var(--tx);}
 .m-btn-sec:hover{background:rgba(255,255,255,.12);box-shadow:none;transform:none;}
+
+/* ── TYPE RINGS SUR MARQUEURS ── */
+.mk.ring-bio .mk-head{box-shadow:0 0 0 3px #22C55E,0 3px 10px rgba(0,0,0,.5)!important;}
+.mk.ring-hve .mk-head{box-shadow:0 0 0 3px #EAB308,0 3px 10px rgba(0,0,0,.5)!important;}
+.mk.ring-rare .mk-head{box-shadow:0 0 0 3px #F97316,0 3px 10px rgba(0,0,0,.5)!important;}
+.mk.ring-verger .mk-head{box-shadow:0 0 0 3px #F43F5E,0 3px 10px rgba(0,0,0,.5)!important;}
+.mk.ring-new .mk-head{box-shadow:0 0 0 3px #FDE047,0 3px 10px rgba(0,0,0,.5)!important;}
+
+/* RICH HOVER TOOLTIP */
+.leaflet-tooltip.pep-card{background:#0e1c06;border:1px solid rgba(249,115,22,.45);border-radius:10px;padding:0;overflow:hidden;width:198px;box-shadow:0 8px 28px rgba(0,0,0,.65);pointer-events:none;font-family:'Plus Jakarta Sans',sans-serif;}
+.leaflet-tooltip.pep-card::before{display:none;}
+.ptt-img{height:52px;display:flex;align-items:center;justify-content:center;}
+.ptt-body{padding:7px 10px 9px;}
+.ptt-nm{font-size:11px;font-weight:700;color:#fff;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ptt-lc{font-size:8px;color:rgba(249,200,130,.55);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ptt-tg{display:flex;gap:3px;flex-wrap:wrap;}
+.ptt-ht{margin-top:5px;font-size:7.5px;color:rgba(249,115,22,.4);text-align:center;border-top:1px solid rgba(249,115,22,.1);padding-top:4px;}
+/* h-hero inner layout */
+.h-hero-inner{display:flex;align-items:center;gap:14px;}
+
+/* ── COUNTER ANIMATION ── */
+@keyframes cntBounce{0%{transform:scale(1.35);opacity:.5}100%{transform:scale(1);opacity:1}}
+#cnt-fr,#cnt-eu{display:inline-block;}
 </style>
 </head>
 <body>
 <header>
-  <div class="logo">&#x1F34B; La Route des <em>Agrumes</em></div>
-  <span class="logo-n" id="badge">62 p&#233;pini&#232;res</span>
-  <div class="sw">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input type="text" id="search" placeholder="Rechercher&#x2026;" oninput="doSearch(this.value)" autocomplete="off">
+  <div class="h-top">
+    <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;z-index:1;filter:drop-shadow(0 1px 5px rgba(0,0,0,.45))">
+      <circle cx="16" cy="16" r="15" fill="#F97316"/>
+      <circle cx="16" cy="16" r="11.5" fill="#FACC15"/>
+      <path d="M16 4.5v23M4.5 16h23M8.3 8.3l15.4 15.4M23.7 8.3L8.3 23.7" stroke="#C25400" stroke-width="1.4" stroke-linecap="round" opacity=".6"/>
+      <circle cx="16" cy="16" r="2.8" fill="#EA6800"/>
+    </svg>
+    <span class="logo-n" id="badge">62 p&#233;pini&#232;res</span>
+    <div class="sw">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search" placeholder="Rechercher&#x2026;" oninput="doSearch(this.value)" autocomplete="off">
+    </div>
+    <div class="hst">
+      <div class="hchip cfr"><span class="fi fi-fr"></span>&nbsp;<strong id="cnt-fr">48</strong></div>
+      <div class="hchip ceu">&#x1F30D;&nbsp;<strong id="cnt-eu">14</strong></div>
+    </div>
   </div>
-  <div class="hst">
-    <div class="hchip cfr"><span class="fi fi-fr"></span>&nbsp;<strong id="cnt-fr">48</strong></div>
-    <div class="hchip ceu">&#x1F30D;&nbsp;<strong id="cnt-eu">14</strong></div>
+  <div class="h-hero">
+    <div class="h-hero-inner">
+      <svg width="48" height="48" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;filter:drop-shadow(0 3px 12px rgba(249,115,22,.55))">
+        <circle cx="16" cy="16" r="15" fill="#F97316"/>
+        <circle cx="16" cy="16" r="11.5" fill="#FACC15"/>
+        <path d="M16 4.5v23M4.5 16h23M8.3 8.3l15.4 15.4M23.7 8.3L8.3 23.7" stroke="#C25400" stroke-width="1.4" stroke-linecap="round" opacity=".6"/>
+        <circle cx="16" cy="16" r="2.8" fill="#EA6800"/>
+      </svg>
+      <div>
+        <div class="h-title">La Route des <em>Agrumes</em></div>
+        <div class="h-slogan">La carte des p&#233;pini&#232;res d&#x27;agrumes en Europe</div>
+      </div>
+    </div>
   </div>
 </header>
 <div class="fbar">
@@ -318,23 +382,14 @@ header{
   <button class="fb" data-f="hve"    onclick="setF('hve',this)">&#x1F3C5; HVE</button>
   <button class="fb" data-f="rare"   onclick="setF('rare',this)">&#x2B50; Rares</button>
   <button class="fb" data-f="online" onclick="setF('online',this)">&#x1F310; En ligne</button>
+  <div class="fsep"></div>
+  <span class="fbl">Livraison&nbsp;:</span>
+  <button class="fb" data-f="envoi" onclick="setF('envoi',this)">&#x1F4E6; Envoi possible</button>
+  <button class="fb" data-f="place" onclick="setF('place',this)">&#x1F3E1; Sur place seul.</button>
 </div>
 <div class="main">
   <div id="map"></div>
   <div class="fcnt" id="fcnt">62 p&#233;pini&#232;res affich&#233;es</div>
-  <div class="legend">
-    <div class="leg-t">Filtrer par pays</div>
-    <div class="leg-r" onclick="setFLeg('FR')"><span class="leg-dot" style="background:var(--FR)"></span><span class="fi fi-fr"></span> France</div>
-    <div class="leg-r" onclick="setFLeg('BE')"><span class="leg-dot" style="background:var(--BE)"></span><span class="fi fi-be"></span> Belgique</div>
-    <div class="leg-r" onclick="setFLeg('BG')"><span class="leg-dot" style="background:var(--BG)"></span><span class="fi fi-bg"></span> Bulgarie</div>
-    <div class="leg-r" onclick="setFLeg('IT')"><span class="leg-dot" style="background:var(--IT)"></span><span class="fi fi-it"></span> Italie</div>
-    <div class="leg-r" onclick="setFLeg('PT')"><span class="leg-dot" style="background:var(--PT)"></span><span class="fi fi-pt"></span> Portugal</div>
-    <div class="leg-r" onclick="setFLeg('CZ')"><span class="leg-dot" style="background:var(--CZ)"></span><span class="fi fi-cz"></span> Tch&#233;quie</div>
-    <div class="leg-r" onclick="setFLeg('CH')"><span class="leg-dot" style="background:var(--CH)"></span><span class="fi fi-ch"></span> Suisse</div>
-    <div class="leg-r" style="margin-top:6px;border-top:1px solid rgba(255,255,255,.07);padding-top:6px" onclick="setFLeg('all')">
-      <span class="leg-dot" style="background:var(--tl2)"></span>Tout afficher
-    </div>
-  </div>
   <div class="mob-btn" id="mob-btn" onclick="openSB()">&#x1F4CB;&nbsp;<span id="mob-cnt">62</span></div>
   <!-- Boutons bascule couches géographiques -->
   <div class="layers-btn" id="layers-btn" style="display:none">
@@ -349,6 +404,19 @@ header{
     <div class="sb-hd">
       <div style="flex:1"><h2>&#x1F5FA; P&#233;pini&#232;res r&#233;f&#233;renc&#233;es</h2><p id="sb-cnt">62 &#233;tablissements &middot; 7 pays</p></div>
       <button class="sb-cls" onclick="closeSB()">&#x2715;</button>
+    </div>
+    <div class="leg-sb">
+      <div class="leg-t">Filtrer par pays</div>
+      <div class="leg-r" onclick="setFLeg('FR')"><span class="leg-dot" style="background:var(--FR)"></span><span class="fi fi-fr"></span> France</div>
+      <div class="leg-r" onclick="setFLeg('BE')"><span class="leg-dot" style="background:var(--BE)"></span><span class="fi fi-be"></span> Belgique</div>
+      <div class="leg-r" onclick="setFLeg('BG')"><span class="leg-dot" style="background:var(--BG)"></span><span class="fi fi-bg"></span> Bulgarie</div>
+      <div class="leg-r" onclick="setFLeg('IT')"><span class="leg-dot" style="background:var(--IT)"></span><span class="fi fi-it"></span> Italie</div>
+      <div class="leg-r" onclick="setFLeg('PT')"><span class="leg-dot" style="background:var(--PT)"></span><span class="fi fi-pt"></span> Portugal</div>
+      <div class="leg-r" onclick="setFLeg('CZ')"><span class="leg-dot" style="background:var(--CZ)"></span><span class="fi fi-cz"></span> Tch&#233;quie</div>
+      <div class="leg-r" onclick="setFLeg('CH')"><span class="leg-dot" style="background:var(--CH)"></span><span class="fi fi-ch"></span> Suisse</div>
+      <div class="leg-r" style="margin-top:5px;border-top:1px solid rgba(249,115,22,.12);padding-top:5px" onclick="setFLeg('all')">
+        <span class="leg-dot" style="background:var(--or)"></span>Tout afficher
+      </div>
     </div>
     <div class="lw" id="lw"></div>
   </div>
@@ -397,7 +465,7 @@ const D=[
 {id:17,co:"FR",fc:"fr",pv:"P",name:"Le Beau Zeste",loc:"Avenue du Stade, 81220 Saint-Paul-Cap-de-Joux",lat:43.6045,lon:2.0612,tags:["online"],spec:"Tarn. P\u00e9pini\u00e8re artisanale. Agrumes greff\u00e9s de qualit\u00e9. Tr\u00e8s pr\u00e9sents sur Facebook.",site:"https://www.facebook.com/lebeauzeste",tel:"06 25 81 75 42",email:"lebeauzeste81@gmail.com",note:"4.8/5",vente:"Sur place / Facebook"},
 {id:7,co:"FR",fc:"fr",pv:"V",name:"Fruit Friends",loc:"Carrer Del Trial, 66320 Finestret",lat:42.5382,lon:2.5708,tags:["online"],spec:"En collaboration avec Olivier Biggio. Prix tr\u00e8s int\u00e9ressants. Commande minimum 30 plantes. Avocatiers, manguiers, pistachiers aussi.",site:"https://agrumes.pro/",tel:"07 82 54 63 71",email:"contact@agrumes.pro",note:"4.5/5",vente:"En ligne (min 30 plantes)"},
 {id:5,co:"FR",fc:"fr",pv:"P",name:"Aux Fruits et \u00e0 Mesure",loc:"5 Chemin du Dev\u00e8s, 33480 Sainte-H\u00e9l\u00e8ne",lat:44.9973,lon:-0.9018,tags:["bio", "online"],spec:"Margaux : passionn\u00e9e, conseils et ateliers de greffe en Gironde. Agriculture Biologique certifi\u00e9e AB. R\u00e9server en ligne, retrait sur place.",site:"https://auxfruitsetamesure.fr/",tel:"06 75 16 74 66",email:"contact@auxfruitsetamesure.fr",note:"5.0/5",vente:"Retrait sur place",certifs:["bio"]},
-{id:8,co:"FR",fc:"fr",pv:"P",name:"Greffeur d'Agrumes",loc:"8 impasse du Riou 31410 lavernose lacasse ",lat:43.4025,lon:1.282,tags:["bio", "rare", "online"],spec:"Sp\u00e9cialiste du greffage en Haute-Garonne. Collection agrumes rustiques et rares. Certifi\u00e9 Bio AB. Vend aussi mat\u00e9riel de culture et graines de porte-greffes.",site:"https://www.greffeurdagrumes.com/",tel:"07 77 32 65 89",email:"laurent@greffeurdagrumes.com",note:"4.8/5",vente:"En ligne",certifs:["bio"]},
+{id:8,co:"FR",fc:"fr",pv:"P",name:"Greffeur d'Agrumes",loc:"8 impasse du Riou 31410 lavernose lacasse",lat:43.4025,lon:1.282,tags:["bio", "rare", "online"],spec:"Sp\u00e9cialiste du greffage en Haute-Garonne. Collection agrumes rustiques et rares. Certifi\u00e9 Bio AB. Vend aussi mat\u00e9riel de culture et graines de porte-greffes.",site:"https://www.greffeurdagrumes.com/",tel:"07 77 32 65 89",email:"laurent@greffeurdagrumes.com",note:"4.8/5",vente:"En ligne",certifs:["bio"]},
 {id:9,co:"FR",fc:"fr",pv:"P",name:"INRAE CRB Citrus",loc:"Station San Giuliano, 20230 San-Nicolao, Corse",lat:42.354,lon:9.529,tags:["rare"],spec:"Collection nationale de r\u00e9f\u00e9rence. Diffuse graines de porte-greffes et greffons sur formulaire officiel. R\u00e9serv\u00e9 aux professionnels et chercheurs.",site:"https://www.inrae.fr/",tel:"04 95 59 59 00",email:"diffusion.crb.citrus@inrae.fr",note:"R\u00e9f\u00e9rence",vente:"Formulaire (pro)"},
 {id:16,co:"FR",fc:"fr",pv:"PV",name:"Leader Plant",loc:"Route de Pont-Saint-Martin, 44840 Les Sorini\u00e8res",lat:47.1418,lon:-1.5452,tags:["online"],spec:"Grande p\u00e9pini\u00e8re VPC Loire-Atlantique. Agrumes parmi une vaste gamme. Livraison rapide France.",site:"https://www.leaderplant.com/",tel:"02 40 04 38 04",email:"contact@leaderplant.com",note:"4.2/5",vente:"En ligne"},
 {id:19,co:"FR",fc:"fr",pv:"PV",name:"Lou Pepin",loc:"Route d'Albi, 81340 Tr\u00e9bas-les-Bains",lat:43.944,lon:2.483,tags:["hve", "rare", "online", "verger"],spec:"Emmanuel P\u00e9pin. P\u00e9pini\u00e8re certifi\u00e9e HVE (Haute Valeur Environnementale) \u2014 d\u00e9marche agro-environnementale exigeante, distincte du Bio AB. Nombreuses vari\u00e9t\u00e9s r\u00e9sistantes au froid. Verger exceptionnel de 100 agrumes en pleine terre ! Producteur ET revendeur.",site:"https://loupepin.com/",tel:"06 76 15 95 04",email:"loupepin81@gmail.com",note:"Nouveau 2024",vente:"Sur place + en ligne",certifs:["hve"],isNew:true},
@@ -408,8 +476,8 @@ const D=[
 {id:23,co:"FR",fc:"fr",pv:"V",name:"Mesfruitiers",loc:"SCEA Fleurandie, Le Val Dor\u00e9, 27190 Le Val-Dor\u00e9",lat:48.991,lon:0.875,tags:["online"],spec:"Eure. Vente en ligne de fruitiers dont agrumes.",site:"https://www.mesfruitiers.fr/",tel:"02 32 38 07 51",email:"contact@mesfruitiers.fr",note:"4.2/5",vente:"En ligne"},
 {id:24,co:"FR",fc:"fr",pv:"P",name:"Michel Dufau",loc:"62 Route de Harguette, 40320 Eug\u00e9nie-les-Bains",lat:43.7009,lon:-0.3915,tags:["rare", "online"],spec:"Landes. 130+ vari\u00e9t\u00e9s. P\u00e9pini\u00e9riste historique des Landes depuis plus de 20 ans.",site:"https://www.agrumes-dufau.com/",tel:"05 58 51 18 54",email:"pepinieres.dufau@wanadoo.fr",note:"4.4/5",vente:"Sur place + en ligne"},
 {id:25,co:"FR",fc:"fr",pv:"P",name:"Micro Citrus",loc:"296 All\u00e9e du Lavoir, 24610 Montpeyroux",lat:45.0095,lon:0.0912,tags:["rare", "online"],spec:"Dordogne. 50+ vari\u00e9t\u00e9s : satsumas, yuzu, bergamotes, pomelos rares. Vend aussi des porte-greffes.",site:"https://microcitrus.fr/",tel:"06 47 30 75 98",note:"5.0/5",vente:"Sur RDV / livraison locale"},
-{id:26,co:"FR",fc:"fr",pv:"V",name:"Mon Jardin Extraordinaire",loc:"2 impasse des Champs de Candy, 41250 Bracieux",lat:47.5543,lon:1.5315,tags:["rare", "online"],spec:"Loir-et-Cher. Agrumes et exotiques comestibles rares. Kevin conseille avec passion chaque client.",site:"https://monjardinextraordinaire.com/",tel:"06 24 04 90 70",email:"pepinieresmonjardin@gmail.com",note:"4.6/5",vente:"Sur place + en ligne"},
-{id:27,co:"FR",fc:"fr",pv:"P",name:"Mon Orangerie",loc:"18 Rue de la Motte, 49125 Tierc\u00e9",lat:47.5879,lon:-0.4795,tags:["bio", "online"],spec:"Maine-et-Loire. Seul agrumiculteur certifi\u00e9 Bio AB + GlobalGAP en Europe. Grande production. Exp\u00e9dition nationale.",site:"https://www.mon-orangerie.fr/",note:"4.4/5",vente:"En ligne",certifs:["bio"]},
+{id:26,co:"FR",fc:"fr",pv:"P",name:"Mon Jardin Extraordinaire",loc:"9 rue de Mar\u00e7on, 41700 Fresnes",lat:47.4339,lon:1.5642,tags:["rare", "online"],spec:"Loir-et-Cher. Agrumes et exotiques comestibles rares. Kevin conseille avec passion chaque client. Point de vente \u00e0 Fresnes ; le site de Bracieux ne sert plus qu'\u00e0 la mise en colis (exp\u00e9ditions).",site:"https://monjardinextraordinaire.com/",tel:"06 24 04 90 70",email:"pepinieresmonjardin@gmail.com",note:"4.6/5",vente:"Sur place + en ligne"},
+{id:63,co:"FR",fc:"fr",pv:"P",name:"Les Jardins du Kindsgass",loc:"Wangen, 67520",lat:48.6356,lon:7.4131,tags:["rare"],spec:"Alsace (Bas-Rhin). P\u00e9pini\u00e8re sp\u00e9cialis\u00e9e dans les fruitiers rares et acclimat\u00e9s. Agrumes greff\u00e9s sur Poncirus et FA5 \u2014 une vingtaine de vari\u00e9t\u00e9s propos\u00e9es. Vente uniquement \u00e0 la p\u00e9pini\u00e8re, pas d'envoi de plants pour l'instant.",site:"https://lesjardinsdukindsgass.com/",note:"Nouveau",vente:"Sur place uniquement",isNew:true},
 {id:1,co:"FR",fc:"fr",pv:"PV",name:"\u00c0 l'Ombre des Figuiers",loc:"1 ch. Kelenneg Vihan, ZA Bel Air, 29700 Pluguffan",lat:47.9721,lon:-4.1478,tags:["rare", "online"],spec:"Finist\u00e8re. Citron caviar, oranges rustiques, collection Mas Bach\u00e8s, raret\u00e9s japonaises introuvables ailleurs. Producteur et revendeur.",site:"https://www.achat-vente-palmiers.com/",tel:"07 80 94 75 58",email:"contact@alombredesfiguiers.com",note:"4.6/5",vente:"Sur place + en ligne"},
 {id:28,co:"FR",fc:"fr",pv:"P",name:"P\u00e9pin(s) Perdus",loc:"La B\u00e9gorre, Route de Peyssies, 31390 Carbonne",lat:43.303,lon:1.221,tags:["rare", "online"],spec:"Haute-Garonne. Rares comestibles dont agrumes rustiques. Tr\u00e8s actifs sur TikTok, tr\u00e8s p\u00e9dagogiques.",site:"https://pepinsperdus.fr/",tel:"06 23 27 07 13",email:"pepinsperdus@gmail.com",note:"4.3/5",vente:"Sur place + en ligne"},
 {id:29,co:"FR",fc:"fr",pv:"P",name:"P\u00e9pini\u00e8re 100 Racines",loc:"238 chemin de Malerbe, 19450 Chamboulive",lat:45.449,lon:1.707,tags:["bio", "online"],spec:"Corr\u00e8ze. Fruitiers bio rustiques dont agrumes. R\u00e9server en ligne et r\u00e9cup\u00e9rer sur place. Certifi\u00e9 Bio AB.",site:"https://pepiniere100racines.fr/",tel:"06 08 12 70 20",email:"info@pepiniere100racines.fr",note:"4.5/5",vente:"Retrait sur place",certifs:["bio"]},
@@ -465,7 +533,7 @@ const TAGS={
 };
 const CERTS={
   bio:{i:"\u{1F331}",t:"<strong>Agriculture Biologique AB</strong> \u2014 Production certifi\u00e9e sans pesticides ni engrais de synth\u00e8se. Contr\u00f4l\u00e9e par Ecocert, Bureau Veritas ou autre organisme agr\u00e9\u00e9."},
-  hve:{i:"\u{1F3C5}",t:"<strong>Haute Valeur Environnementale (HVE)</strong> \u2014 Certification agro-environnementale fran\u00e7aise : biodiversit\u00e9, ph\u00e9nol\u00f3gie, fertilisation, eau. Plus accessible que le Bio AB, mais d\u00e9marche exigeante et v\u00e9rifi\u00e9e."},
+  hve:{i:"\u{1F3C5}",t:"<strong>Haute Valeur Environnementale (HVE)</strong> \u2014 Certification agro-environnementale fran\u00e7aise : biodiversit\u00e9, ph\u00e9nologie, fertilisation, eau. Plus accessible que le Bio AB, mais d\u00e9marche exigeante et v\u00e9rifi\u00e9e."},
 };
 
 const col=p=>CC[p.co]||"#444";
@@ -481,7 +549,8 @@ function mkIcon(p,sel){
   const bw=sel?2.5:2;
   const tw=sel?7:5;
   const th=sel?10:7;
-  const html=`<div class="mk${sel?' sel':''}">
+  const ring=p.tags.includes("bio")?"ring-bio":p.tags.includes("hve")?"ring-hve":p.tags.includes("verger")?"ring-verger":p.tags.includes("rare")?"ring-rare":p.isNew?"ring-new":"";
+  const html=`<div class="mk${sel?' sel':''}${ring?' '+ring:''}">
     <div class="mk-head" style="width:${s}px;height:${s}px;border:${bw}px solid rgba(255,255,255,.88);box-shadow:0 3px 10px rgba(0,0,0,.55);">
       <span class="fi fi-${p.fc}" style="width:${fs}px;height:${s}px;margin-left:-${Math.round((fs-s)/2)}px;display:block;background-size:cover;background-position:center;"></span>
     </div>
@@ -501,12 +570,14 @@ const MK={};
 let FILT="all",SRH="",SEL=null,_lat=null,_lon=null;
 D.forEach(p=>{
   const m=L.marker([p.lat,p.lon],{icon:mkIcon(p,false)}).addTo(map);
-  m.bindTooltip(p.name,{
-    permanent:false,
-    direction:"top",
-    className:"pep-tip",
-    offset:[0,-4]
-  });
+  // Rich tooltip card
+  const bgC=CC[p.co]||"#1a3a4a";
+  const rt=p.tags.includes("bio")?"bio":p.tags.includes("hve")?"hve":p.tags.includes("rare")?"rare":p.tags.includes("verger")?"verger":"";
+  const rtBadge=rt&&TAGS[rt]?`<span class="tag ${TAGS[rt].c}" style="font-size:7px;padding:1px 5px">${TAGS[rt].l}</span>`:"";
+  const pvBadge=`<span class="tag ${p.pv==="P"?"t-prod":p.pv==="PV"?"t-pv":"t-rev"}" style="font-size:7px;padding:1px 5px">${p.pv==="P"?"Producteur":p.pv==="PV"?"Prod.\u00a0&\u00a0Rev.":"Revendeur"}</span>`;
+  const locShort=p.loc.split(",").slice(-2).join(",").trim();
+  const tipHtml=`<div><div class="ptt-img" style="background:linear-gradient(135deg,${bgC}cc,${bgC}44);"><span style="font-size:26px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.55))">\u{1F34A}</span></div><div class="ptt-body"><div class="ptt-nm">${p.name}</div><div class="ptt-lc">\u{1F4CD} ${locShort}</div><div class="ptt-tg">${pvBadge}${rtBadge}</div><div class="ptt-ht">Cliquer pour la fiche compl\u00e8te</div></div></div>`;
+  m.bindTooltip(tipHtml,{permanent:false,direction:"top",className:"pep-card",offset:[0,-8]});
   m.on("click",()=>{openMod(p.id);if(mob())closeSB();});
   MK[p.id]=m;
 });
@@ -599,11 +670,21 @@ function filtered(){
   return D.filter(p=>{
     let mf=FILT==="all"||
       (FILT==="prod"&&(p.pv==="P"||p.pv==="PV"))||
+      (FILT==="envoi"&&p.tags.includes("online"))||
+      (FILT==="place"&&!p.tags.includes("online"))||
       (["bio","hve","rare","online","verger"].includes(FILT)&&p.tags.includes(FILT))||
       p.co===FILT;
     const ms=!SRH||p.name.toLowerCase().includes(SRH)||p.loc.toLowerCase().includes(SRH)||(CN[p.co]||"").toLowerCase().includes(SRH);
     return mf&&ms;
   });
+}
+
+function animNum(elId,val){
+  const el=document.getElementById(elId);
+  if(!el)return;
+  const old=parseInt(el.textContent)||0;
+  el.textContent=val;
+  if(old!==val){el.style.animation="none";void el.offsetWidth;el.style.animation="cntBounce .42s cubic-bezier(.34,1.3,.64,1)";}
 }
 
 // ── RENDER ────────────────────────────────────────────────────
@@ -618,8 +699,8 @@ function render(){
   document.getElementById("fcnt").textContent=n+" p\u00e9pini\u00e8res affich\u00e9es";
   document.getElementById("mob-cnt").textContent=n;
   document.getElementById("sb-cnt").textContent=n+" \u00e9tablissements \u00b7 "+nP+" pays";
-  document.getElementById("cnt-fr").textContent=nFR;
-  document.getElementById("cnt-eu").textContent=nEU;
+  animNum("cnt-fr",nFR);
+  animNum("cnt-eu",nEU);
 
   D.forEach(p=>{
     if(ids.has(p.id)){if(!map.hasLayer(MK[p.id]))MK[p.id].addTo(map);}
@@ -735,6 +816,7 @@ function setFLeg(co){
   render();
 }
 function doSearch(v){SRH=v.toLowerCase();render();}
+
 render();
 </script>
 </body>
