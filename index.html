@@ -179,6 +179,40 @@ header{
 .nr{padding:40px 14px;text-align:center;color:var(--tx2);font-size:12px;}
 .nr span{font-size:28px;display:block;margin-bottom:8px;}
 
+/* ── Tooltips noms régions ── */
+.leaflet-tooltip.reg-tip{
+  background:rgba(11,21,32,.88);
+  border:1px solid rgba(249,115,22,.35);
+  border-radius:4px;
+  color:#FCA97A;
+  font-size:9.5px;
+  font-weight:700;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  padding:2px 7px;
+  white-space:nowrap;
+  box-shadow:0 2px 8px rgba(0,0,0,.4);
+  pointer-events:none;
+}
+.leaflet-tooltip.reg-tip::before{display:none;}
+/* toggle couches */
+.layers-btn{
+  position:absolute;bottom:22px;left:14px;z-index:600;
+  display:flex;flex-direction:column;gap:5px;
+}
+@media(min-width:601px){.layers-btn{bottom:220px;}}
+.lbtn{
+  background:rgba(11,21,32,.93);border:1px solid var(--bd3);
+  border-radius:var(--rnd);padding:4px 11px;
+  font-size:9.5px;font-weight:700;color:var(--tx2);
+  cursor:pointer;white-space:nowrap;transition:all .14s;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  display:flex;align-items:center;gap:5px;
+}
+.lbtn:hover{color:var(--w);border-color:var(--bd3);}
+.lbtn.on{color:var(--w);}
+.lbtn .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+
 /* MODAL */
 .ov{display:none;position:fixed;inset:0;background:rgba(4,10,20,.78);backdrop-filter:blur(10px);z-index:2000;align-items:center;justify-content:center;padding:16px;}
 .ov.open{display:flex;}
@@ -286,6 +320,15 @@ header{
     </div>
   </div>
   <div class="mob-btn" id="mob-btn" onclick="openSB()">&#x1F4CB;&nbsp;<span id="mob-cnt">62</span></div>
+  <!-- Boutons bascule couches géographiques -->
+  <div class="layers-btn" id="layers-btn" style="display:none">
+    <button class="lbtn on" id="btn-pays" onclick="toggleLayer('pays')">
+      <span class="dot" style="background:rgba(160,200,255,.7);border:1px solid rgba(160,200,255,.9)"></span>Frontières pays
+    </button>
+    <button class="lbtn on" id="btn-reg" onclick="toggleLayer('reg')">
+      <span class="dot" style="background:rgba(249,115,22,.7);border:1px solid rgba(249,115,22,.9)"></span>Régions France
+    </button>
+  </div>
   <div class="sidebar" id="sidebar">
     <div class="sb-hd">
       <div style="flex:1"><h2>&#x1F5FA; P&#233;pini&#232;res r&#233;f&#233;renc&#233;es</h2><p id="sb-cnt">62 &#233;tablissements &middot; 7 pays</p></div>
@@ -325,6 +368,7 @@ header{
   </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
 <script>
 
 const D=[
@@ -445,7 +489,96 @@ D.forEach(p=>{
   MK[p.id]=m;
 });
 
-// ── FILTRAGE ──────────────────────────────────────────────────
+// ── FRONTIÈRES PAYS + RÉGIONS FRANCE ──────────────────────────
+// Codes ISO 3166-1 numérique des pays européens pertinents
+const EU_IDS = new Set([8,20,40,56,70,100,191,203,208,233,246,250,276,300,348,352,372,380,428,438,440,442,470,492,498,499,528,578,616,620,642,643,674,688,703,705,724,752,756,804,807,826]);
+
+let layerPays = null;   // GeoJSON frontières pays
+let layerReg  = null;   // GeoJSON régions FR
+let showPays  = true;
+let showReg   = true;
+
+// Style pays : ligne fine blanc-bleu, pas de remplissage
+const STYLE_PAYS = {
+  color:"rgba(160,200,255,0.55)",
+  weight:1.1,
+  fillOpacity:0,
+  opacity:0.55,
+  interactive:false
+};
+
+// Style régions France : tirets orangés discrets, léger fond
+const STYLE_REG = {
+  color:"rgba(249,115,22,0.65)",
+  weight:1.2,
+  fillColor:"rgba(249,115,22,0.04)",
+  fillOpacity:1,
+  opacity:0.65,
+  dashArray:"6,5",
+  interactive:true
+};
+
+// Chargement parallèle
+Promise.all([
+  fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(r=>r.json()),
+  fetch("https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/regions-version-simplifiee.geojson").then(r=>r.json())
+]).then(([world, regions])=>{
+
+  // Convertir TopoJSON → GeoJSON et filtrer l'Europe
+  const allCountries = topojson.feature(world, world.objects.countries);
+  const euroFC = {
+    type:"FeatureCollection",
+    features: allCountries.features.filter(f => EU_IDS.has(+f.id))
+  };
+
+  // Ajouter frontières pays (pane "tilePane" = sous les marqueurs)
+  layerPays = L.geoJSON(euroFC, {style:STYLE_PAYS, pane:"tilePane"}).addTo(map);
+
+  // Ajouter régions France avec tooltip nom de région au survol
+  layerReg = L.geoJSON(regions, {
+    style: STYLE_REG,
+    pane:"tilePane",
+    onEachFeature(feat, layer){
+      const nom = feat.properties.nom || feat.properties.NOM_M || "";
+      if(nom){
+        layer.bindTooltip(nom,{
+          permanent:false,
+          direction:"center",
+          className:"reg-tip",
+          sticky:true
+        });
+      }
+      layer.on({
+        mouseover(e){ e.target.setStyle({fillOpacity:.08,opacity:.85}); },
+        mouseout(e){ layerReg.resetStyle(e.target); }
+      });
+    }
+  }).addTo(map);
+
+  // Afficher les boutons toggle
+  document.getElementById("layers-btn").style.display="flex";
+
+}).catch(()=>{
+  // En cas d'erreur réseau, on ignore silencieusement
+});
+
+function toggleLayer(which){
+  if(which==="pays"){
+    showPays=!showPays;
+    if(showPays&&layerPays) layerPays.addTo(map);
+    else if(layerPays) map.removeLayer(layerPays);
+    const btn=document.getElementById("btn-pays");
+    btn.classList.toggle("on",showPays);
+    btn.style.opacity=showPays?"1":".45";
+  } else {
+    showReg=!showReg;
+    if(showReg&&layerReg) layerReg.addTo(map);
+    else if(layerReg) map.removeLayer(layerReg);
+    const btn=document.getElementById("btn-reg");
+    btn.classList.toggle("on",showReg);
+    btn.style.opacity=showReg?"1":".45";
+  }
+}
 function filtered(){
   return D.filter(p=>{
     let mf=FILT==="all"||
