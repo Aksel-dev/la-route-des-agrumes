@@ -195,6 +195,21 @@ header{
   pointer-events:none;
 }
 .leaflet-tooltip.reg-tip::before{display:none;}
+/* Tooltip nom pépinière sur marqueur */
+.leaflet-tooltip.pep-tip{
+  background:rgba(11,21,32,.93);
+  border:1px solid rgba(6,182,212,.45);
+  border-radius:5px;
+  color:#fff;
+  font-size:11px;
+  font-weight:700;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  padding:4px 9px;
+  white-space:nowrap;
+  box-shadow:0 3px 12px rgba(0,0,0,.5);
+  pointer-events:none;
+}
+.leaflet-tooltip.pep-tip::before{display:none;}
 /* toggle couches */
 .layers-btn{
   position:absolute;bottom:22px;left:14px;z-index:600;
@@ -477,15 +492,21 @@ function mkIcon(p,sel){
 
 // ── CARTE ─────────────────────────────────────────────────────
 const map=L.map("map",{center:[46.5,7],zoom:5,zoomControl:true});
-L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",{
-  attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
-  subdomains:"abcd",maxZoom:19
+L.tileLayer("https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png",{
+  attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">Contributeurs OpenStreetMap</a>, donn\u00e9es <a href="https://opendatacommons.org/licenses/odbl/">ODbL</a>',
+  subdomains:"abc",maxZoom:19
 }).addTo(map);
 
 const MK={};
 let FILT="all",SRH="",SEL=null,_lat=null,_lon=null;
 D.forEach(p=>{
   const m=L.marker([p.lat,p.lon],{icon:mkIcon(p,false)}).addTo(map);
+  m.bindTooltip(p.name,{
+    permanent:false,
+    direction:"top",
+    className:"pep-tip",
+    offset:[0,-4]
+  });
   m.on("click",()=>{openMod(p.id);if(mob())closeSB();});
   MK[p.id]=m;
 });
@@ -508,15 +529,14 @@ const STYLE_PAYS = {
   interactive:false
 };
 
-// Style régions France : tirets orangés discrets, léger fond
+// Style régions France : tirets bien visibles, léger fond
 const STYLE_REG = {
-  color:"rgba(249,115,22,0.65)",
-  weight:1.2,
-  fillColor:"rgba(249,115,22,0.04)",
+  color:"#E8650A",
+  weight:2,
+  fillColor:"rgba(232,101,10,0.05)",
   fillOpacity:1,
-  opacity:0.65,
-  dashArray:"6,5",
-  interactive:true
+  opacity:0.78,
+  dashArray:"7,5"
 };
 
 // Chargement parallèle
@@ -538,9 +558,8 @@ Promise.all([
   // Ajouter régions France avec tooltip nom de région au survol
   layerReg = L.geoJSON(regions, {
     style: STYLE_REG,
-    pane:"tilePane",
     onEachFeature(feat, layer){
-      const nom = feat.properties.nom || feat.properties.NOM_M || "";
+      const nom = feat.properties.nom || feat.properties.NOM_M || feat.properties.name || "";
       if(nom){
         layer.bindTooltip(nom,{
           permanent:false,
@@ -549,10 +568,6 @@ Promise.all([
           sticky:true
         });
       }
-      layer.on({
-        mouseover(e){ e.target.setStyle({fillOpacity:.08,opacity:.85}); },
-        mouseout(e){ layerReg.resetStyle(e.target); }
-      });
     }
   }).addTo(map);
 
