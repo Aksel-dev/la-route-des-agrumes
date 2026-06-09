@@ -18,7 +18,7 @@
   --au:#EAB308;--au2:#C49A06;
   --w:#FFFFFF;--tx:#C5DCF0;--tx2:#6A9DBE;--tx3:#2A4E6E;
   --bd:rgba(255,255,255,.06);--bd2:rgba(255,255,255,.13);--bd3:rgba(255,255,255,.24);
-  --FR:#15803D;--IT:#C2410C;--PT:#B91C1C;--CH:#7F1D1D;--BE:#92400E;--CZ:#3730A3;--BG:#7C2020;
+  --FR:#15803D;--IT:#C2410C;--PT:#B91C1C;--CH:#7F1D1D;--BE:#92400E;--CZ:#3730A3;--BG:#7C2020;--ES:#A16207;
   --s0:0 2px 12px rgba(0,0,0,.35);--s1:0 8px 28px rgba(0,0,0,.5);--s2:0 20px 60px rgba(0,0,0,.65);
   --r:6px;--r2:10px;--r3:14px;--rnd:99px;
 }
@@ -76,6 +76,7 @@ header::before{
 .fb[data-f="FR"].on{background:var(--FR);}
 .fb[data-f="IT"].on{background:var(--IT);}
 .fb[data-f="PT"].on{background:var(--PT);}
+.fb[data-f="ES"].on{background:var(--ES);}
 .fb[data-f="CH"].on{background:var(--CH);}
 .fb[data-f="BE"].on{background:var(--BE);}
 .fb[data-f="CZ"].on{background:var(--CZ);}
@@ -324,10 +325,10 @@ header::before{
       <circle cx="16" cy="16" r="2.8" fill="#EA6800"/>
     </svg>
     <div style="flex:1"></div>
-    <span class="logo-n" id="badge" style="margin-right:10px">62 p&#233;pini&#232;res</span>
+    <span class="logo-n" id="badge" style="margin-right:10px">66 p&#233;pini&#232;res</span>
     <div class="hst">
-      <div class="hchip cfr"><span class="fi fi-fr"></span>&nbsp;<strong id="cnt-fr">48</strong></div>
-      <div class="hchip ceu">&#x1F30D;&nbsp;<strong id="cnt-eu">14</strong></div>
+      <div class="hchip cfr"><span class="fi fi-fr"></span>&nbsp;<strong id="cnt-fr">51</strong></div>
+      <div class="hchip ceu">&#x1F30D;&nbsp;<strong id="cnt-eu">15</strong></div>
     </div>
   </div>
   <div class="h-hero">
@@ -351,6 +352,7 @@ header::before{
   <button class="fb"    data-f="FR"     onclick="setF('FR',this)"><span class="fi fi-fr"></span> France</button>
   <button class="fb"    data-f="IT"     onclick="setF('IT',this)"><span class="fi fi-it"></span> Italie</button>
   <button class="fb"    data-f="PT"     onclick="setF('PT',this)"><span class="fi fi-pt"></span> Portugal</button>
+  <button class="fb"    data-f="ES"     onclick="setF('ES',this)"><span class="fi fi-es"></span> Espagne</button>
   <button class="fb"    data-f="CH"     onclick="setF('CH',this)"><span class="fi fi-ch"></span> Suisse</button>
   <button class="fb"    data-f="BE"     onclick="setF('BE',this)"><span class="fi fi-be"></span> Belgique</button>
   <button class="fb"    data-f="CZ"     onclick="setF('CZ',this)"><span class="fi fi-cz"></span> Tch&#233;quie</button>
@@ -369,10 +371,10 @@ header::before{
 </div>
 <div class="main">
   <div id="map"></div>
-  <div class="mob-btn" id="mob-btn" onclick="openSB()">&#x1F4CB;&nbsp;<span id="mob-cnt">62</span></div>
+  <div class="mob-btn" id="mob-btn" onclick="openSB()">&#x1F4CB;&nbsp;<span id="mob-cnt">66</span></div>
   <div class="sidebar" id="sidebar">
     <div class="sb-hd">
-      <div style="flex:1"><h2>&#x1F5FA; P&#233;pini&#232;res r&#233;f&#233;renc&#233;es</h2><p id="sb-cnt">62 &#233;tablissements &middot; 7 pays</p></div>
+      <div style="flex:1"><h2>&#x1F5FA; P&#233;pini&#232;res r&#233;f&#233;renc&#233;es</h2><p id="sb-cnt">66 &#233;tablissements &middot; 8 pays</p></div>
       <button class="sb-cls" onclick="closeSB()">&#x2715;</button>
     </div>
     <div class="leg-sb">
@@ -382,6 +384,7 @@ header::before{
       <div class="leg-r" onclick="setFLeg('BG')"><span class="leg-dot" style="background:var(--BG)"></span><span class="fi fi-bg"></span> Bulgarie</div>
       <div class="leg-r" onclick="setFLeg('IT')"><span class="leg-dot" style="background:var(--IT)"></span><span class="fi fi-it"></span> Italie</div>
       <div class="leg-r" onclick="setFLeg('PT')"><span class="leg-dot" style="background:var(--PT)"></span><span class="fi fi-pt"></span> Portugal</div>
+      <div class="leg-r" onclick="setFLeg('ES')"><span class="leg-dot" style="background:var(--ES)"></span><span class="fi fi-es"></span> Espagne</div>
       <div class="leg-r" onclick="setFLeg('CZ')"><span class="leg-dot" style="background:var(--CZ)"></span><span class="fi fi-cz"></span> Tch&#233;quie</div>
       <div class="leg-r" onclick="setFLeg('CH')"><span class="leg-dot" style="background:var(--CH)"></span><span class="fi fi-ch"></span> Suisse</div>
       <div class="leg-r" style="margin-top:5px;border-top:1px solid rgba(249,115,22,.12);padding-top:5px" onclick="setFLeg('all')">
@@ -444,7 +447,7 @@ const D=[
 {id:21,co:"FR",fc:"fr",pv:"P",name:"Mes Agrumes Pas Frileux",loc:"Quartier Chame, 07220 Larnas",lat:44.424,lon:4.568,tags:["rare"],spec:"Ard\u00e8che. Olivier greffe sur Poncirus \u00e0 altitude. Agrumes test\u00e9s en pleine terre dans l'Ard\u00e8che. Sp\u00e9cialiste rustiques r\u00e9sistants au froid.",site:"https://www.mesagrumespasfrileux.com/",tel:"07 68 44 43 07",note:"5.0/5",vente:"Sur place / site"},
 {id:22,co:"FR",fc:"fr",pv:"V",name:"Mes Arbustes",loc:"6 La Malatrait, Les Ch\u00e2telliers-Ch\u00e2teaumur, 85700 S\u00e8vremont",lat:46.8241,lon:-0.8842,tags:["online"],spec:"Vend\u00e9e. Grand catalogue en ligne. Agrumes parmi de nombreuses plantes. Livraison soign\u00e9e.",site:"https://www.mesarbustes.fr/",tel:"02 52 61 51 47",email:"service-clients@mesarbustes.com",note:"4.5/5",vente:"En ligne"},
 {id:23,co:"FR",fc:"fr",pv:"V",name:"Mesfruitiers",loc:"SCEA Fleurandie, Le Val Dor\u00e9, 27190 Le Val-Dor\u00e9",lat:48.991,lon:0.875,tags:["online"],spec:"Eure. Vente en ligne de fruitiers dont agrumes.",site:"https://www.mesfruitiers.fr/",tel:"02 32 38 07 51",email:"contact@mesfruitiers.fr",note:"4.2/5",vente:"En ligne"},
-{id:24,co:"FR",fc:"fr",pv:"P",name:"Michel Dufau",loc:"62 Route de Harguette, 40320 Eug\u00e9nie-les-Bains",lat:43.7009,lon:-0.3915,tags:["rare", "online"],spec:"Landes. 130+ vari\u00e9t\u00e9s. P\u00e9pini\u00e9riste historique des Landes depuis plus de 20 ans.",site:"https://www.agrumes-dufau.com/",tel:"05 58 51 18 54",email:"pepinieres.dufau@wanadoo.fr",note:"4.4/5",vente:"Sur place + en ligne"},
+{id:24,co:"FR",fc:"fr",pv:"P",name:"Michel Dufau",loc:"62 Route de Harguette, 40320 Eug\u00e9nie-les-Bains",lat:43.7009,lon:-0.3915,tags:["rare", "online"],spec:"Landes. 160+ vari\u00e9t\u00e9s rares et de collection. P\u00e9pini\u00e9riste historique des Landes depuis plus de 20 ans (culture conventionnelle raisonn\u00e9e). Catalogue en ligne avec exp\u00e9dition nationale.",site:"https://www.agrumes-dufau.com/",tel:"05 58 51 18 54",email:"pepinieres.dufau@wanadoo.fr",note:"4.4/5",vente:"Sur place + en ligne"},
 {id:25,co:"FR",fc:"fr",pv:"P",name:"Micro Citrus",loc:"296 All\u00e9e du Lavoir, 24610 Montpeyroux",lat:45.0095,lon:0.0912,tags:["rare", "online"],spec:"Dordogne. 50+ vari\u00e9t\u00e9s : satsumas, yuzu, bergamotes, pomelos rares. Vend aussi des porte-greffes.",site:"https://microcitrus.fr/",tel:"06 47 30 75 98",note:"5.0/5",vente:"Sur RDV / livraison locale"},
 {id:26,co:"FR",fc:"fr",pv:"PV",name:"Mon Jardin Extraordinaire",loc:"9 rue de Mar\u00e7on, 41700 Fresnes",lat:47.4339,lon:1.5642,tags:["rare", "online"],spec:"Loir-et-Cher. Agrumes et exotiques comestibles rares. Kevin conseille avec passion chaque client. Point de vente \u00e0 Fresnes ; le site de Bracieux ne sert plus qu'\u00e0 la mise en colis (exp\u00e9ditions).",site:"https://monjardinextraordinaire.com/",tel:"06 24 04 90 70",email:"pepinieresmonjardin@gmail.com",note:"4.6/5",vente:"Sur place + en ligne"},
 {id:63,co:"FR",fc:"fr",pv:"P",name:"Les Jardins du Kindsgass",loc:"Wangen, 67520",lat:48.6356,lon:7.4131,tags:["rare"],spec:"Alsace (Bas-Rhin). P\u00e9pini\u00e8re sp\u00e9cialis\u00e9e dans les fruitiers rares et acclimat\u00e9s. Agrumes greff\u00e9s sur Poncirus et FA5 \u2014 une vingtaine de vari\u00e9t\u00e9s propos\u00e9es. Vente uniquement \u00e0 la p\u00e9pini\u00e8re, pas d'envoi de plants pour l'instant.",site:"https://lesjardinsdukindsgass.com/",note:"Nouveau",vente:"Sur place uniquement",isNew:true},
@@ -474,6 +477,9 @@ const D=[
 {id:46,co:"FR",fc:"fr",pv:"PV",name:"V\u00e9g\u00e9tal 85",loc:"La Fouini\u00e8re, 85310 La Chaize-le-Vicomte",lat:46.6352,lon:-1.3048,tags:["online"],spec:"Vend\u00e9e. Grand choix avec porte-greffe indiqu\u00e9 sur chaque plante. Livraison nationale fiable.",site:"https://www.pepiniere-vegetal85.fr/",tel:"02 51 05 78 41",email:"contact@vegetal85.fr",note:"4.6/5",vente:"Sur place + en ligne"},
 {id:47,co:"FR",fc:"fr",pv:"P",name:"Verger Nature",loc:"Les Cambi\u00e8res, 30120 Aulas",lat:43.9912,lon:3.591,tags:["rare", "online"],spec:"Gard, C\u00e9vennes. Agrumes de l'extr\u00eame. Collection unique, Jean-Baptiste partage tout avec la communaut\u00e9.",site:"https://www.vergernature.fr/",tel:"06 12 80 78 80",email:"jblemaire@protonmail.com",note:"5.0/5",vente:"Sur place + en ligne"},
 {id:48,co:"FR",fc:"fr",pv:"P",name:"Zeste & Compagnie",loc:"36 All\u00e9e de la Gare, 19500 Turenne",lat:45.0557,lon:1.5729,tags:["online"],spec:"Corr\u00e8ze. Agrumes dans le P\u00e9rigord noir. R\u00e9server en ligne et r\u00e9cup\u00e9rer sur place.",site:"http://www.agrumes.gendep19.org/zeste-compagnie.html",tel:"07 68 80 17 01",email:"heryjul@gmail.com",note:"4.5/5",vente:"Retrait sur place"},
+{id:64,co:"FR",fc:"fr",pv:"P",name:"P\u00e9pini\u00e8re Thierry Dupouy",loc:"Eug\u00e9nie-les-Bains, 40320",lat:43.6982,lon:-0.3948,tags:["rare"],spec:"Landes. P\u00e9pini\u00e8re familiale d'agrumes depuis une trentaine d'ann\u00e9es \u2014 voisine de Michel Dufau \u00e0 Eug\u00e9nie. Conduite naturelle sans intrants chimiques (purins, d\u00e9coctions, plantes compagnes). Esp\u00e8ces originales tr\u00e8s fructif\u00e8res, greffes sur mesure ; fournit des restaurants r\u00e9put\u00e9s. Pas de boutique en ligne : RDV et foires du Sud-Ouest.",site:"https://www.pepinieres-dupouy.com/",note:"R\u00e9put\u00e9e",vente:"Sur place (RDV) + foires"},
+{id:65,co:"FR",fc:"fr",pv:"P",name:"La For\u00eat des Saveurs",loc:"Le Brunec, 56320 Priziac",lat:48.0186,lon:-3.3856,tags:["bio","rare"],spec:"Morbihan, Centre-Bretagne. Bruno Monch\u00e2tre & Lynn Mauger, producteurs bio de plants d'agrumes rustiques et de cuisine (yuzu, satsuma...) sur le mod\u00e8le de la for\u00eat-jardin. 100+ vari\u00e9t\u00e9s rares et rustiques. Co-fondateurs de la Fili\u00e8re Agrumes Bretagne (2025). Vente sur RDV \u00e0 Priziac et sur les foires aux plantes de l'Ouest.",site:"https://laforetdessaveurs.fr/",tel:"06 51 56 49 51",email:"contact@laforetdessaveurs.fr",note:"5.0/5",vente:"Sur place (RDV) + foires",certifs:["bio"]},
+{id:66,co:"FR",fc:"fr",pv:"P",name:"Aouravalo\u00f9 - Agrumes en Bretagne",loc:"Gr\u00e2ces, 22200",lat:48.5576,lon:-3.1736,tags:["bioconv","rare"],spec:"C\u00f4tes-d'Armor. P\u00e9pini\u00e8re d\u00e9di\u00e9e exclusivement aux agrumes rustiques bretons : satsumas, mikans, yuzus, citrons caviar, \u00e9r\u00e9mocitrus, limes acides... R\u00e9sistance -10 \u00e0 -15\u00b0C, culture en pleine terre. Conversion Bio en cours. Commercialisation sur les foires aux plantes bretonnes.",site:"https://agrumesenbretagne.fr/",email:"bruno@agrumesenbretagne.fr",note:"\u2014",vente:"Foires aux plantes (Bretagne)"},
 {id:49,co:"BE",fc:"be",pv:"P",name:"Bois de Rode Bos",loc:"Rodestraat 28, 1640 Sint-Genesius-Rode",lat:50.7551,lon:4.3501,tags:["rare", "bio", "online"],spec:"Collection exceptionnelle et croisements maison. Bio en conversion. Ouvert jeudi\u2013samedi uniquement.",site:"https://www.boisderodebos.be/",tel:"+32 470 02 21 09",note:"5.0/5",vente:"Sur place (jeu-sam)",certifs:["bio"]},
 {id:50,co:"BE",fc:"be",pv:"P",name:"Kwekerij De Zoetewei",loc:"Zoetewei 4, 2580 Putte",lat:51.0588,lon:4.6492,tags:["rare", "online"],spec:"Province d'Anvers. Collection immense de comestibles rares dont agrumes. Visites guid\u00e9es sur demande.",site:"http://www.kwekerijdezoetewei.be/",tel:"+32 15 24 70 24",note:"4.9/5",vente:"Sur place"},
 {id:51,co:"BG",fc:"bg",pv:"PV",name:"Exotic Plants Bulgaria",loc:"Okolovrasten pat 45, 1415 Sofia",lat:42.6517,lon:23.2872,tags:["rare", "online"],spec:"Sofia. Plantes exotiques dont agrumes rares. Boutique en ligne.",site:"https://exoticplantsbg.com/",note:"4.0/5",vente:"En ligne"},
@@ -484,15 +490,16 @@ const D=[
 {id:56,co:"IT",fc:"it",pv:"P",name:"Vivai Costantino",loc:"Via San Biagio, 98056 Terme Vigliatore (Messina)",lat:38.132,lon:15.1825,tags:["local"],spec:"Sicile. P\u00e9pini\u00e8re familiale depuis plusieurs g\u00e9n\u00e9rations. Citronniers, orangers, fruitiers m\u00e9diterran\u00e9ens.",site:"https://www.vivaicostantino.it/",tel:"+39 346 869 1825",note:"5.0/5",vente:"Sur place"},
 {id:57,co:"PT",fc:"pt",pv:"P",name:"Dorca Plantas",loc:"Estrada Nacional 3, Ortiga, 6120-501 Ma\u00e7\u00e3o",lat:39.5782,lon:-8.0438,tags:["online"],spec:"Ribatejo. Sp\u00e9cialiste agrumes Portugal. Livraison en Europe en 2 jours. Service client tr\u00e8s r\u00e9actif.",site:"https://dorcaplantas.pt/",tel:"+351 963 074 018",note:"4.9/5",vente:"En ligne"},
 {id:58,co:"PT",fc:"pt",pv:"P",name:"Viveiros Castromil",loc:"Rua de Castromil, Sobreira, 4585-752 Paredes",lat:41.153,lon:-8.378,tags:["online"],spec:"Porto. P\u00e9pini\u00e8re depuis +40 ans. Orangers, citronniers, pommiers. Exp\u00e9dition internationale.",site:"https://www.vcastromil.pt/",tel:"+351 22 433 3006",note:"4.7/5",vente:"Sur place + en ligne"},
+{id:67,co:"ES",fc:"es",pv:"P",name:"Agrumes.pro",loc:"Cam\u00ed Font de la Parra, 46740 Carcaixent (Valence)",lat:39.102,lon:-0.421,tags:["rare"],spec:"Province de Valence (Espagne). Verger de production et conservatoire d'Olivier Biggio (expert et formateur), g\u00e9r\u00e9 avec Fabien Roussel. Agrumes de collection (Dekopon/Sumo, Orri, Tangelo Alizza, Yuzu, Orange M7...) et important p\u00f4le d'exotiques (avocatiers, manguiers). Lieu de stages et formations \u00e0 la culture des agrumes. Vente en ligne via Fruit Friends (Finestret, FR).",site:"https://agrumes.pro/",tel:"+33 6 35 27 00 95",email:"ecoartlodge@gmail.com",note:"Verger / stages",vente:"Verger \u2014 vente via Fruit Friends"},
 {id:59,co:"CZ",fc:"cz",pv:"P",name:"Adavo / Adam Bajer",loc:"Chel\u010dick\u00e9ho 281, 281 44 Velk\u00fd Osek",lat:50.1045,lon:15.1985,tags:["online"],spec:"Boh\u00eame centrale. Agrumes greff\u00e9s sur Swingle 4475 et Poncirus. Livraison Europe.",site:"https://rakytnik.com/",tel:"+420 775 145 061",note:"4.7/5",vente:"Sur place + en ligne"},
 {id:60,co:"CZ",fc:"cz",pv:"V",name:"Ekozahradnictvi",loc:"Tojice 16, 335 01 Nepomuk",lat:49.4895,lon:13.5812,tags:["online"],spec:"Boh\u00eame du Sud. Jardinerie \u00e9cologique tch\u00e8que avec rayon agrumes. E-shop en tch\u00e8que.",site:"https://www.ekozahradnictvi.cz/e-shop/",note:"3.9/5",vente:"Sur place + en ligne"},
 {id:61,co:"CH",fc:"ch",pv:"P",name:"AlpAgrumi",loc:"Via Alla Riviera 24, 6512 Giubiasco (Bellinzona)",lat:46.182,lon:9.0128,tags:["rare", "online"],spec:"Tessin. Livraison maison avec leur propre service pour \u00e9viter tout dommage. Yuzu, agrumes rares. Fiches conseils tr\u00e8s d\u00e9taill\u00e9es.",site:"https://alpagrumi.ch/",tel:"+41 76 247 36 26",note:"5.0/5",vente:"Livraison maison"},
 {id:62,co:"CH",fc:"ch",pv:"P",name:"Eisenhut Vivaio",loc:"Via Piaggia 14, 6575 San Nazzaro (Gambarogno)",lat:46.1105,lon:8.8225,tags:["rare", "online"],spec:"Tessin. Jardin botanique + p\u00e9pini\u00e8re au bord du lac Majeur. Magnolias, cam\u00e9lias, agrumes rustiques. Vue exceptionnelle.",site:"https://eisenhut.ch/fr/",tel:"+41 91 795 18 67",note:"4.5/5",vente:"Sur place + en ligne"}
 ];
 
-const CC={FR:"#15803D",IT:"#C2410C",PT:"#B91C1C",CH:"#7F1D1D",BE:"#92400E",CZ:"#3730A3",BG:"#7C2020"};
-const CN={FR:"France",IT:"Italie",PT:"Portugal",CH:"Suisse",BE:"Belgique",CZ:"R\u00e9p. Tch\u00e8que",BG:"Bulgarie"};
-const CO_ORDER=["FR","BE","BG","IT","PT","CZ","CH"];
+const CC={FR:"#15803D",IT:"#C2410C",PT:"#B91C1C",ES:"#A16207",CH:"#7F1D1D",BE:"#92400E",CZ:"#3730A3",BG:"#7C2020"};
+const CN={FR:"France",IT:"Italie",PT:"Portugal",ES:"Espagne",CH:"Suisse",BE:"Belgique",CZ:"R\u00e9p. Tch\u00e8que",BG:"Bulgarie"};
+const CO_ORDER=["FR","BE","BG","IT","PT","ES","CZ","CH"];
 const TAGS={
   bio:     {c:"t-bio",     l:"\u{1F331} Bio AB"},
   bioconv: {c:"t-bioconv", l:"\u{1F33F} Bio"},
@@ -750,4 +757,5 @@ render();
 </script>
 </body>
 </html>
+
 
