@@ -7,7 +7,7 @@
 <meta name="description" content="La carte interactive des pépinières d'agrumes en France et en Europe : producteurs, greffeurs, variétés rustiques, vente en ligne ou sur place.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="La Route des Agrumes 🍊">
-<meta property="og:description" content="Trouvez une pépinière d'agrumes près de chez vous : plus de 60 adresses en France et en Europe.">
+<meta property="og:description" content="Trouvez une pépinière d'agrumes près de chez vous : 66 adresses en France et en Europe.">
 <meta property="og:locale" content="fr_FR">
 <meta name="theme-color" content="#0f1419">
 <meta name="mobile-web-app-capable" content="yes">
@@ -15,216 +15,169 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍊</text></svg>">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#0f1419;--bg2:#151c24;--bg3:#1c2530;--card:#131a21;
-  --or:#D69E2E;--or2:#E6C068;--tx:#E6EBF0;--tx2:#9AA8B6;--tx3:#66788A;
-  --bd:rgba(255,255,255,.08);--bd2:rgba(255,255,255,.16);
-  --FR:#15803D;--IT:#C2410C;--PT:#B91C1C;--ES:#A16207;--CH:#9F1239;--BE:#92400E;--CZ:#3730A3;--BG:#7C2D12;
-  --r:10px;--rnd:99px;--sh:0 10px 30px rgba(0,0,0,.5);
-  --safe-t:env(safe-area-inset-top,0px);--safe-b:env(safe-area-inset-bottom,0px);
-}
+:root{--bg:#0f1419;--p:#131a21;--p2:#1a232d;--p3:#243040;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.16);
+--tx:#E6EBF0;--tx2:#9AA8B6;--tx3:#66788A;--g:#D69E2E;--g2:#E6C068;--gbg:rgba(214,158,46,.14);
+--st:env(safe-area-inset-top,0px);--sb:env(safe-area-inset-bottom,0px)}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow:hidden;overscroll-behavior:none}body{height:100vh;height:100dvh}
-body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--tx);display:flex;flex-direction:column;padding-top:var(--safe-t)}
-button{font-family:inherit;cursor:pointer}
-a{color:inherit}
+html,body{height:100%;overflow:hidden;overscroll-behavior:none}
+body{height:100vh;height:100dvh;font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--tx)}
+button,input{font:inherit;color:inherit}button{cursor:pointer;border:0;background:none}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--g2);outline-offset:2px}
+#map{position:absolute;inset:0;background:#cfe0e4}
+.leaflet-control-zoom{border:0!important;box-shadow:0 6px 20px rgba(0,0,0,.4)!important;border-radius:12px!important;overflow:hidden}
+.leaflet-control-zoom a{background:var(--p)!important;color:var(--tx)!important;border-color:var(--line)!important;width:38px!important;height:38px!important;line-height:38px!important}
+.leaflet-top.leaflet-right{top:calc(var(--st) + 6px)}
 
-/* HEADER */
-header{flex-shrink:0;display:flex;align-items:center;gap:14px;padding:10px 16px;background:linear-gradient(135deg,#0b1015,#1c2530 60%,#151c24);border-bottom:1px solid rgba(214,158,46,.3);position:relative;z-index:1001}
-.brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.brand svg{width:34px;height:34px;filter:drop-shadow(0 2px 8px rgba(214,158,46,.5))}
-.brand h1{font-family:'Fraunces',serif;font-size:20px;line-height:1.1;color:#fff}
-.brand h1 em{font-style:italic;background:linear-gradient(90deg,var(--or),var(--or2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.brand small{display:block;font-size:10px;color:var(--tx2);letter-spacing:.4px;margin-top:2px}
-.search{flex:1;max-width:380px;margin-left:auto;position:relative}
-.search input{width:100%;padding:9px 14px 9px 36px;border-radius:var(--rnd);border:1px solid var(--bd2);background:rgba(255,255,255,.06);color:#fff;font:500 13px inherit;outline:none;transition:.15s}
+/* PANNEAU */
+#panel{position:absolute;z-index:500;display:flex;flex-direction:column;left:16px;top:calc(16px + var(--st));bottom:16px;width:396px;background:rgba(19,26,33,.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:20px;box-shadow:0 24px 70px rgba(0,0,0,.55);overflow:hidden}
+.grab{display:none}
+.ph{flex-shrink:0;padding:16px 16px 4px}
+.brand{display:flex;align-items:center;gap:11px;margin-bottom:13px}
+.brand svg{width:36px;height:36px;flex-shrink:0}
+.brand h1{font:700 20px/1.1 'Fraunces',serif;color:#fff}
+.brand h1 em{font-style:italic;color:var(--g2)}
+.brand small{display:block;font-size:11px;color:var(--tx2);margin-top:3px}
+.search{position:relative;display:block}
+.search input{width:100%;height:46px;padding:0 14px 0 42px;border-radius:14px;border:1px solid var(--line2);background:var(--p2);outline:none;font-size:14px;transition:.15s}
 .search input::placeholder{color:var(--tx3)}
-.search input:focus{border-color:var(--or);background:rgba(255,255,255,.1)}
-.search::before{content:"🔍";position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:13px;opacity:.7}
-.stats{display:flex;gap:6px;flex-shrink:0}
-.chip{display:flex;align-items:center;gap:5px;padding:4px 11px;border-radius:var(--rnd);background:rgba(255,255,255,.07);border:1px solid var(--bd);font-size:11px;color:var(--tx2)}
-.chip strong{color:#fff;font-size:13px}
-@media(max-width:768px){.brand small,.stats{display:none}.brand h1{font-size:17px}header{gap:10px;padding:8px 12px}}
+.search input:focus{border-color:var(--g);box-shadow:0 0 0 3px var(--gbg)}
+.search svg{position:absolute;left:14px;top:50%;margin-top:-9px;width:18px;height:18px;stroke:var(--tx3);fill:none;stroke-width:2}
+.chips{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding:12px 16px 4px;margin:0 -16px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 16px,#000 calc(100% - 24px),transparent);mask-image:linear-gradient(90deg,transparent 0,#000 16px,#000 calc(100% - 24px),transparent)}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 13px;border-radius:99px;border:1px solid var(--line2);color:var(--tx2);font-size:12.5px;font-weight:600;white-space:nowrap;transition:.15s}
+.chip:hover{color:#fff;border-color:var(--g)}
+.chip.on{background:var(--g);border-color:var(--g);color:#14181d}
+.chip .fi{width:18px;height:13px;border-radius:2px}
+.chip small{font-size:10.5px;opacity:.65;font-weight:700}
+.bar{display:flex;align-items:center;gap:8px;padding:10px 0 8px;font-size:12px;color:var(--tx2)}
+.bar b{color:#fff}
+.bar .sp{flex:1}
+.link{color:var(--g2);font-weight:600;font-size:12px;padding:4px 2px}
+.fbtn{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:99px;background:var(--p2);border:1px solid var(--line2);font-size:12px;font-weight:600;color:var(--tx)}
+.fbtn i{font-style:normal;min-width:18px;height:18px;border-radius:9px;background:var(--g);color:#14181d;font-size:10.5px;font-weight:700;display:none;align-items:center;justify-content:center}
+.fbtn.has i{display:inline-flex}
+.tray{display:none;padding:2px 0 10px}
+.tray.open{display:block}
+.tray h4{font-size:10px;letter-spacing:.9px;text-transform:uppercase;color:var(--tx3);margin:8px 0 7px}
+.tray div{display:flex;flex-wrap:wrap;gap:7px}
+.pb{flex:1;min-height:0;overflow-y:auto;border-top:1px solid var(--line);overscroll-behavior:contain}
+.pb::-webkit-scrollbar{width:5px}.pb::-webkit-scrollbar-thumb{background:var(--p3);border-radius:3px}
+#panel[data-view=detail] .ph{display:none}
+#panel[data-view=detail] .pb{border-top:0}
+#panel[data-view=list] #detail,#panel[data-view=detail] #list{display:none}
 
-/* FILTRES */
-.fbar{flex-shrink:0;display:flex;align-items:center;gap:6px;padding:8px 14px;overflow-x:auto;scrollbar-width:none;background:var(--bg2);border-bottom:1px solid var(--bd)}
-.fbar::-webkit-scrollbar{display:none}
-.fl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--tx3);flex-shrink:0}
-.fsep{width:1px;height:20px;background:var(--bd2);margin:0 6px;flex-shrink:0}
-.fb{flex-shrink:0;display:inline-flex;align-items:center;gap:6px;padding:6px 13px;border-radius:var(--rnd);border:1px solid var(--bd2);background:transparent;color:var(--tx2);font-size:12px;font-weight:600;white-space:nowrap;transition:.15s}
-.fb:hover{border-color:var(--or);color:#fff}
-.fb.on{background:var(--or);border-color:var(--or);color:#fff;box-shadow:0 2px 10px rgba(214,158,46,.35)}
-.fb .fi{width:16px;height:12px;border-radius:2px}
-.fb .n{font-size:10px;opacity:.7}
-.reset{margin-left:auto;color:var(--or);border-color:transparent;display:none}
-.reset.show{display:inline-flex}
+/* LISTE */
+.gh{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:8px;padding:8px 16px;background:rgba(19,26,33,.97);font-size:10.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--tx3);border-bottom:1px solid var(--line)}
+.gh .fi{width:16px;height:12px;border-radius:2px}.gh span:last-child{margin-left:auto}
+.row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);cursor:pointer;transition:background .12s}
+.row:hover{background:rgba(255,255,255,.04)}
+.row.act{background:var(--gbg);box-shadow:inset 3px 0 0 var(--g)}
+.fl{flex:none;width:38px;height:38px;border-radius:50%;overflow:hidden;border:2px solid rgba(255,255,255,.85)}
+.fl .fi{display:block;width:100%;height:100%;background-size:cover;background-position:center}
+.rb{min-width:0;flex:1}
+.rn{font-size:14px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rl{font-size:11.5px;color:var(--tx2);margin:2px 0 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rd{flex:none;font-size:11.5px;font-weight:700;color:var(--g2)}
+.rc{flex:none;width:18px;height:18px;stroke:var(--tx3);fill:none;stroke-width:2}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:99px;letter-spacing:.3px;white-space:nowrap;background:var(--p3);color:var(--tx2)}
+.t-prod{background:rgba(74,222,128,.14);color:#6EE7A0}.t-pv{background:rgba(147,197,253,.14);color:#93C5FD}.t-rev{background:rgba(230,192,104,.14);color:var(--g2)}
+.t-bio,.t-bioconv{background:rgba(34,197,94,.16);color:#86EFAC}.t-hve{background:rgba(234,179,8,.16);color:#FDE047}
+.t-rare{background:var(--gbg);color:var(--g2)}.t-online{background:rgba(56,189,248,.14);color:#7DD3FC}
+.t-local{background:rgba(167,139,250,.16);color:#C4B5FD}.t-verger{background:rgba(251,113,133,.16);color:#FDA4AF}.t-new{background:rgba(250,204,21,.18);color:#FDE047}
+.empty{padding:50px 24px;text-align:center;color:var(--tx2);font-size:13px;line-height:1.6}.empty b{display:block;font-size:30px;margin-bottom:8px}
+.foot{padding:14px 16px calc(16px + var(--sb));font-size:10px;color:var(--tx3);line-height:1.6}
+.foot a{color:var(--tx2);text-decoration:underline}
 
-/* LAYOUT */
-.main{flex:1;display:flex;min-height:0;position:relative}
-#map{flex:1;background:var(--bg)}
-.leaflet-control-zoom a{background:var(--bg3)!important;color:#fff!important;border-color:var(--bd2)!important}
-.leaflet-control-attribution{background:rgba(15,20,25,.85)!important;color:var(--tx3)!important;font-size:9px!important}
-.leaflet-control-attribution a{color:var(--tx2)!important}
+/* FICHE */
+.dtop{position:sticky;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:12px 12px 8px;background:linear-gradient(var(--p) 70%,transparent)}
+.ibtn{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 14px;border-radius:99px;background:var(--p2);border:1px solid var(--line2);font-size:13px;font-weight:600}
+.ibtn:hover{border-color:var(--g)}
+.dh{padding:6px 18px 4px}
+.dc{display:flex;align-items:center;gap:9px;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--tx2);margin-bottom:10px}
+.dc .fl{width:26px;height:26px;border-width:1.5px}
+.dn{font:700 25px/1.15 'Fraunces',serif;color:#fff;margin-bottom:6px}
+.dl{font-size:13px;color:var(--tx2);margin-bottom:12px;line-height:1.5}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px 18px 4px}
+.ac{display:flex;align-items:center;justify-content:center;gap:8px;height:46px;border-radius:13px;background:var(--p2);border:1px solid var(--line2);font-size:13px;font-weight:600;transition:.15s}
+.ac:hover{border-color:var(--g);transform:translateY(-1px)}
+.ac.pri{background:var(--g);border-color:var(--g);color:#14181d;grid-column:1/-1}
+.dd{margin:14px 18px;padding:14px 16px;font-size:13.5px;line-height:1.75;color:var(--tx);background:var(--p2);border-left:3px solid var(--g);border-radius:0 14px 14px 0}
+.cert{margin:0 18px 14px;padding:12px 14px;font-size:12.5px;line-height:1.65;color:var(--tx2);border:1px solid var(--line);border-radius:14px}
+.cert b{color:#fff}.cert div+div{margin-top:7px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 18px 14px}
+.cell{padding:11px 13px;background:var(--p2);border:1px solid var(--line);border-radius:12px}
+.cell small{display:block;font-size:9.5px;letter-spacing:.7px;text-transform:uppercase;color:var(--tx3);font-weight:700;margin-bottom:4px}
+.cell span{font-size:13px;font-weight:600;color:#fff}
+.ct{margin:0 18px 18px;font-size:13px;line-height:2.1;color:var(--tx2)}.ct a{color:var(--g2)}
 
-/* MARQUEURS */
-.mk{display:flex;flex-direction:column;align-items:center;transition:transform .15s}
-.mk:hover{transform:scale(1.15)}
-.mk-h{border-radius:50%;overflow:hidden;border:2px solid #fff;box-shadow:0 3px 10px rgba(0,0,0,.55);width:26px;height:26px}
-.mk-h .fi{display:block;width:32px;height:26px;margin-left:-3px;background-size:cover}
-.mk-t{width:0;height:0;border:5px solid transparent;border-bottom:0;border-top-width:7px;margin-top:-1px}
-.mk.sel .mk-h{width:38px;height:38px;border-width:3px}
-.mk.sel .mk-h .fi{width:46px;height:38px;margin-left:-4px}
-.mk.sel .mk-t{border-width:7px;border-bottom:0;border-top-width:10px}
-.mk.bio .mk-h{box-shadow:0 0 0 3px #22C55E,0 3px 10px rgba(0,0,0,.5)}
-.mk.hve .mk-h{box-shadow:0 0 0 3px #EAB308,0 3px 10px rgba(0,0,0,.5)}
-.mk.rare .mk-h{box-shadow:0 0 0 3px var(--or),0 3px 10px rgba(0,0,0,.5)}
-.marker-cluster div{background:linear-gradient(135deg,var(--or),#9A6B14)!important;color:#fff!important;font:700 13px 'Plus Jakarta Sans',sans-serif!important;border:2px solid #fff;box-shadow:0 3px 12px rgba(0,0,0,.5)}
-.marker-cluster{background:rgba(214,158,46,.3)!important}
-.leaflet-tooltip.pep-tip{background:rgba(15,20,25,.95);border:1px solid rgba(214,158,46,.5);border-radius:8px;color:#fff;padding:6px 10px;box-shadow:var(--sh);font:600 12px 'Plus Jakarta Sans',sans-serif}
-.leaflet-tooltip.pep-tip::before{display:none}
-.pep-tip small{display:block;color:var(--tx2);font-weight:500;font-size:10px;margin-top:1px}
-.leaflet-tooltip.reg-tip{background:rgba(15,20,25,.9);border:1px solid rgba(214,158,46,.35);color:#E6C068;font:700 10px 'Plus Jakarta Sans',sans-serif;border-radius:4px}
-.leaflet-tooltip.reg-tip::before{display:none}
+/* CARTE : marqueurs + boutons flottants */
+.mk{transform-origin:50% 100%;transition:transform .15s}
+.mk:hover{transform:scale(1.12)}
+.zl .mk{transform:scale(.78)}.zl .mk:hover{transform:scale(.92)}
+.mk-h{border-radius:50%;overflow:hidden;border:2.5px solid #fff;box-shadow:0 3px 10px rgba(0,0,0,.5)}
+.mk-h .fi{display:block;width:100%;height:100%;background-size:cover;background-position:center}
+.mk-t{display:block;width:0;height:0;margin:-1px auto 0;border:6px solid transparent;border-bottom:0;border-top-color:var(--c)}
+.mk.sel .mk-h{border-color:var(--g);box-shadow:0 0 0 4px rgba(214,158,46,.4),0 6px 16px rgba(0,0,0,.55)}
+.fab{position:absolute;z-index:450;right:10px;top:calc(var(--st) + 100px);width:38px;height:38px;border-radius:12px;background:var(--p);border:0;box-shadow:0 6px 20px rgba(0,0,0,.4);font-size:17px}
+.fab:hover{background:var(--p2)}
+.leaflet-tooltip.tip{background:var(--p);border:1px solid var(--line2);border-radius:9px;color:#fff;font:600 12px 'Plus Jakarta Sans',sans-serif;padding:5px 10px;box-shadow:0 6px 18px rgba(0,0,0,.5)}
+.leaflet-tooltip.tip::before{display:none}
+.leaflet-tooltip.reg{background:var(--p);border:1px solid var(--line2);color:var(--g2);font:700 10px 'Plus Jakarta Sans',sans-serif;border-radius:5px}
+.leaflet-tooltip.reg::before{display:none}
+.toast{position:fixed;z-index:3000;left:50%;top:calc(var(--st) + 14px);transform:translateX(-50%);max-width:90vw;padding:10px 16px;border-radius:99px;background:var(--p);border:1px solid var(--g);color:var(--g2);font-size:12.5px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.5);display:none}
 
-/* SIDEBAR */
-.sidebar{width:330px;flex-shrink:0;display:flex;flex-direction:column;background:linear-gradient(180deg,#121920,#0c1116);border-left:1px solid rgba(214,158,46,.2);z-index:400}
-.sb-hd{display:flex;align-items:center;padding:12px 14px;border-bottom:1px solid var(--bd)}
-.sb-hd h2{font:700 15px 'Fraunces',serif;color:#fff}
-.sb-hd p{font-size:10px;color:var(--tx2);margin-top:2px}
-.sb-x{display:none;margin-left:auto;width:30px;height:30px;border-radius:50%;border:1px solid var(--bd2);background:transparent;color:var(--tx2)}
-.lw{flex:1;overflow-y:auto;min-height:0}
-.lw::-webkit-scrollbar{width:4px}.lw::-webkit-scrollbar-thumb{background:#2d3a48;border-radius:2px}
-.ch{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:8px;padding:6px 14px;background:rgba(12,17,22,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--bd);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--tx2)}
-.ch .fi{width:18px;height:13px;border-radius:2px}
-.ch span:last-child{margin-left:auto;background:rgba(214,158,46,.15);color:var(--or);border-radius:var(--rnd);padding:1px 8px}
-.it{display:flex;gap:10px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;border-left:3px solid transparent;transition:.12s}
-.it:hover{background:rgba(214,158,46,.08)}
-.it.active{background:rgba(214,158,46,.15);border-left-color:var(--or)}
-.dot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0}
-.it-n{font-size:13px;font-weight:600;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.it-l{font-size:10.5px;color:var(--tx2);margin:2px 0 5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.tags{display:flex;flex-wrap:wrap;gap:4px}
-.tag{font-size:8.5px;font-weight:700;padding:2px 7px;border-radius:var(--rnd);text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
-.t-prod{background:rgba(34,197,94,.18);color:#4ADE80}.t-rev{background:rgba(251,146,60,.18);color:#E6C068}.t-pv{background:rgba(96,165,250,.18);color:#93C5FD}
-.t-bio{background:rgba(34,197,94,.2);color:#86EFAC}.t-bioconv{background:rgba(34,197,94,.1);color:#A7F3D0;border:1px solid rgba(34,197,94,.25)}
-.t-hve{background:rgba(234,179,8,.2);color:#FDE047}.t-rare{background:rgba(214,158,46,.2);color:#E6C068}
-.t-online{background:rgba(14,165,233,.2);color:#7DD3FC}.t-local{background:rgba(139,92,246,.2);color:#C4B5FD}
-.t-verger{background:rgba(244,63,94,.2);color:#FDA4AF}.t-new{background:rgba(230,192,104,.2);color:#FDE047}
-.empty{padding:50px 20px;text-align:center;color:var(--tx2);font-size:13px}
-.empty span{display:block;font-size:30px;margin-bottom:8px}
+/* TABLETTE */
+@media(min-width:761px) and (max-width:1024px){#panel{width:344px}}
 
-.mob-btn{display:none;position:absolute;right:14px;bottom:calc(22px + var(--safe-b));z-index:600;padding:11px 18px;border-radius:var(--rnd);border:0;background:linear-gradient(135deg,var(--or),#9A6B14);color:#fff;font-weight:700;font-size:13px;box-shadow:var(--sh)}
-@media(max-width:768px){
-  .mob-btn{display:block}
-  .sidebar{position:absolute;inset:auto 0 0 0;width:100%;height:72%;border-left:0;border-top:1px solid rgba(214,158,46,.35);border-radius:18px 18px 0 0;z-index:700;transform:translateY(105%);transition:transform .3s cubic-bezier(.4,0,.2,1);box-shadow:0 -12px 40px rgba(0,0,0,.6);padding-bottom:var(--safe-b)}
-  .sidebar.open{transform:none}
-  .sb-x{display:block}
-  .sb-hd{position:relative;padding-top:18px}
-  .sb-hd::before{content:"";position:absolute;left:50%;top:7px;width:40px;height:4px;margin-left:-20px;border-radius:2px;background:rgba(255,255,255,.22)}
+/* MOBILE : panneau type « bottom sheet » à 3 hauteurs */
+@media(max-width:760px){
+  #panel{left:0;right:0;top:auto;bottom:0;width:auto;border-radius:22px 22px 0 0;border-bottom:0;transition:height .3s cubic-bezier(.4,0,.2,1);padding-bottom:var(--sb)}
+  #panel[data-sheet=peek]{height:calc(172px + var(--sb))}
+  #panel[data-sheet=half]{height:52dvh}
+  #panel[data-sheet=full]{height:calc(100dvh - var(--st) - 52px)}
+  .grab{display:flex;justify-content:center;padding:10px 0 4px;touch-action:none;cursor:grab;flex-shrink:0}
+  .grab i{width:42px;height:5px;border-radius:3px;background:rgba(255,255,255,.28)}
+  .ph{padding-top:4px}
+  .brand{margin-bottom:10px}.brand svg{width:30px;height:30px}.brand h1{font-size:18px}.brand small{display:none}
+  .leaflet-control-zoom{display:none}
+  .fab{top:calc(var(--st) + 12px);width:44px;height:44px}
+  .chip{height:38px}
 }
-@media(min-width:769px) and (max-width:1100px){.sidebar{width:280px}.stats{display:none}.search{max-width:300px}}
-
-/* MODALE */
-.ov{display:none;position:fixed;inset:0;z-index:2000;align-items:center;justify-content:center;padding:16px;background:rgba(5,8,11,.75);backdrop-filter:blur(8px)}
-.ov.open{display:flex}
-.modal{width:100%;max-width:520px;max-height:92vh;overflow-y:auto;background:var(--card);border:1px solid rgba(214,158,46,.25);border-radius:16px;box-shadow:var(--sh);animation:pop .22s cubic-bezier(.34,1.3,.64,1)}
-@keyframes pop{from{transform:translateY(16px) scale(.97);opacity:0}to{transform:none;opacity:1}}
-@keyframes up{from{transform:translateY(100%)}to{transform:none}}
-@media(max-width:600px){.ov{align-items:flex-end;padding:0}.modal{border-radius:16px 16px 0 0;max-height:90vh;animation:up .28s ease;padding-bottom:var(--safe-b)}}
-.mh{position:relative;padding:20px 22px 16px;background:linear-gradient(135deg,#1c2530,#27333f);border-bottom:1px solid rgba(214,158,46,.2)}
-.m-c{display:flex;align-items:center;gap:9px;margin-bottom:9px;font-size:11px;font-weight:700;color:var(--tx2)}
-.m-c .fi{width:28px;height:21px;border-radius:3px}
-.m-n{font:700 22px/1.2 'Fraunces',serif;color:#fff;padding-right:34px}
-.m-l{font-size:12px;color:var(--tx2);margin-top:4px}
-.m-x{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;border:1px solid var(--bd2);background:rgba(255,255,255,.08);color:#fff}
-.mb{padding:16px 22px 22px}
-.mb .tags{margin-bottom:14px}
-.mb .tag{font-size:10px;padding:3px 10px}
-.m-d{font-size:13px;line-height:1.75;color:var(--tx);padding:12px 14px;margin-bottom:14px;background:rgba(214,158,46,.06);border-left:3px solid var(--or);border-radius:0 var(--r) var(--r) 0}
-.cert{margin-bottom:14px;padding:11px 14px;font-size:12px;line-height:1.6;color:var(--tx2);background:rgba(255,255,255,.04);border-left:3px solid var(--or2);border-radius:0 var(--r) var(--r) 0}
-.cert strong{color:#fff}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:14px}
-.cell{padding:9px 11px;background:rgba(255,255,255,.05);border:1px solid var(--bd);border-radius:8px}
-.cell .l{font-size:8.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--tx3);font-weight:700;margin-bottom:3px}
-.cell .v{font-size:12px;font-weight:600;color:#fff}
-.ct{padding:10px 14px;margin-bottom:14px;font-size:12.5px;line-height:2;background:rgba(255,255,255,.04);border:1px solid var(--bd);border-radius:8px}
-.ct a{color:#7DD3FC;text-decoration:none}.ct a:hover{text-decoration:underline}
-.btns{display:flex;gap:8px}
-.btn{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:12px;border-radius:var(--r);border:1px solid var(--bd2);background:rgba(255,255,255,.07);color:#fff;font-weight:700;font-size:13px;text-decoration:none;transition:.15s}
-.btn.main{background:linear-gradient(135deg,var(--or),#9A6B14);border:0;box-shadow:0 4px 18px rgba(214,158,46,.3)}
-.btn:hover{transform:translateY(-1px)}
-.toast{position:fixed;left:50%;bottom:calc(20px + var(--safe-b));transform:translateX(-50%);z-index:3000;padding:9px 16px;border-radius:var(--rnd);background:#2a2112;border:1px solid var(--or);color:#E6C068;font-size:12px;display:none}
-
-/* Finitions : header lumineux, sélection animée, tactile, accessibilité */
-header::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 12% 0,rgba(214,158,46,.38),transparent 45%),radial-gradient(circle at 88% 100%,rgba(230,192,104,.2),transparent 42%)}
-header>*{position:relative;z-index:1}
-.mk.sel{animation:drop .4s cubic-bezier(.34,1.56,.64,1)}
-@keyframes drop{from{transform:translateY(-16px);opacity:.3}}
-.geo{margin-left:auto;border-color:rgba(6,182,212,.5);color:#67E8F9}
-.geo+.reset.show{margin-left:0}
-@media(pointer:coarse){.fb{padding:10px 16px}.it{padding:14px}.m-x,.sb-x{width:40px;height:40px}.btn{padding:15px}.leaflet-bar a{width:38px!important;height:38px!important;line-height:38px!important}}
-:focus-visible{outline:2px solid var(--or2);outline-offset:2px}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<header>
-  <div class="brand">
-    <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="#F97316"/><circle cx="16" cy="16" r="11.5" fill="#FACC15"/><path d="M16 4.5v23M4.5 16h23M8.3 8.3l15.4 15.4M23.7 8.3L8.3 23.7" stroke="#C25400" stroke-width="1.4" stroke-linecap="round" opacity=".6"/><circle cx="16" cy="16" r="2.8" fill="#EA6800"/></svg>
-    <div><h1>La Route des <em>Agrumes</em></h1><small>La carte des pépinières d'agrumes en Europe</small></div>
-  </div>
-  <label class="search"><input id="q" type="search" placeholder="Nom, ville, département…" autocomplete="off" aria-label="Rechercher une pépinière"></label>
-  <div class="stats">
-    <div class="chip"><span class="fi fi-fr"></span><strong id="cnt-fr">0</strong></div>
-    <div class="chip">🌍<strong id="cnt-eu">0</strong></div>
-  </div>
-</header>
+<div id="map" role="application" aria-label="Carte des pépinières d'agrumes"></div>
+<button class="fab" id="geo" aria-label="Me localiser et trier par distance" title="Près de moi">📍</button>
 
-<nav class="fbar" id="fbar" aria-label="Filtres"></nav>
-
-<div class="main">
-  <div id="map"></div>
-  <button class="mob-btn" id="mob-btn">📋 <span id="mob-cnt">0</span> pépinières</button>
-  <aside class="sidebar" id="sidebar">
-    <div class="sb-hd">
-      <div><h2>Pépinières référencées</h2><p id="sb-cnt"></p></div>
-      <button class="sb-x" id="sb-x" aria-label="Fermer">✕</button>
+<aside id="panel" data-view="list" data-sheet="half">
+  <div class="grab" id="grab" aria-label="Agrandir ou réduire la liste"><i></i></div>
+  <div class="ph">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="#F97316"/><circle cx="16" cy="16" r="11.5" fill="#FACC15"/><path d="M16 4.5v23M4.5 16h23M8.3 8.3l15.4 15.4M23.7 8.3L8.3 23.7" stroke="#C25400" stroke-width="1.4" stroke-linecap="round" opacity=".6"/><circle cx="16" cy="16" r="2.8" fill="#EA6800"/></svg>
+      <div><h1>La Route des <em>Agrumes</em></h1><small>Les pépinières d'agrumes en Europe</small></div>
     </div>
-    <div class="lw" id="lw"></div>
-  </aside>
-</div>
-
-<div class="ov" id="ov" role="dialog" aria-modal="true">
-  <div class="modal">
-    <div class="mh">
-      <div class="m-c"><span class="fi" id="m-fi"></span><span id="m-co"></span></div>
-      <div class="m-n" id="m-n"></div>
-      <div class="m-l" id="m-l"></div>
-      <button class="m-x" id="m-x" aria-label="Fermer">✕</button>
-    </div>
-    <div class="mb">
-      <div class="tags" id="m-tags"></div>
-      <div class="cert" id="m-cert" hidden></div>
-      <div class="m-d" id="m-d"></div>
-      <div class="grid" id="m-grid"></div>
-      <div class="ct" id="m-ct" hidden></div>
-      <div class="btns">
-        <a class="btn main" id="m-site" target="_blank" rel="noopener">🌐 Visiter le site</a>
-        <button class="btn" id="m-zoom">📍 Voir sur la carte</button>
-      </div>
-    </div>
+    <label class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5" stroke-linecap="round"/></svg><input id="q" type="search" placeholder="Nom, ville, département, variété…" autocomplete="off" enterkeyhint="search" aria-label="Rechercher"></label>
+    <div class="chips" id="chips"></div>
+    <div class="bar"><span id="count"></span><button class="link" id="unsort" hidden>✕ Trié par distance</button><span class="sp"></span><button class="fbtn" id="fbtn" aria-expanded="false">⚙ Filtres <i id="fn">0</i></button></div>
+    <div class="tray" id="tray"></div>
   </div>
-</div>
-<div class="toast" id="toast"></div>
+  <div class="pb" id="pb">
+    <div id="list"></div>
+    <div id="detail"></div>
+    <div class="foot">Carte © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">Contributeurs OpenStreetMap</a> · données ODbL · <a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a></div>
+  </div>
+</aside>
+<div class="toast" id="toast" role="status"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
 <!-- ═══ DONNÉES : les 66 pépinières (pour en ajouter, copie une ligne {id:…}) ═══ -->
 <script>
@@ -296,206 +249,210 @@ const D=[
 {id:61,co:"CH",fc:"ch",pv:"P",name:"AlpAgrumi",loc:"Via Alla Riviera 24, 6512 Giubiasco (Bellinzona)",lat:46.182,lon:9.0128,tags:["rare","online"],spec:"Tessin. Livraison maison avec leur propre service pour éviter tout dommage. Yuzu, agrumes rares. Fiches conseils très détaillées.",site:"https://alpagrumi.ch/",tel:"+41 76 247 36 26",note:"5.0/5",vente:"Livraison maison"},
 {id:62,co:"CH",fc:"ch",pv:"P",name:"Eisenhut Vivaio",loc:"Via Piaggia 14, 6575 San Nazzaro (Gambarogno)",lat:46.1105,lon:8.8225,tags:["rare","online"],spec:"Tessin. Jardin botanique + pépinière au bord du lac Majeur. Magnolias, camélias, agrumes rustiques. Vue exceptionnelle.",site:"https://eisenhut.ch/fr/",tel:"+41 91 795 18 67",note:"4.5/5",vente:"Sur place + en ligne"}
 ];
-
 </script>
 <script>
 "use strict";
-if(typeof D==="undefined"){document.body.innerHTML='<p style="padding:30px;color:#fff;font:16px sans-serif">Les fiches sont absentes : colle ton bloc <code>const D=[…];</code> à l\u2019emplacement « DONNÉES » de index.html.</p>';throw new Error("D manquant");}
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const mob=()=>innerWidth<=768;
-
+const norm=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+const mobile=()=>matchMedia("(max-width:760px)").matches;
 const CC={FR:"#15803D",IT:"#C2410C",PT:"#B91C1C",ES:"#A16207",CH:"#9F1239",BE:"#92400E",CZ:"#3730A3",BG:"#7C2D12"};
 const CN={FR:"France",IT:"Italie",PT:"Portugal",ES:"Espagne",CH:"Suisse",BE:"Belgique",CZ:"Tchéquie",BG:"Bulgarie"};
 const ORDER=["FR","BE","BG","IT","PT","ES","CZ","CH"];
-const TAGS={
-  bio:{c:"t-bio",l:"🌱 Bio AB"},bioconv:{c:"t-bioconv",l:"🌿 Bio"},hve:{c:"t-hve",l:"🏅 HVE"},
-  rare:{c:"t-rare",l:"⭐ Rares"},online:{c:"t-online",l:"🌐 En ligne"},local:{c:"t-local",l:"📍 Local"},verger:{c:"t-verger",l:"🌳 Verger"}
-};
-const CERTS={
-  bio:"<strong>Agriculture Biologique AB</strong> — production certifiée sans pesticides ni engrais de synthèse, contrôlée par un organisme agréé.",
-  hve:"<strong>Haute Valeur Environnementale</strong> — certification agro-environnementale française (biodiversité, fertilisation, eau). Distincte du Bio AB."
-};
+const TAGS={bio:["t-bio","🌱 Bio AB"],bioconv:["t-bioconv","🌿 Bio"],hve:["t-hve","🏅 HVE"],rare:["t-rare","⭐ Rares"],online:["t-online","🌐 En ligne"],local:["t-local","📍 Local"],verger:["t-verger","🌳 Verger"]};
 const PV={P:["t-prod","Producteur"],PV:["t-pv","Prod. & Rev."],V:["t-rev","Revendeur"]};
-
-/* ── ÉTAT DES FILTRES ── */
-const S={co:"all",types:new Set(),liv:null,q:"",sel:null};
-const TYPES=[["prod","🌿 Producteur",p=>p.pv!=="V"],["bio","🌱 Bio",p=>p.tags.includes("bio")||p.tags.includes("bioconv")],
-  ["hve","🏅 HVE",p=>p.tags.includes("hve")],["rare","⭐ Rares",p=>p.tags.includes("rare")]];
+const CERTS={bio:"<b>Agriculture Biologique AB</b> — production certifiée sans pesticides ni engrais de synthèse, contrôlée par un organisme agréé.",hve:"<b>Haute Valeur Environnementale</b> — certification agro-environnementale française (biodiversité, fertilisation, eau). Distincte du Bio AB."};
+const TYPES=[["prod","🌿 Producteur",p=>p.pv!=="V"],["bio","🌱 Bio",p=>p.tags.includes("bio")||p.tags.includes("bioconv")],["hve","🏅 HVE",p=>p.tags.includes("hve")],["rare","⭐ Variétés rares",p=>p.tags.includes("rare")]];
 const LIVS=[["envoi","📦 Envoi possible",p=>p.tags.includes("online")],["place","🏡 Sur place seulement",p=>!p.tags.includes("online")]];
-const norm=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+const byId=Object.fromEntries(D.map(p=>[p.id,p]));
+const S={co:"all",types:new Set(),liv:null,q:"",sel:null,user:null,sheet:"half"};
 
 function matches(p,skipCo){
   if(!skipCo&&S.co!=="all"&&p.co!==S.co)return false;
   for(const k of S.types)if(!TYPES.find(t=>t[0]===k)[2](p))return false;
   if(S.liv&&!LIVS.find(t=>t[0]===S.liv)[2](p))return false;
-  if(S.q&&!norm(p.name+" "+p.loc+" "+(CN[p.co]||"")+" "+p.spec).includes(S.q))return false;
-  return true;
+  return !S.q||norm(p.name+" "+p.loc+" "+(CN[p.co]||"")+" "+p.spec).includes(S.q);
 }
-
-/* ── BARRE DE FILTRES ── */
-function buildBar(){
-  const cos=ORDER.filter(c=>D.some(p=>p.co===c));
-  let h=`<span class="fl">Pays</span><button class="fb" data-k="co" data-v="all">🌍 Tous</button>`;
-  cos.forEach(c=>h+=`<button class="fb" data-k="co" data-v="${c}"><span class="fi fi-${c.toLowerCase()}"></span>${CN[c]} <span class="n" data-n="${c}"></span></button>`);
-  h+=`<div class="fsep"></div><span class="fl">Type</span>`;
-  TYPES.forEach(t=>h+=`<button class="fb" data-k="type" data-v="${t[0]}">${t[1]}</button>`);
-  h+=`<div class="fsep"></div><span class="fl">Livraison</span>`;
-  LIVS.forEach(t=>h+=`<button class="fb" data-k="liv" data-v="${t[0]}">${t[1]}</button>`);
-  h+=`<button class="fb geo" id="geo">📍 Près de moi</button><button class="fb reset" id="reset">↺ Réinitialiser</button>`;
-  $("fbar").innerHTML=h;
-  $("fbar").addEventListener("click",e=>{
-    const b=e.target.closest(".fb");if(!b)return;
-    if(b.id==="geo"){locate();return;}
-    if(b.id==="reset"){S.co="all";S.types.clear();S.liv=null;S.q="";$("q").value="";}
-    else{
-      const{k,v}=b.dataset;
-      if(k==="co")S.co=v;
-      else if(k==="type")S.types.has(v)?S.types.delete(v):S.types.add(v);
-      else S.liv=S.liv===v?null:v;
-    }
-    render();
-  });
-}
+const rad=x=>x*Math.PI/180;
+function dist(a,b){const h=Math.sin(rad(b.lat-a.lat)/2)**2+Math.cos(rad(a.lat))*Math.cos(rad(b.lat))*Math.sin(rad(b.lon-a.lon)/2)**2;return 12742*Math.asin(Math.sqrt(h));}
+const km=d=>d<10?d.toFixed(1).replace(".",",")+" km":Math.round(d).toLocaleString("fr-FR")+" km";
+function toast(m){const t=$("toast");t.textContent=m;t.style.display="block";clearTimeout(toast.t);toast.t=setTimeout(()=>t.style.display="none",3800);}
 
 /* ── CARTE ── */
-const map=L.map("map",{center:[46.5,7],zoom:5,zoomControl:true});
-L.tileLayer("https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png",{
-  attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">Contributeurs OpenStreetMap</a>',subdomains:"abc",maxZoom:19
-}).addTo(map);
-const cluster=L.markerClusterGroup({maxClusterRadius:38,showCoverageOnHover:false,disableClusteringAtZoom:11,spiderfyOnMaxZoom:true});
-map.addLayer(cluster);
+const map=L.map("map",{zoomControl:false,attributionControl:false,center:[46.6,4.5],zoom:5,minZoom:3});
+L.control.zoom({position:"topright"}).addTo(map);
+L.tileLayer("https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png",{subdomains:"abc",maxZoom:19}).addTo(map);
+const layer=L.layerGroup().addTo(map);
+const zl=()=>map.getContainer().classList.toggle("zl",map.getZoom()<=6);
+map.on("zoomend",zl);zl();
 
 function icon(p,sel){
-  const ring=p.tags.includes("bio")?"bio":p.tags.includes("hve")?"hve":p.tags.includes("rare")?"rare":"";
-  const h=sel?48:35;
-  return L.divIcon({className:"",iconSize:[sel?38:26,h],iconAnchor:[sel?19:13,h],
-    html:`<div class="mk${sel?" sel":""} ${ring}"><div class="mk-h"><span class="fi fi-${esc(p.fc)}"></span></div><div class="mk-t" style="border-top-color:${CC[p.co]||"#444"}"></div></div>`});
+  const w=sel?46:34;
+  return L.divIcon({className:"",iconSize:[w,w+9],iconAnchor:[w/2,w+9],
+    html:`<div class="mk${sel?" sel":""}" style="--c:${CC[p.co]||"#555"};width:${w}px"><div class="mk-h" style="width:${w}px;height:${w}px"><span class="fi fi-${esc(p.fc)}"></span></div><i class="mk-t"></i></div>`});
 }
-const MK={};
+const MK={},touch=matchMedia("(pointer:coarse)").matches;
 D.forEach(p=>{
-  const m=L.marker([p.lat,p.lon],{icon:icon(p,false),title:p.name});
-  m.bindTooltip(`${esc(p.name)}<small>${esc(p.loc.split(",").slice(-1)[0].trim())}</small>`,{direction:"top",className:"pep-tip",offset:[0,-30]});
-  m.on("click",()=>openMod(p.id));
+  const m=L.marker([p.lat,p.lon],{icon:icon(p,false),title:p.name,keyboard:true});
+  if(!touch)m.bindTooltip(esc(p.name),{direction:"top",className:"tip",offset:[0,-38]});
+  m.on("click",()=>openDetail(p.id));
   MK[p.id]=m;
 });
 
-/* Frontières + régions (échec silencieux avec message discret) */
 const EU=new Set([8,20,40,56,70,100,191,203,208,233,246,250,276,300,348,352,372,380,428,438,440,442,470,492,498,499,528,578,616,620,642,643,674,688,703,705,724,752,756,804,807,826]);
 Promise.all([
   fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(r=>r.json()),
   fetch("https://cdn.jsdelivr.net/gh/gregoiredavid/france-geojson@master/regions-version-simplifiee.geojson").then(r=>r.json())
 ]).then(([w,reg])=>{
   const all=topojson.feature(w,w.objects.countries);
-  L.geoJSON({type:"FeatureCollection",features:all.features.filter(f=>EU.has(+f.id))},
-    {style:{color:"#A0C8FF",weight:1,opacity:.5,fillOpacity:0,interactive:false},pane:"tilePane"}).addTo(map);
-  L.geoJSON(reg,{style:{color:"#D69E2E",weight:1.8,opacity:.75,dashArray:"7,5",fillColor:"#D69E2E",fillOpacity:.04},
-    onEachFeature:(f,l)=>{const n=f.properties.nom;if(n)l.bindTooltip(n,{sticky:true,className:"reg-tip"});}}).addTo(map);
-}).catch(()=>{const t=$("toast");t.textContent="Les frontières n'ont pas pu être chargées.";t.style.display="block";setTimeout(()=>t.style.display="none",4000);});
+  L.geoJSON({type:"FeatureCollection",features:all.features.filter(f=>EU.has(+f.id))},{style:{color:"#5b7a8c",weight:1,opacity:.7,fillOpacity:0,interactive:false},pane:"tilePane"}).addTo(map);
+  L.geoJSON(reg,{style:{color:"#B7791F",weight:1.6,opacity:.7,dashArray:"6,5",fillColor:"#D69E2E",fillOpacity:.04},
+    onEachFeature:(f,l)=>{if(f.properties.nom)l.bindTooltip(f.properties.nom,{sticky:true,className:"reg"});}}).addTo(map);
+}).catch(()=>toast("Les frontières n'ont pas pu être chargées."));
+
+/* ── PANNEAU / BOTTOM SHEET ── */
+const SH=["peek","half","full"];
+function setSheet(s){S.sheet=s;$("panel").dataset.sheet=s;}
+const sheetPx=()=>({peek:176,half:innerHeight*.52,full:innerHeight*.5})[S.sheet];
+function pad(){
+  return mobile()?{paddingTopLeft:[16,70],paddingBottomRight:[16,sheetPx()+16]}
+                 :{paddingTopLeft:[$("panel").offsetWidth+36,24],paddingBottomRight:[64,24]};
+}
+function fit(list,fresh){
+  if(!list.length)return;
+  const b=L.latLngBounds(list.map(p=>[p.lat,p.lon]));
+  map.fitBounds(b,{...pad(),maxZoom:list.length===1?Math.min(Math.max(map.getZoom(),10),13):9,animate:!fresh});
+}
+let y0=null;
+const grab=$("grab");
+grab.addEventListener("pointerdown",e=>{y0=e.clientY;grab.setPointerCapture(e.pointerId);});
+grab.addEventListener("pointerup",e=>{
+  if(y0===null)return;const dy=e.clientY-y0;y0=null;let i=SH.indexOf(S.sheet);
+  if(Math.abs(dy)<8)i=S.sheet==="peek"?1:S.sheet==="half"?0:1;
+  else i=dy<0?Math.min(2,i+1):Math.max(0,i-1);
+  setSheet(SH[i]);
+});
+$("q").addEventListener("focus",()=>{if(mobile())setSheet("full");});
+
+/* ── FILTRES ── */
+function buildChips(){
+  let h=`<button class="chip" data-k="co" data-v="all">🌍 Tous <small id="n-all"></small></button>`;
+  ORDER.filter(c=>D.some(p=>p.co===c)).forEach(c=>h+=`<button class="chip" data-k="co" data-v="${c}"><span class="fi fi-${c.toLowerCase()}"></span>${CN[c]} <small data-n="${c}"></small></button>`);
+  $("chips").innerHTML=h;
+  $("tray").innerHTML=`<h4>Type de pépinière</h4><div>${TYPES.map(t=>`<button class="chip" data-k="type" data-v="${t[0]}">${t[1]}</button>`).join("")}</div>
+    <h4>Livraison</h4><div>${LIVS.map(t=>`<button class="chip" data-k="liv" data-v="${t[0]}">${t[1]}</button>`).join("")}</div>
+    <div style="margin-top:10px"><button class="link" id="reset">↺ Tout réinitialiser</button></div>`;
+}
+function onChip(e){
+  const b=e.target.closest("[data-k]");if(!b)return;
+  const{k,v}=b.dataset;
+  if(k==="co")S.co=v;else if(k==="type")S.types.has(v)?S.types.delete(v):S.types.add(v);else S.liv=S.liv===v?null:v;
+  render(true);
+}
+$("chips").addEventListener("click",onChip);$("tray").addEventListener("click",e=>{
+  if(e.target.id==="reset"){S.co="all";S.types.clear();S.liv=null;S.q="";$("q").value="";render(true);}else onChip(e);});
+$("fbtn").onclick=()=>{const o=$("tray").classList.toggle("open");$("fbtn").setAttribute("aria-expanded",o);};
+let qt;$("q").addEventListener("input",e=>{clearTimeout(qt);qt=setTimeout(()=>{S.q=norm(e.target.value.trim());render(true);},180);});
 
 /* ── RENDU ── */
-function render(){
+function render(refit){
   const f=D.filter(p=>matches(p));
-  const ids=new Set(f.map(p=>p.id));
-  cluster.clearLayers();
-  cluster.addLayers(D.filter(p=>ids.has(p.id)).map(p=>MK[p.id]));
-
-  const nFR=f.filter(p=>p.co==="FR").length;
-  $("cnt-fr").textContent=nFR;$("cnt-eu").textContent=f.length-nFR;
-  $("mob-cnt").textContent=f.length;
-  $("sb-cnt").textContent=`${f.length} établissement${f.length>1?"s":""} · ${new Set(f.map(p=>p.co)).size} pays`;
-
-  document.querySelectorAll("#fbar .fb[data-k]").forEach(b=>{
-    const{k,v}=b.dataset;
-    b.classList.toggle("on",k==="co"?S.co===v:k==="type"?S.types.has(v):S.liv===v);
-  });
-  document.querySelectorAll("#fbar [data-n]").forEach(n=>n.textContent=D.filter(p=>p.co===n.dataset.n&&matches(p,true)).length);
-  $("reset").classList.toggle("show",S.co!=="all"||S.types.size>0||!!S.liv||!!S.q);
-
-  const by={};f.forEach(p=>(by[p.co]=by[p.co]||[]).push(p));
+  if(S.user){f.forEach(p=>p._d=dist(S.user,p));f.sort((a,b)=>a._d-b._d);}
+  layer.clearLayers();
+  f.forEach(p=>layer.addLayer(MK[p.id]));
+  if(S.sel&&!f.includes(byId[S.sel]))layer.addLayer(MK[S.sel]);
+  const nP=new Set(f.map(p=>p.co)).size;
+  $("count").innerHTML=`<b>${f.length}</b> pépinière${f.length>1?"s":""} · ${nP} pays`;
+  $("unsort").hidden=!S.user;
+  const nf=S.types.size+(S.liv?1:0);$("fn").textContent=nf;$("fbtn").classList.toggle("has",nf>0);
+  document.querySelectorAll("#panel [data-k]").forEach(b=>{const{k,v}=b.dataset;b.classList.toggle("on",k==="co"?S.co===v:k==="type"?S.types.has(v):S.liv===v);});
+  $("n-all").textContent=D.filter(p=>matches(p,true)).length;
+  document.querySelectorAll("[data-n]").forEach(n=>n.textContent=D.filter(p=>p.co===n.dataset.n&&matches(p,true)).length);
+  const row=p=>{
+    const tg=[`<span class="tag ${PV[p.pv][0]}">${PV[p.pv][1]}</span>`].concat(p.tags.filter(t=>TAGS[t]&&t!=="online"&&t!=="local").slice(0,2).map(t=>`<span class="tag ${TAGS[t][0]}">${TAGS[t][1]}</span>`));
+    if(p.isNew)tg.push('<span class="tag t-new">✨ Nouveau</span>');
+    return `<div class="row${S.sel===p.id?" act":""}" data-id="${p.id}" tabindex="0" role="button">
+      <span class="fl"><span class="fi fi-${esc(p.fc)}"></span></span>
+      <div class="rb"><div class="rn">${esc(p.name)}</div><div class="rl">${esc(p.loc.split(",").slice(-2).join(",").trim())}</div><div class="tags">${tg.join("")}</div></div>
+      ${S.user?`<span class="rd">${km(p._d)}</span>`:'<svg class="rc" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>'}</div>`;};
   let h="";
-  ORDER.forEach(co=>{
-    if(!by[co])return;
-    h+=`<div class="ch"><span class="fi fi-${co.toLowerCase()}"></span><span>${CN[co]}</span><span>${by[co].length}</span></div>`;
-    by[co].forEach(p=>{
-      const tg=p.tags.map(t=>TAGS[t]?`<span class="tag ${TAGS[t].c}">${TAGS[t].l}</span>`:"").join("");
-      h+=`<div class="it${S.sel===p.id?" active":""}" id="li-${p.id}" data-id="${p.id}">
-        <span class="dot" style="background:${CC[p.co]||"#444"}"></span>
-        <div style="min-width:0"><div class="it-n">${esc(p.name)}</div>
-        <div class="it-l">📍 ${esc(p.loc.split(",").slice(-2).join(",").trim())}</div>
-        <div class="tags"><span class="tag ${PV[p.pv][0]}">${PV[p.pv][1]}</span>${tg}${p.isNew?'<span class="tag t-new">✨ Nouveau</span>':""}</div></div></div>`;
-    });
-  });
-  $("lw").innerHTML=h||`<div class="empty"><span>🔍</span>Aucune pépinière ne correspond.</div>`;
+  if(S.user)h=f.map(row).join("");
+  else ORDER.forEach(c=>{const g=f.filter(p=>p.co===c);if(g.length)h+=`<div class="gh"><span class="fi fi-${c.toLowerCase()}"></span><span>${CN[c]}</span><span>${g.length}</span></div>`+g.map(row).join("");});
+  $("list").innerHTML=h||`<div class="empty"><b>🔍</b>Aucune pépinière ne correspond.<br><button class="link" onclick="document.getElementById('reset').click()">Réinitialiser les filtres</button></div>`;
+  if(refit&&f.length)fit(f);
 }
-$("lw").addEventListener("click",e=>{const it=e.target.closest(".it");if(it)openMod(+it.dataset.id);});
+$("list").addEventListener("click",e=>{const r=e.target.closest(".row");if(r)openDetail(+r.dataset.id);});
+$("list").addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){const r=e.target.closest(".row");if(r){e.preventDefault();openDetail(+r.dataset.id);}}});
 
-/* ── MODALE ── */
-function openMod(id){
-  const p=D.find(x=>x.id===id);if(!p)return;
-  if(S.sel&&MK[S.sel])MK[S.sel].setIcon(icon(D.find(x=>x.id===S.sel),false));
-  S.sel=id;MK[id].setIcon(icon(p,true));
-  $("m-fi").className="fi fi-"+p.fc;
-  $("m-co").textContent=CN[p.co]||p.co;
-  $("m-n").textContent=p.name;
-  $("m-l").textContent="📍 "+p.loc;
-  const st=[`<span class="tag ${PV[p.pv][0]}">${PV[p.pv][1]}</span>`]
-    .concat(p.tags.map(t=>TAGS[t]?`<span class="tag ${TAGS[t].c}">${TAGS[t].l}</span>`:""));
-  if(p.isNew)st.push('<span class="tag t-new">✨ Nouveau</span>');
-  $("m-tags").innerHTML=st.join("");
+/* ── FICHE ── */
+let listScroll=0;
+function setSel(id){
+  if(S.sel&&MK[S.sel]){MK[S.sel].setIcon(icon(byId[S.sel],false));MK[S.sel].setZIndexOffset(0);}
+  S.sel=id;
+  if(id){if(!layer.hasLayer(MK[id]))layer.addLayer(MK[id]);MK[id].setIcon(icon(byId[id],true));MK[id].setZIndexOffset(1000);}
+}
+function openDetail(id,push=true){
+  const p=byId[id];if(!p)return;
+  if($("panel").dataset.view==="list")listScroll=$("pb").scrollTop;
+  setSel(id);
+  const acts=[];
+  if(p.site)acts.push(`<a class="ac pri" href="${esc(p.site)}" target="_blank" rel="noopener">🌐 Visiter le site</a>`);
+  if(p.tel)acts.push(`<a class="ac" href="tel:${esc(p.tel.replace(/[^+\d]/g,""))}">📞 Appeler</a>`);
+  if(p.email)acts.push(`<a class="ac" href="mailto:${esc(p.email)}">✉️ Écrire</a>`);
+  acts.push(`<a class="ac" href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lon}" target="_blank" rel="noopener">🧭 Itinéraire</a>`);
+  const tg=[`<span class="tag ${PV[p.pv][0]}">${PV[p.pv][1]}</span>`].concat(p.tags.filter(t=>TAGS[t]).map(t=>`<span class="tag ${TAGS[t][0]}">${TAGS[t][1]}</span>`));
+  if(p.isNew)tg.push('<span class="tag t-new">✨ Nouveau</span>');
   const ce=(p.certifs||[]).filter(c=>CERTS[c]).map(c=>`<div>${CERTS[c]}</div>`).join("");
-  $("m-cert").hidden=!ce;$("m-cert").innerHTML=ce;
-  $("m-d").textContent=p.spec;
-  $("m-grid").innerHTML=[["Note clients",p.note],["Vente",p.vente],["Pays",CN[p.co]]]
-    .map(([l,v])=>`<div class="cell"><div class="l">${l}</div><div class="v">${esc(v||"—")}</div></div>`).join("");
-  const ln=[];
-  if(p.tel)ln.push(`📞 <a href="tel:${esc(p.tel.replace(/[^+\d]/g,""))}">${esc(p.tel)}</a>`);
-  if(p.email)ln.push(`✉️ <a href="mailto:${esc(p.email)}">${esc(p.email)}</a>`);
-  $("m-ct").hidden=!ln.length;$("m-ct").innerHTML=ln.join("<br>");
-  const s=$("m-site");s.hidden=!p.site;if(p.site)s.href=p.site;
-  $("ov").classList.add("open");
-  history.replaceState(null,"","#"+id);
-  document.querySelectorAll(".it").forEach(e=>e.classList.toggle("active",e.id==="li-"+id));
-  const el=$("li-"+id);if(el)el.scrollIntoView({block:"nearest"});
-  if(mob())$("sidebar").classList.remove("open");
+  const cells=[["Vente",p.vente],["Note clients",p.note],["Statut",PV[p.pv][1]],["Pays",CN[p.co]]];
+  if(S.user)cells.push(["Distance",km(dist(S.user,p))]);
+  const ct=[p.tel&&`📞 <a href="tel:${esc(p.tel.replace(/[^+\d]/g,""))}">${esc(p.tel)}</a>`,p.email&&`✉️ <a href="mailto:${esc(p.email)}">${esc(p.email)}</a>`].filter(Boolean).join("<br>");
+  $("detail").innerHTML=`<div class="dtop"><button class="ibtn" id="back">← Retour</button><button class="ibtn" id="share">↗ Partager</button></div>
+    <div class="dh"><div class="dc"><span class="fl"><span class="fi fi-${esc(p.fc)}"></span></span>${esc(CN[p.co]||p.co)}</div>
+    <h2 class="dn">${esc(p.name)}</h2><div class="dl">📍 ${esc(p.loc)}</div><div class="tags">${tg.join("")}</div></div>
+    <div class="acts">${acts.join("")}</div>
+    <div class="dd">${esc(p.spec)}</div>${ce?`<div class="cert">${ce}</div>`:""}
+    <div class="grid">${cells.map(([l,v])=>`<div class="cell"><small>${l}</small><span>${esc(v||"—")}</span></div>`).join("")}</div>
+    ${ct?`<div class="ct">${ct}</div>`:""}`;
+  $("panel").dataset.view="detail";$("pb").scrollTop=0;
+  $("back").onclick=()=>closeDetail();
+  $("share").onclick=async()=>{const u=location.href.split("#")[0]+"#"+id;
+    try{if(navigator.share)await navigator.share({title:p.name+" — La Route des Agrumes",url:u});else{await navigator.clipboard.writeText(u);toast("Lien copié 👍");}}catch(e){}};
+  if(mobile()&&S.sheet!=="full")setSheet("half");
+  if(push)history.replaceState(null,"","#"+id);
+  map.fitBounds(L.latLngBounds([[p.lat,p.lon]]),{...pad(),maxZoom:Math.min(Math.max(map.getZoom(),10),13)});
+  render();
 }
-function closeMod(){
-  $("ov").classList.remove("open");
-  if(S.sel){MK[S.sel].setIcon(icon(D.find(x=>x.id===S.sel),false));S.sel=null;}
+function closeDetail(){
+  setSel(null);$("panel").dataset.view="list";
   history.replaceState(null,"",location.pathname+location.search);
-  document.querySelectorAll(".it.active").forEach(e=>e.classList.remove("active"));
+  render();$("pb").scrollTop=listScroll;
 }
-$("m-x").onclick=closeMod;
-$("ov").addEventListener("click",e=>{if(e.target===$("ov"))closeMod();});
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMod();});
-$("m-zoom").onclick=()=>{
-  const p=D.find(x=>x.id===S.sel);if(!p)return;
-  $("ov").classList.remove("open");
-  map.setView([p.lat,p.lon],13,{animate:true});
-};
+addEventListener("keydown",e=>{if(e.key==="Escape"&&S.sel)closeDetail();});
+addEventListener("hashchange",()=>{const id=+location.hash.slice(1);if(id&&byId[id]&&id!==S.sel)openDetail(id,false);else if(!location.hash&&S.sel)closeDetail();});
+map.on("click",()=>{if(mobile()&&S.sheet==="full")setSheet("half");});
 
-/* ── DIVERS ── */
-function toast(m){const t=$("toast");t.textContent=m;t.style.display="block";setTimeout(()=>t.style.display="none",4000);}
+/* ── GÉOLOCALISATION ── */
 let me;
-function locate(){
+$("geo").onclick=()=>{
   if(!navigator.geolocation)return toast("Géolocalisation indisponible sur cet appareil.");
+  toast("Localisation en cours…");
   navigator.geolocation.getCurrentPosition(pos=>{
-    const ll=[pos.coords.latitude,pos.coords.longitude];
+    S.user={lat:pos.coords.latitude,lon:pos.coords.longitude};
     if(me)me.remove();
-    me=L.circleMarker(ll,{radius:8,color:"#fff",weight:3,fillColor:"#06B6D4",fillOpacity:1}).addTo(map);
-    map.setView(ll,8,{animate:true});
-  },()=>toast("Localisation refusée ou indisponible."),{timeout:8000});
-}
-$("mob-btn").onclick=()=>$("sidebar").classList.add("open");
-$("sb-x").onclick=()=>$("sidebar").classList.remove("open");
-map.on("click",()=>{if(mob())$("sidebar").classList.remove("open");});
-let t;$("q").addEventListener("input",e=>{clearTimeout(t);t=setTimeout(()=>{S.q=norm(e.target.value.trim());render();},150);});
+    me=L.circleMarker([S.user.lat,S.user.lon],{radius:8,color:"#fff",weight:3,fillColor:"#38bdf8",fillOpacity:1}).addTo(map);
+    if($("panel").dataset.view==="detail")closeDetail();
+    render();$("pb").scrollTop=0;
+    const near=D.map(p=>[dist(S.user,p),p]).sort((a,b)=>a[0]-b[0]).slice(0,5).map(x=>x[1]);
+    fit(near.concat({lat:S.user.lat,lon:S.user.lon}));
+    toast("Pépinières triées de la plus proche à la plus lointaine");
+  },()=>toast("Localisation refusée ou indisponible."),{timeout:9000});
+};
+$("unsort").onclick=()=>{S.user=null;if(me){me.remove();me=null;}render(true);};
 
-buildBar();render();
-const h0=+location.hash.slice(1);
-if(h0&&D.some(p=>p.id===h0)){const p=D.find(x=>x.id===h0);map.setView([p.lat,p.lon],10);openMod(h0);}
+/* ── DÉMARRAGE ── */
+buildChips();render();
+fit(D,true);
+{const id=+location.hash.slice(1);if(id&&byId[id])openDetail(id,false);}
 </script>
 </body>
 </html>
-
-
